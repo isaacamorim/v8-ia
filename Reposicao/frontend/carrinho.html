@@ -1,3 +1,4 @@
+@ -1,633 +0,0 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -19,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS do seu rodapé -->
     <link rel="stylesheet" href="../../footer-rodape/footer.css">
-    
+
     <!-- CDNs necessários -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -202,14 +203,14 @@
         <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
     </button>
     <div class="sidebar-overlay" onclick="closeSidebar()"></div>
-    
+
     <aside id="sidebar" class="sidebar-container">
         <div class="sidebar-header">
             <!-- Logo miniatura (sempre visível quando menu recolhido) -->
             <a href="../../index.html" class="logo-icon default-logo">
                 <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
             </a>
-    
+
             <!-- Logo completa (visível apenas quando menu expandido) -->
             <h2 class="expanded-logo">
                 <a href="../../index.html">
@@ -217,7 +218,7 @@
                 </a>
             </h2>
         </div>
-    
+
         <nav class="sidebar-nav">
             <div class="nav-item">
                 <a href="../../index.html" class="nav-link active" title="Início">
@@ -250,7 +251,7 @@
                     <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
                 </div>
             </div>
-    
+
             <div class="nav-item has-submenu">
                 <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Reposição">
                     <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
@@ -263,7 +264,7 @@
                 </div>
             </div>
         </nav>
-    
+
         <div class="sidebar-footer">
             <div class="language-switcher">
                 <a href="contatos-en.html" hreflang="en-us">
@@ -277,7 +278,7 @@
                 </a>
             </div>
         </div>
-    
+
         <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
     </aside>
 
@@ -325,7 +326,7 @@
                             </a>
                         </div>
                     </div>
-    
+
                     <!-- Coluna 2: Contato -->
                     <div class="footer-column">
                         <h5>Contato</h5>
@@ -351,7 +352,7 @@
                             </a>
                         </p>
                     </div>
-    
+
                     <!-- Coluna 3: Links úteis -->
                     <div class="footer-column">
                         <h5>Links Úteis</h5>
@@ -364,14 +365,14 @@
                             <li><a href="../../login.html">Login/ERP</a></li>
                         </ul>
                     </div>
-    
+
                     <!-- Coluna 4: Vazia ou pode ser removida -->
                     <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
                 </div>
             </div>
         </div>
         </div>
-    
+
         <!-- Seção de financiadores -->
         <div class="financiadores-section">
             <div class="container">
@@ -383,16 +384,17 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Copyright -->
         <div class="footer-copyright-section">
             <div class="container">
-                <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos
+                    os
                     direitos reservados.</p>
             </div>
         </div>
     </footer>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -582,7 +584,7 @@
                     throw new Error('Seu carrinho está vazio.');
                 }
 
-                      // Aqui você faria uma requisição POST para seu backend com os dados do pedido:
+                // Aqui você faria uma requisição POST para seu backend com os dados do pedido:
                 // Exemplo (usando fetch):
                 /*
                 fetch('https://seuservidor/api/finalizarPedido', {

@@ -1,3 +1,4 @@
+@ -1,64 +0,0 @@
 from flask import Blueprint, request, jsonify
 from services.whatsapp_service import enviar_pedido_whatsapp
 from utils.auth_utils import get_cliente_por_id

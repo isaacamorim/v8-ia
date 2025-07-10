@@ -1,3 +1,4 @@
+@ -1, 56 + 0, 0 @@
 document.addEventListener('DOMContentLoaded', () => {
     const cnpjInput = document.getElementById('cnpjInput');
     const checkCnpjBtn = document.getElementById('checkCnpjBtn');

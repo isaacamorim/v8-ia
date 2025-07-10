@@ -1,3 +1,4 @@
+@ -1,46 +0,0 @@
 import requests
 from backend.config import Config
 

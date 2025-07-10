@@ -1,4 +1,4 @@
-from app import db
+from backend.api.app import db
 
 
 class Produto(db.Model):

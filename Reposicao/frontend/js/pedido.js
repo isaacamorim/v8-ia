@@ -1,3 +1,4 @@
+@ -1, 37 + 0, 0 @@
 document.addEventListener('DOMContentLoaded', () => {
     const finalizeBtn = document.getElementById('finalizeOrderBtn');
 

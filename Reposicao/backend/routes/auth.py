@@ -1,3 +1,4 @@
+@ -1,116 +0,0 @@
 from flask import Blueprint, request, jsonify
 from utils.validators import validar_documento, gerar_senha_padrao
 from utils.auth_utils import hash_senha, verificar_senha

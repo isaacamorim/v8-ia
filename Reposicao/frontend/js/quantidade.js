@@ -1,3 +1,4 @@
+@ -1, 25 + 0, 0 @@
 function criarSeletorQuantidade(produto) {
     const container = document.createElement('div');
     container.className = 'quantity-selector';
