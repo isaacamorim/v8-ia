@@ -12,6 +12,11 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = f"oracle+cx_oracle://{DB_USER}:{DB_PASSWORD}@{DSN}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Configurar binds para múltiplos bancos
+    SQLALCHEMY_BINDS = {
+        'principal': SQLALCHEMY_DATABASE_URI,
+        'temp': 'sqlite:///temp.db'  # Banco temporário
+    }
 
     # Configurações do WhatsApp
     WHATSAPP_NUMBER = os.getenv("WHATSAPP_NUMBER", "55119989335816")

@@ -1,5 +1,4 @@
-from app import db
-
+from ..extensions import db
 
 class Cliente(db.Model):
     __tablename__ = "J_ENDERE"
@@ -11,5 +10,6 @@ class Cliente(db.Model):
     JND_SENHA_HASH = db.Column(db.String(255))
     JND_ATIVO_PORTAL = db.Column(db.Boolean, default=False)
 
-    def check_password(self, senha, bcrypt):
+    def check_password(self, senha):
+        from ..extensions import bcrypt
         return bcrypt.check_password_hash(self.JND_SENHA_HASH, senha)

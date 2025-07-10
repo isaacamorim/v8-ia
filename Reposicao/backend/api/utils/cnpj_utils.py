@@ -1,6 +1,5 @@
 import re
 
-
 def limpar_cnpj(cnpj):
     """Remove caracteres não numéricos do CNPJ/CPF"""
     return re.sub(r"[^\d]", "", cnpj)

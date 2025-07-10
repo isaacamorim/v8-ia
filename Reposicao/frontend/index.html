@@ -526,6 +526,19 @@
         <span id="clientStatusText">Visitante - Digite seu CNPJ/CPF para fazer login</span>
     </div>
 
+    <!-- Adicionar no cabeçalho -->
+    <div class="client-status" id="clientStatus">
+        <form id="cnpjForm" style="display: flex; gap: 10px; width: 100%;">
+            <input type="text" id="cnpjInput" placeholder="Digite seu CNPJ/CPF"
+                style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+            <button type="submit" class="btn" style="padding: 8px 15px;">Verificar</button>
+        </form>
+        <span id="clientStatusText" style="display: block; margin-top: 10px;"></span>
+    </div>
+    
+    <!-- Adicionar no final do body -->
+    <script src="js/cnpj_verification.js"></script>
+    
     <!-- Main Content -->
     <div class="main-container">
         <!-- Filtros -->
