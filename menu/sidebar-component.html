@@ -1,0 +1,91 @@
+<!-- sidebar-component.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Lateral Responsivo</title>
+    <link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<!-- Menu Lateral -->
+<button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+    <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+</button>
+<div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<aside id="sidebar" class="sidebar-container">
+    <div class="sidebar-header">
+        <!-- Logo padrão (miniatura) -->
+        <a href="../../index.html" class="logo-icon default-logo">
+            <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+        </a>
+    
+        <!-- Logo quando expandido -->
+        <h2 class="expanded-logo">
+            <a href="../../index.html">
+                <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+            </a>
+        </h2>
+        </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-item">
+            <a href="../../index.html" class="nav-link" title="Início">
+                <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                <span class="nav-text">Início</span>
+            </a>
+        </div>
+        <div class="nav-item has-submenu">
+            <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                <span class="nav-text">Produtos</span>
+                <span class="nav-arrow">▼</span>
+            </a>
+            <div class="submenu">
+                <!--
+                <a href="#" class="nav-link">Reposição</a>
+                -->
+                <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+            </div>
+        </div>
+        <div class="nav-item has-submenu">
+            <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nós">
+                <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                <span class="nav-text">Sobre nós</span>
+                <span class="nav-arrow">▼</span>
+            </a>
+            <div class="submenu">
+                <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <a href="../../login.html" class="nav-link" title="Login">
+                <span class="nav-icon"><i class="fas fa-user"></i></span>
+                <span class="nav-text">Login</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="language-switcher">
+            <a href="contatos-en.html" hreflang="en-us">
+                <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+            </a>
+            <a href="contatos-es.html" hreflang="es">
+                <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+            </a>
+            <a href="contatos.html" hreflang="pt-br">
+                <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+            </a>
+        </div>
+    </div>
+
+    <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+</aside>
+<script src="sidebar.js"></script>

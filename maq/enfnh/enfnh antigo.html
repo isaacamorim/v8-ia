@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+	<title>Novo Horizonte ENFNH</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Cache-Control" content="max-age=172000">
+	<!-- CSS base do site -->
+	<link href="../../css/reset.css" rel="stylesheet">
+	<link href="../../css/generic.css" rel="stylesheet">
+	<link href="../../css/productpage.css" rel="stylesheet">
+	<link href="../../css/responsive-product-page.css" rel="stylesheet">
+	<link href="../../Imgs/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+	<link href="../../Imgs/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Scripts: ideal usar uma única versão do jQuery -->
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="../../scripts/jScript-header.js"></script>
+	<script src="../../scripts/jScript-load-content.js"></script>
+	<script src="../../scripts/jScript-menuresponsive.js"></script>
+	<script src="../../scripts/jScript-popup.js"></script>
+
+	<style>
+		/* CSS específico para esta página */
+		.catalog-content {
+			max-width: 1200px;
+			margin: 40px auto;
+			padding: 0 20px;
+		}
+
+		.spec-section h3,
+		.dimensions-section h3,
+		.bale-types h3 {
+			color: #d52029;
+			border-bottom: 3px solid #d52029;
+			padding-bottom: 10px;
+			margin: 40px 0 20px;
+		}
+
+		.technical-table table,
+		.dimensions-table table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 45px 0;
+		}
+
+		.technical-table td,
+		.dimensions-table td {
+			padding: 13px;
+			border: 1.5px solid #ddd;
+			vertical-align: top;
+		}
+
+		.technical-table td:first-child,
+		.dimensions-table td:first-child {
+			background: #d52029;
+		}
+
+		.innovation-features {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 30px;
+			margin: 30px 0;
+		}
+
+		.innovation-features ul {
+			list-style: none;
+			padding-left: 20px;
+			text-align: center;
+		}
+
+		.innovation-features li {
+			margin-bottom: 10px;
+			position: relative;
+			padding-left: 25px;
+		}
+
+		.dimension-image {
+			width: 100%;
+			max-width: 600px;
+			margin: 20px auto;
+			display: block;
+		}
+
+		.bale-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 20px;
+			margin: 20px 0;
+		}
+
+		.bale-item {
+			text-align: center;
+			padding: 15px;
+			border: 1px solid #eee;
+			border-radius: 8px;
+		}
+
+		.bale-item img {
+			max-width: 100%;
+			height: auto;
+			margin-bottom: 10px;
+		}
+
+
+		/* Container para alinhar a tabela e a imagem lado a lado */
+		.dimensions-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		}
+
+		.dimensions-table {
+		flex: 1;
+		min-width: 300px;
+		}
+
+		.dimension-image {
+		flex: 1;
+		max-width: 420px;
+		/* Opcional: para centralizar a imagem se houver espaço extra */
+		margin: 0 auto;
+		}
+
+		/* Para telas menores, empilha verticalmente */
+		@media (max-width: 768px) {
+		.dimensions-container {
+			flex-direction: column;
+		}
+		}
+
+
+
+		@media (max-width: 768px) {
+			.innovation-features {
+				grid-template-columns: 1fr;
+			}
+
+			.bale-grid {
+				grid-template-columns: repeat(2, 1fr);
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Cabeçalho e menus (mantidos do site base) -->
+	<section class="menu_header_mobile">
+		<div class="logo_mobile">
+			<a href="../../index.html"><img src="../../Imgs/logo-white.png" alt="Logo"></a>
+		</div>
+		<div class="logo_min_mobile">
+			<a href="../../index.html"><img src="../../Imgs/Logo.png" alt="Logo min"></a>
+		</div>
+		<div class="menu_responsive_mobile">
+			<a href="#"><img src="../../Imgs/menu.png" alt="Menu"></a>
+		</div>
+	</section>
+	<ul class="menu_dropdown_mobile" style="padding-left:0">
+		<!-- Menu mobile e flags -->
+		<div class="flags_mobile">
+			<ul>
+				<li><a href="enfnh-en.html" target="_self"><img src="../../Imgs/bandeiras/ingles.png" alt="Inglês"
+							height="20" width="30"></a></li>
+				<li><a href="#" target="_self"><img src="../../Imgs/bandeiras/espanhol.png" alt="Espanhol" height="20"
+							width="30"></a></li>
+				<li><a href="enfnh.html" target="_self"><img src="../../Imgs/bandeiras/portugues.png" alt="Português"
+							height="20" width="30"></a></li>
+			</ul>
+		</div>
+		<li><a href="../../sobre.html" class="menu_options"><b>SOBRE</b></a></li>
+		<li><a href="../../produtos.html" class="menu_options"><b>PRODUTOS</b></a></li>
+		<li><a href="../../contatos.html" class="menu_options"><b>CONTATO</b></a></li>
+		<li><a href="cadastro.html" class="menu_options"><b>LOGIN</b></a></li>
+		<li><a href="catalogo.html" class="menu_options"><b>CATALOGO</b></a></li>
+		<li><a href="login.html" class="menu_options"><b>ERP</b></a></li>
+		<li><a href="carrinho.html" class="menu_options">CARRINHO</a></li>
+	</ul>
+	<section class="menu">
+		<img src="../../Imgs/seta-header.png" class="open_menu">
+		<div class="logo"><a href="../../index.html"><img src="../../Imgs/logo-white.png" alt="Logo"></a></div>
+		<div class="menu_content">
+			<ul>
+				<li><a href="../../sobre.html">SOBRE</a></li>
+				<li><a href="../../produtos.html">PRODUTOS</a></li>
+				<li><a href="../../contatos.html">CONTATO</a></li>
+				<li><a href="cadastro.html">LOGIN</a></li>
+				<li><a href="catalogo.html">CATALOGO DE REP</a></li>
+				<li><a href="login.html">ERP</a></li>
+				<li><a href="carrinho.html">CARRINHO</a></li>
+			</ul>
+		</div>
+		<div class="flags">
+			<ul>
+				<li><a href="enfnh-en.html" target="_self"><img src="../../Imgs/bandeiras/ingles.png" alt="Inglês"
+							height="13" width="20"></a></li>
+				<li><a href="#" target="_self"><img src="../../Imgs/bandeiras/espanhol.png" alt="Espanhol" height="13"
+							width="20"></a></li>
+				<li><a href="enfnh.html" target="_self"><img src="../../Imgs/bandeiras/portugues.png" alt="Português"
+							height="13" width="20"></a></li>
+			</ul>
+		</div>
+	</section>
+	<div id="wrapper">
+		<main>
+			<div class="info">
+				<div class="box-card">
+					<div class="box-image">
+						<a href="#" class="btn" data-popup-open="popup-1">
+							<img src="../../Imgs/plus.png" id="plus">
+							<img src="../../Imgs/maquinas-produtos/Enfardadeira/ENF301.png"
+								style="width:100%;height:100%">
+						</a>
+						<a href="../../produtos.html" style="width:auto">
+							<img src="../../Imgs/icon-back.png" id="box-back">
+						</a>
+						<p id="box-p">Voltar</p>
+					</div>
+					<hr class="hr-productspage">
+				</div>
+				<div class="popup" data-popup="popup-1">
+					<div class="popup-inner">
+						<div class="grid">
+							<div class="pop-img">
+								<img src="../../Imgs/maquinas-produtos/Enfardadeira/ENF302.png"
+									style="width:100%;height:100%">
+							</div>
+							<div class="pop-img">
+								<img src="../../Imgs/maquinas-produtos/Enfardadeira/ENF303.png"
+									style="width:100%;height:100%">
+							</div>
+							<div class="pop-img">
+								<img src="../../Imgs/maquinas-produtos/Enfardadeira/ENF304.png"
+									style="width:100%;height:100%">
+							</div>
+						</div>
+						<p><a href="#" data-popup-close="popup-1">Fechar</a></p>
+						<a href="#" class="popup-close" data-popup-close="popup-1">x</a>
+					</div>
+				</div>
+				<div id="box_text">
+					<div class="titles">ENFNH</div>
+					<h4 style="margin-top:-10px">Enfardadeira</h4>
+					<h3 style="margin-top:20px">Descrição</h3>
+					<p class="text">
+						Enfardadeiras, ou agrupadoras, são equipamentos que acondicionam pacotes em fardos de diferentes
+						tamanhos, geralmente dividos em 1, 2 ou 3 colunas. São posicionadas logo após as empacotadeiras,
+						servindo até duas simultaneamente.
+						<br><br>
+						A ENFNH 30 divide com a família EVANH a fama de robusta, intuitiva e de excelente
+						custo-benefício. Introduzida no nosso catálogo poucos anos após a empacotadeira, também se
+						destacou na aceitação pelo mercado, fato que só vem crescendo desde então.
+					</p>
+					<br><br>
+					<div class="titles">VANTAGENS</div>
+					<ul>
+						<li>Velocidade incomparável</li>
+						<li>Maior vida útil do equipamento</li>
+						<li>Sistema silencioso</li>
+						<li>Partes móveis reduzidas</li>
+						<li>Vibração mínima</li>
+						<li>Manutenção facilitada</li>
+					</ul>
+					<form action="../../pdfs/Catalogo Digital - evanh;enfnh.pdf" target="_blank">
+						<button class="button_catalog" type="submit">Baixe o catálogo</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- INÍCIO DO CATÁLOGO CONVERTIDO -->
+			<div class="catalog-content">
+				<!-- Página 2: Características Técnicas -->
+				<!-- Modifique a seção de características técnicas para corresponder exatamente ao PDF -->
+				<section class="spec-section">
+					<h3>CARACTERÍSTICAS TÉCNICAS</h3>
+					<div class="technical-table">
+						<table>
+							<tr>
+								<td>MODELO</td>
+								<td>ENF 30 G3</td>
+
+							</tr>
+							<tr>
+								<td>LARG. MÁX. EMBALAGEM ABERTA</td>
+								<td>1230 mm</td>
+							</tr>
+							<tr>
+								<td>COMPR. MIN. DO PACOTE</td>
+								<td>250 mm</td>
+							</tr>
+							<tr>
+								<td>COMPR. MÁX. DO PACOTE</td>
+								<td>700 mm</td>
+							</tr>
+							<tr>
+								<td>PRESSÃO DE OPERAÇÃO</td>
+								<td>6 bar</td>
+							</tr>
+							<tr>
+								<td>TENSÃO</td>
+								<td>220/380 V</td>
+							</tr>
+						</table>
+					</div>
+				</section>
+
+				<!-- Página 2: Características Técnicas e Dimensões -->
+				<section class="dimensions-section">
+					<h3>DIMENSÕES</h3>
+					<!-- Novo container para alinhar tabela e imagem lado a lado -->
+					<div class="dimensions-container">
+						<div class="dimensions-table">
+							<table>
+								<tr>
+									<td>IDENTIDICADOR</td>
+									<td>MODELO</td>
+									<td>ENFNH G3</td>
+								</tr>
+								<tr>
+									<td>A</td>
+									<td>LARGURA TOTAL</td>
+									<td>2450 mm</td>
+								</tr>
+								<tr>
+									<td>B</td>
+									<td>PROFUNDIDADE TOTAL</td>
+									<td>2165 mm</td>
+								</tr>
+								<tr>
+									<td>C</td>
+									<td>ALTURA TOTAL</td>
+									<td>2850 mm</td>
+								</tr>
+							</table>
+						</div>
+						<img src="../../Imgs/maquinas-produtos/Enfardadeira/dimensoes.png"
+							alt="Diagrama dimensional da enfardadeira ENFNH G3" class="dimension-image">
+					</div>
+				</section>
+			<!-- Página 3: Tipos de Fardos -->
+			<section class="bale-types">
+				<h3>TIPOS DE FARDOS</h3>
+				<div class="bale-format">
+					<h4>ENTRADA TRASEIRA</h4>
+					<div class="bale-grid">
+						<div class="bale-item">
+							<img src="../../Imgs/maquinas-produtos/Enfardadeira/fardo-traseiro-1.png"
+								alt="Fardo 20x0,5Kg">
+							<p>20 x 0,5 Kg</p>
+							<p>10 x 1 Kg</p>
+							<p>20 x 1 Lb</p>
+						</div>
+						<div class="bale-item">
+							<img src="../../Imgs/maquinas-produtos/Enfardadeira/fardo-traseiro-2.png"
+								alt="Fardo 15x2Kg">
+							<p>15 x 2 Kg</p>
+							<p>20 x 2 Lb</p>
+							<p>20 x 5 Lb</p>
+						</div>
+						<div class="bale-item">
+							<img src="../../Imgs/maquinas-produtos/Enfardadeira/fardo-traseiro-3.png"
+								alt="Fardo 20x0,5Kg">
+							<p>20 x 0,5 Kg</p>
+							<p>10 x 1 Kg</p>
+						</div>
+						<!-- Repita para os demais formatos, se necessário -->
+					</div>
+				</div>
+
+				<div class="bale-format">
+					<h4>ENTRADA LATERAL</h4>
+					<div class="bale-grid">
+						<div class="bale-item">
+							<img src="../../Imgs/maquinas-produtos/Enfardadeira/fardo-lateral-1.png" alt="Fardo 10x1Kg">
+							<p>10 x 1 Kg</p>
+							<p>6 x 5 Kg</p>
+						</div>
+						<!-- Repita para os demais formatos -->
+
+					</div>
+				</div>
+				<!-- FIM DO CATÁLOGO CONVERTIDO -->
+
+		</main>
+		<footer>
+			<hr style="padding:0;margin:0">
+			<div id="info_bottom">
+				<div class="boot_aboot">
+					<img src="../../Imgs/logo-bottom-2.png" id="logo_foot" alt="Logo Footer">
+					<p style="text-align:center">Desde 1981</p>
+				</div>
+				<hr class="hr-foot">
+				<div class="boot_aboot">
+					<p><strong class="info_footer">LOCALIZAÇÃO</strong><br>Rua Dorival Faveri, 214<br>Bairro Jd. do
+						Lago<br>Limeira- Sp<br>Brasil</p>
+					<p><strong class="info_footer">TELEFONE</strong><br>Cx. Postal 436<br>+55 (19) 3451-2822</p>
+					<p><strong
+							class="info_footer">EMAILS</strong><br>novo.horizonte@nh.ind.br<br>vendas@nh.ind.br<br>compras@nh.ind.br
+					</p>
+				</div>
+				<div class="boot_aboot">
+					<p><strong class="info_footer">MAPA DO SITE</strong></p>
+					<p><a href="../../index.html" class="mapaBtn">HOME</a></p>
+					<p><a href="../../sobre.html" class="mapaBtn">SOBRE</a></p>
+					<p><a href="../../produtos.html" class="mapaBtn">PRODUTOS</a></p>
+					<p><a href="../../contatos.html" class="mapaBtn">CONTATO</a></p>
+				</div>
+				<hr class="hr-foot" style="margin-left:11px">
+				<div class="boot_aboot">
+					<div class="img_cert"><img src="../../Imgs/creds/pagamento-1.png" alt="Certificado 1"></div>
+					<div class="img_cert"><img src="../../Imgs/creds/pagamento-2.png" alt="Certificado 2"></div>
+					<div class="img_cert"><img src="../../Imgs/creds/pagamento-3.png" alt="Certificado 3"></div>
+					<div class="img_cert"><img src="../../Imgs/creds/pagamento-4.png" alt="Certificado 4"></div>
+				</div>
+			</div>
+			<div id="rights">
+				<hr class="hr-foot-vertical" style="width:80%">
+				<p style="font-size:12px"><strong class="info_footer">©2020 - Novo Horizonte Indústria de Máquinas
+						Ágricolas Ltda - Todos os direitos reservados.</strong></p><br>
+			</div>
+		</footer>
+	</div>
+	<script src="https://www.googletagmanager.com/gtag/js?id=UA-144859325-1" async></script>
+	<script>
+		function gtag() { dataLayer.push(arguments) }
+		window.dataLayer = window.dataLayer || [], gtag("js", new Date), gtag("config", "UA-144859325-1", { optimize_id: "GTM-TZ68P3H" });
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+
+    <link href="css/products.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" async></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" async></script>
+    <script src="scripts/jScript-header.js" async></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js" async></script>
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js" async></script>
+    <link rel="stylesheet" href="/css/whatsapp-flutuante.css">
+    <script defer src="/scripts/whatsapp-flutuante.js"></script>
+    <!--CSS do menu lateral-->
+    <link rel="stylesheet" href="../../menu/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS do seu rodapé -->
+    <link rel="stylesheet" href="../../footer-rodape/footer.css">
+    
+    <!-- CDNs necessários -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #d52029;
+            --secondary-color: #B4252C;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f5f5f7;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-color: #e0e0e0;
+            --primary-light: #ffe0e0;
+            /* Indigo-100 */
+            --text-default: #513737;
+            /* Gray-700 */
+            --text-inverse: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            margin: 0;
+            padding-bottom: 60px;
+            /* Espaço para o rodapé */
+        }
+
+
+        .header .client-name {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon img {
+            height: 30px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: yellow;
+            color: var(--primary-color);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 80px auto 20px auto;
+            background-color: var(--bg-white);
+            padding: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .main-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Galeria de miniaturas */
+        .thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            border: 2px solid var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .back-button,
+        .buy-button {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button:hover,
+        .buy-button:hover {
+            background-color: #a70000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Campo de quantidade */
+        .quantity-container {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-container input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .thumbnails {
+                gap: 5px;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .quantity-container input {
+                width: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <!-- Logo miniatura (sempre visível quando menu recolhido) -->
+            <a href="../../index.html" class="logo-icon default-logo">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+    
+            <!-- Logo completa (visível apenas quando menu expandido) -->
+            <h2 class="expanded-logo">
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+        </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link active" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                        <a href="#" class="nav-link">Reposição</a>
+                        -->
+                    <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nós">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Sobre nós</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Reposição">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Repocição</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Catalogo</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Carrinho</a>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="contatos-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="contatos-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="contatos.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+
+    <!-- Área de status do cliente -->
+    <div class="client-status" id="clientStatus">
+        <!-- Conteúdo será definido via JavaScript -->
+    </div>
+
+    <script>
+        // Função para alternar o menu móvel
+        function toggleMobileMenu() {
+            var mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.style.display = (mobileMenu.style.display === 'none') ? 'block' : 'none';
+        }
+
+        // Função para atualizar contador do carrinho (exemplo)
+        function updateCartCount(count) {
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Exemplo de inicialização
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartCount(0); // Inicializa o carrinho com 0 itens
+        });
+    </script>
+
+    <div class="container">
+        <h1 id="productName">Detalhes do Produto</h1>
+        <img id="mainImage" class="main-image" src="" alt="Imagem Principal do Produto">
+        <!-- Galeria de miniaturas (será exibida se houver mais de uma imagem) -->
+        <div class="thumbnails" id="thumbnails"></div>
+        <p><strong>Código:</strong> <span id="productCode"></span></p>
+        <p><strong>Categoria:</strong> <span id="productCategory"></span></p>
+        <p><strong>Avaliação:</strong> <span id="productRating"></span></p>
+        <p><strong>Preço:</strong> <span id="productPrice"></span></p>
+        <p><strong>Unidade de Medida:</strong> <span id="productUnit"></span></p>
+        <p id="productDescription"></p>
+        <!-- Campo para selecionar a quantidade -->
+        <div class="quantity-container">
+            <label for="quantity">Quantidade:</label>
+            <input type="number" id="quantity" value="1" min="1">
+        </div>
+        <!-- Botões de ação -->
+        <a href="catalogo.html" class="back-button">Voltar ao Catálogo</a>
+        <button class="buy-button" onclick="comprarProduto()">Comprar</button>
+    </div>
+
+    <!-- Rodapé com link para login se não estiver logado -->
+    <div class="footer" id="footer">
+        <!-- Conteúdo atualizado via JavaScript -->
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="site-footer">
+        <!-- Conteúdo principal do rodapé -->
+        <div class="footer-main-content">
+            <div class="container">
+                <div class="footer-content">
+                    <!-- Coluna 1: Logo e descrição -->
+                    <div class="footer-column">
+                        <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                        <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                        <div class="social-icons">
+                            <a href="#" target="_blank" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" target="_blank" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                                target="_blank" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a href="../../politica-privacidade.html"
+                                style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                                Política de Privacidade
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Coluna 2: Contato -->
+                    <div class="footer-column">
+                        <h5>Contato</h5>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                                target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                                Rua Dorival Faveri, 214<br>
+                                Jd. do Lago, Limeira-SP<br>
+                                CEP: 13481-604
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                                +55 (19) 3451-2822
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                                vendas@nh.ind.br
+                            </a>
+                        </p>
+                    </div>
+    
+                    <!-- Coluna 3: Links úteis -->
+                    <div class="footer-column">
+                        <h5>Links Úteis</h5>
+                        <ul class="footer-links">
+                            <li><a href="../../index.html">Início</a></li>
+                            <li><a href="../../sobre.html">Sobre Nós</a></li>
+                            <li><a href="../../produtos.html">Produtos</a></li>
+                            <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                            <li><a href="../../contatos.html">Contato</a></li>
+                            <li><a href="../../login.html">Login/ERP</a></li>
+                        </ul>
+                    </div>
+    
+                    <!-- Coluna 4: Vazia ou pode ser removida -->
+                    <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- Seção de financiadores -->
+        <div class="financiadores-section">
+            <div class="container">
+                <div class="financiadores-logos">
+                    <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                    <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                    <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                    <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <div class="footer-copyright-section">
+            <div class="container">
+                <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                    direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Atualizar ano automaticamente
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+
+    <script>
+        // Exemplo de array de produtos com múltiplas imagens e unidade de medida
+        const products = [
+            {
+                code: "069.0001",
+                name: "FITA PARA DATADOR 34 MM (PRETA)",
+                category: "Datador",
+                images: ["Logo NH.JPG", "imagem2.jpg", "imagem3.jpg"],
+                rating: 4,
+                price: "R$ 100,00",
+                unit: "unidade",
+                description: "Virabrequim forjado em aço liga 4340 com alta durabilidade e performance."
+            },
+            {
+                code: "055.0055",
+                name: "TEFLON TAC-TAPE 0,13 C/A PR (35MM X 15MTS) STANDARD",
+                category: "Solda Vertical/Horizontal",
+                images: ["peca-002.jpg"],
+                rating: 5,
+                price: "R$ 200,00",
+                unit: "rolo",
+                description: "Bomba de óleo de alta pressão para aplicações industriais."
+            }
+        ];
+
+        // Função para obter o parâmetro 'id' da URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Carrega detalhes do produto e exibe as imagens
+        function loadProductDetails() {
+            const id = getQueryParam("id");
+            const product = products.find(p => p.code === id);
+            if (product) {
+                document.getElementById("productName").textContent = product.name;
+                document.getElementById("productCode").textContent = product.code;
+                document.getElementById("productCategory").textContent = product.category;
+                document.getElementById("productRating").textContent = product.rating;
+                document.getElementById("productPrice").textContent = product.price;
+                document.getElementById("productUnit").textContent = product.unit;
+                document.getElementById("productDescription").textContent = product.description;
+                // Define a imagem principal
+                if (product.images && product.images.length > 0) {
+                    document.getElementById("mainImage").src = product.images[0];
+                    document.getElementById("mainImage").alt = product.name;
+                    // Exibe miniaturas se houver mais de uma imagem
+                    if (product.images.length > 1) {
+                        const thumbnailsDiv = document.getElementById("thumbnails");
+                        thumbnailsDiv.innerHTML = "";
+                        product.images.forEach((imgSrc, index) => {
+                            const thumb = document.createElement("img");
+                            thumb.src = imgSrc;
+                            thumb.alt = product.name + " - " + (index + 1);
+                            thumb.className = "thumbnail" + (index === 0 ? " active" : "");
+                            thumb.onclick = () => {
+                                document.getElementById("mainImage").src = imgSrc;
+                                // Atualiza a classe "active" na miniatura selecionada
+                                document.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active"));
+                                thumb.classList.add("active");
+                            };
+                            thumbnailsDiv.appendChild(thumb);
+                        });
+                    }
+                }
+            } else {
+                document.querySelector(".container").innerHTML = "<h1>Produto não encontrado</h1><a href='catalogo.html' class='back-button'>Voltar ao Catálogo</a>";
+            }
+        }
+
+        // Função para simular a compra/adicionar ao carrinho
+        function comprarProduto() {
+            const id = getQueryParam("id");
+            const product = products.find(p => p.code === id);
+            if (!product) return;
+
+            const cliente = JSON.parse(localStorage.getItem("clienteLogado")) || { nome: "Visitante", cnpj: "" };
+            const quantity = parseInt(document.getElementById("quantity").value) || 1;
+
+            const item = {
+                code: product.code,
+                name: product.name,
+                image: product.images ? product.images[0] : "",
+                quantity: quantity,
+                price: product.price,
+                cliente: cliente.cnpj
+            };
+
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(item);
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            alert("Produto adicionado ao carrinho!");
+            atualizarCartCount();
+        }
+
+        // Atualiza a contagem do carrinho
+        function atualizarCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cliente = JSON.parse(localStorage.getItem("clienteLogado")) || { cnpj: "" };
+            const count = cart.filter(item => item.cliente === cliente.cnpj)
+                .reduce((acc, item) => acc + item.quantity, 0);
+            document.getElementById("cartCount").textContent = count;
+        }
+
+        // Configura o cabeçalho e o rodapé conforme o status de login
+        function configurarCliente() {
+            const cliente = JSON.parse(localStorage.getItem("clienteLogado"));
+            if (cliente && cliente.nome) {
+                document.getElementById("clientName").textContent = "Olá, " + cliente.nome;
+            } else {
+                document.getElementById("clientName").textContent = "Olá, Visitante";
+            }
+
+            const footer = document.getElementById("footer");
+            if (!cliente) {
+                footer.innerHTML = '<a href="login.html">Entrar / Cadastrar</a>';
+            } else {
+                footer.innerHTML = 'Você está logado como ' + cliente.nome;
+            }
+        }
+
+        window.onload = function () {
+            configurarCliente();
+            loadProductDetails();
+            atualizarCartCount();
+        }
+    </script>
+    <!-- Carregar script do menu CORRETAMENTE -->
+    <script src="../../menu/sidebar.js"></script>
+</body>
+
+</html>

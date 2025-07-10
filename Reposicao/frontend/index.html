@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reposição de Peças</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="Logo">
+        </div>
+        <div class="cnpj-check">
+            <input type="text" id="cnpjInput" placeholder="Digite seu CNPJ/CPF">
+            <button id="checkCnpjBtn">Verificar</button>
+        </div>
+        <div class="cart-icon">
+            <span id="cartCount">0</span>
+            <img src="images/cart.png" alt="Carrinho">
+        </div>
+    </header>
+
+    <div class="client-status" id="clientStatus">
+        Olá, Visitante - <a href="login.html">Entrar / Cadastrar</a>
+    </div>
+
+    <main>
+        <div class="filters">
+            <input type="text" id="searchInput" placeholder="Buscar peças...">
+            <div class="category-filters">
+                <!-- Filtros serão gerados dinamicamente -->
+            </div>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <!-- Produtos serão carregados dinamicamente -->
+        </div>
+    </main>
+
+    <aside class="cart-sidebar" id="cartSidebar">
+        <h2>Carrinho de Compras</h2>
+        <div class="cart-items" id="cartItems"></div>
+        <button id="finalizeOrderBtn" disabled>Finalizar Pedido</button>
+    </aside>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/produtos.js"></script>
+    <script src="js/carrinho.js"></script>
+</body>
+
+</html>

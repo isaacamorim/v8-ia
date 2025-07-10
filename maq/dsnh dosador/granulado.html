@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>DGNH Granulados</title>
+    <meta charset="utf-8">
+    <meta content="text/html" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="beneficiamento, máquinas agrícolas, novo horizonte, cereais, feijão, grãos" name="keywords">
+    <meta content="index, follow" name="robots">
+    <meta content="Novo Horizonte" name="author">
+    <meta content="Página de máquinas de beneficiamento da Novo Horizonte." name="description">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="Imgs/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="Imgs/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- WhatsApp Flutuante CSS & JS (from original site) -->
+    <link rel="stylesheet" href="../../css/whatsapp-flutuante.css">
+    <script defer src="../../scripts/whatsapp-flutuante.js"></script>
+    <script defer src="../../scripts/scroll_animations.js"></script> <!-- Added new animation JS -->
+    <!--CSS do menu lateral-->
+    <link rel="stylesheet" href="../../menu/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS do seu rodapé -->
+    <link rel="stylesheet" href="../../footer-rodape/footer.css">
+    
+    <!-- CDNs necessários -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Variáveis de cores */
+        :root {
+            --primary-color: #d52029;
+            --secondary-color: #B4252C;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f5f5f7;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-color: #e0e0e0;
+            --primary-light: #ffe0e0;
+            /* Indigo-100 */
+            --text-default: #513737;
+            /* Gray-700 */
+            --text-inverse: #FFFFFF;
+        }
+
+        .tab {
+            background: var(--primary-light);
+            color: var(--text-default);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: var(--text-inverse);
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            position: relative;
+        }
+
+        .tabs::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: var(--indicator-width);
+            height: 3px;
+            background: var(--primary);
+            transition: left 0.3s, width 0.3s;
+        }
+
+        .card {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+            background: #FFF;
+        }
+
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+
+        .tabs::after {
+            left: var(--indicator-left, 0);
+        }
+
+        /* Card Style */
+        .card-section {
+            background-color: #ffffff;
+            /* Paleta: #FFFFFF para fundo do card */
+            padding: 40px 15px;
+            /* Mantido padding interno */
+            margin-top: 90px;
+            /* Espaçamento triplicado no topo */
+            margin-bottom: 90px;
+            /* Espaçamento triplicado na base */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 0.7px solid #E6E6E6;
+            /* Paleta: #E6E6E6 para borda suave */
+        }
+
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../Imgs/maquinas-produtos/Empacotadeira/dosador/gaveta.png');
+            background-size: cover;
+            background-position: center;
+            color: var(--light-text);
+            padding: 70px 0;
+            height: 700px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #b81822;
+        }
+
+        /* Feature Cards */
+        .feature-cards {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -240px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-card {
+            flex: 1;
+            color: var(--light-text);
+            padding: 30px;
+            margin: 0 10px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            /* Necessário para posicionar a linha */
+        }
+
+        /* Linha vertical entre os cards (exceto no último) */
+        .feature-card:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 20%;
+            /* Ajuste conforme necessário */
+            bottom: 20%;
+            /* Ajuste conforme necessário */
+            right: -10px;
+            /* Posiciona no meio da margem */
+            width: 1px;
+            background-color: #ddd;
+            /* Cor da linha */
+            top: 25%;
+            bottom: 25%;
+            /* Linha mais curta */
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        /* Product Gallery */
+        .product-gallery {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover img {
+            opacity: 0.9;
+        }
+
+        /* Showcase Section (Modelo 3D + Galeria + Vídeo) */
+        .showcase-section {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .showcase-container {
+            display: grid;
+            grid-template-columns: 2fr 2fr;
+            /* 4/6 para modelo, 2/6 para mídia */
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        /* Modelo 3D */
+        .model-box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .model-title {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .model-placeholder {
+            width: 100%;
+            height: 550px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        /* Mídia (Galeria + Vídeo empilhados) */
+        .media-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Galeria de imagens (lado direito superior) */
+        .gallery-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 11px;
+        }
+
+        .gallery-box .gallery-item img {
+            width: 100%;
+            height: 170px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        /* Controlar zoom da imagem */
+        .gallery-item img {
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Vídeo (lado direito inferior) */
+        .video-box {
+            background-color: var(--light-bg);
+            padding: 10px 0;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 280px;
+            background-color: #000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-placeholder video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .play-button {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 2;
+        }
+
+        .play-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 25px solid white;
+            margin-left: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            /* espaço entre as abas */
+        }
+
+        .tab {
+            padding: 0.6rem 1.2rem;
+            /* tamanho confortável para clique */
+            border-radius: 1.5rem;
+            /* forma de “pill” */
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+        }
+
+
+        /* Features Tab Section */
+        .features-section {
+            padding: 80px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            position: relative;
+            top: 1px;
+            /* Alinha com a borda inferior */
+        }
+
+        .tab:hover {
+            color: var(--primary-color);
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            color: #f2f2f2;
+            font-size: 24px;
+            /* border-bottom: 2px solid var(--border-color); */
+            padding-bottom: 10px;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        .specs-table th {
+            background-color: #fff1f1;
+            font-weight: 600;
+        }
+
+        .specs-table tr:nth-child(even) {
+            background-color: #faf8f8;
+        }
+
+        .specs-table tr:hover {
+            background-color: #e9f7ff;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #d90000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .dimensoes-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .debug-info {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Package Types Section */
+        .package-types {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .package-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .package-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .package-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .package-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .package-content {
+            padding: 20px;
+        }
+
+        .package-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .package-content p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Dosadores Section */
+        .dosadores-section {
+            padding: 80px 0;
+        }
+
+        .dosadores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .dosador-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .dosador-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .dosador-image {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .dosador-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .dosador-content {
+            padding: 20px;
+        }
+
+        .dosador-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .dosador-content p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .dosador-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+
+
+
+
+        /* Rodapé */
+        footer {
+            background-color: rgb(180, 37, 44);
+            color: rgb(255, 255, 255);
+            padding: 40px 15px;
+            /* Remove padding bottom for copyright bar */
+            text-align: center;
+        }
+
+
+        footer .container {
+            padding-bottom: 5px;
+            /* Add padding back for content before copyright */
+        }
+
+
+
+        .footer-main-content {
+            background-color: rgb(180, 37, 44);
+            color: rgb(255, 255, 255);
+            padding: 40px 15px;
+        }
+
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        footer h5 {
+            color: #ffffff;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        footer p {
+            color: #bdadad;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer ul li a:hover {
+            color: #ffffff;
+        }
+
+        .financiadores-logos {
+            background-color: rgb(59, 59, 59);
+            text-align: center;
+            padding: 0px;
+        }
+
+        .financiadores-logos img {
+            max-height: 40px;
+            /* Control height of logos */
+            margin: 10px 15px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .financiadores-logos img:hover {
+            opacity: 1;
+        }
+
+        .copyright-bar {
+            background-color: #d52029;
+            /* Red background */
+            color: #ffffff;
+            /* White text */
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .copyright-bar p {
+            margin-bottom: 0;
+            color: #ffffff;
+            /* Ensure text is white */
+        }
+
+        .footer-copyright-section {
+            background-color: rgb(230, 230, 230);
+            color: rgb(55, 54, 55);
+            text-align: center;
+            font-size: 0.9em;
+            padding: 20px 15px;
+            border-top: 1px solid rgb(208, 208, 208);
+        }
+
+        .footer-copyright-section p {
+            margin-bottom: 0px;
+            color: rgb(55, 54, 55);
+        }
+
+        .site-footer p,
+        .site-footer .footer-links li a {
+            color: rgb(68, 68, 68) !important;
+        }
+
+        footer.site-footer {
+            text-align: center;
+            padding: 0px;
+        }
+
+        .site-footer {
+            text-align: left;
+            color: rgb(255, 255, 255) !important;
+            margin-top: 90px !important;
+        }
+
+        .site-footer {
+            text-align: left;
+        }
+
+        .col-1,
+        .col-2,
+        .col-3,
+        .col-4,
+        .col-5,
+        .col-6,
+        .col-7,
+        .col-8,
+        .col-9,
+        .col-10,
+        .col-11,
+        .col-12 {
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 100%;
+        }
+
+        .footer-column {
+            Specificity: (0, 1, 0);
+            margin-bottom: 30px !important;
+        }
+
+        .site-footer .footer-column p,
+        .site-footer .footer-column .footer-links li a {
+            font-size: 0.85em !important;
+            line-height: 1.65 !important;
+            color: rgb(242, 242, 242) !important;
+        }
+
+        .footer-main-content .social-icons a {
+            color: rgb(255, 255, 255);
+            font-size: 1.3em;
+            margin: 0px 8px;
+            transition: color 0.2s;
+        }
+
+        .social-icons a {
+            color: rgb(255, 255, 255) !important;
+            margin-right: 15px !important;
+            font-size: 1.2em !important;
+        }
+
+        a {
+            color: rgb(213, 32, 41);
+            text-decoration: none;
+        }
+
+
+
+        .fab,
+        .far {
+            font-weight: 400;
+        }
+
+        .fab {
+            font-family: "Font Awesome 5 Brands";
+        }
+
+        .fa,
+        .fab,
+        .fad,
+        .fal,
+        .far,
+        .fas {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+
+        .fa-brands,
+        .fab {
+            font-weight: 400;
+        }
+
+        .fa-brands,
+        .fab {
+            font-family: "Font Awesome 6 Brands";
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .lateral-menu {
+                width: 0;
+                padding: 0;
+                border-right: none;
+            }
+
+            .lateral-menu.open-mobile {
+                width: 220px;
+                padding: 20px;
+                border-right: 3px solid #d52029;
+            }
+
+            .main-content-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.75em;
+            }
+
+            h3 {
+                font-size: 1.5em;
+            }
+
+            .sobre-nos-coluna-esquerda {
+                padding-right: 0;
+                /* Remove padding for stacked layout */
+                margin-bottom: 40px;
+            }
+
+            .sobre-nos-coluna-direita {
+                padding-left: 0;
+                /* Remove padding for stacked layout */
+            }
+
+            .conteudo-coluna-esquerda h1 {
+                font-size: 2.8em;
+            }
+
+            .sobre-nos-coluna-direita .paragrafo-conteudo h3 {
+                font-size: 1.4em;
+            }
+
+            .solucao-card {
+                height: auto;
+                /* Auto height for mobile */
+                min-height: 250px;
+                /* Minimum height */
+            }
+
+            .financiadores-logos img {
+                max-height: 30px;
+                margin: 10px 8px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .col-md-3 {
+                max-width: 25%;
+                flex: 0 0 25%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .footer-main-content .social-icons {
+                text-align: center;
+            }
+        }
+
+        /* Lateral Navigation Menu - Updated */
+        .lateral-menu {
+            width: 260px;
+            /* Expanded width */
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #ffffff;
+            /* White background */
+            color: #343a40;
+            /* Dark text */
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            border-right: 3px solid #d52029;
+            /* Red line on the right border */
+            transition: width 0.3s ease;
+            /* Animation for expand/collapse */
+        }
+
+        .lateral-menu.minimized {
+            width: 80px;
+            /* Minimized width - for icons only */
+        }
+
+        .lateral-menu .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+            /* Indicate clickable */
+        }
+
+        /* Show a smaller version of logo or an icon when minimized */
+        .lateral-menu.minimized .logo-container img.full-logo {
+            display: none;
+        }
+
+        .lateral-menu .logo-container img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            /* Garante que a imagem seja um bloco para centralização e não tenha fundo estranho */
+            margin: 0 auto;
+            /* Centraliza a imagem no container */
+        }
+
+        /* Estilo específico para o logo quando o menu está minimizado */
+        .lateral-menu.minimized .logo-container img {
+            max-width: 40px;
+            /* Tamanho menor para o ícone */
+            /* Outros estilos como padding ou margin podem ser ajustados aqui se necessário */
+        }
+
+        .lateral-menu nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lateral-menu nav ul li a {
+            display: flex;
+            align-items: center;
+            color: #343a40;
+            padding: 12px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .lateral-menu nav ul li a .menu-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            min-width: 24px;
+            transition: color 0.2s ease;
+        }
+
+        .lateral-menu.minimized nav ul li a .menu-text {
+            display: none;
+        }
+
+        .lateral-menu.minimized nav ul li a {
+            justify-content: center;
+            padding: 12px 0;
+        }
+
+        /* Default icon color when minimized */
+        .lateral-menu.minimized nav ul li a .menu-icon {
+            color: #343a40;
+            /* Black/dark icon color by default when minimized */
+            margin-right: 0;
+            /* No margin when text is hidden */
+        }
+
+        /* Active icon color when minimized */
+        .lateral-menu.minimized nav ul li a.active .menu-icon {
+            color: #d52029;
+            /* Red for active icon when minimized */
+        }
+
+        /* Hover state for minimized menu icons */
+        .lateral-menu.minimized nav ul li a:hover .menu-icon {
+            color: #d52029;
+            /* Red on hover for minimized icons (even if not active) */
+        }
+
+        /* Hover and active states for expanded menu */
+        .lateral-menu:not(.minimized) nav ul li a:hover,
+        .lateral-menu:not(.minimized) nav ul li a.active {
+            background-color: #f0f0f0;
+            color: #d52029;
+        }
+
+        .lateral-menu:not(.minimized) nav ul li a:hover .menu-icon,
+        .lateral-menu:not(.minimized) nav ul li a.active .menu-icon {
+            color: #d52029;
+            /* Red icon on hover/active for expanded menu */
+        }
+
+        .lateral-menu .language-switcher {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .lateral-menu.minimized .language-switcher {
+            padding: 0 5px;
+        }
+
+        .lateral-menu .language-switcher img {
+            width: 30px;
+            height: 20px;
+            margin: 0 5px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .lateral-menu.minimized .language-switcher img {
+            width: 24px;
+            /* Slightly smaller flags when minimized */
+            height: 16px;
+            margin: 0 2px;
+        }
+
+        .lateral-menu .language-switcher img:hover {
+            opacity: 1;
+        }
+
+        /* Main Content Area */
+        .main-content-wrapper {
+            margin-left: 80px;
+            /* Initial margin for minimized menu */
+            padding: 0;
+            /* Remove padding from wrapper */
+            width: calc(100% - 80px);
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        .lateral-menu:not(.minimized)+.main-content-wrapper {
+            margin-left: 260px;
+            /* Margin for expanded menu */
+            width: calc(100% - 260px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <a href="../../index.html" class="logo-icon">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+            <h2>
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+        </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link active" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                        <a href="#" class="nav-link">Reposição</a>
+                        -->
+                    <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link active">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nós">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text active">Sobre nós</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="#" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item">
+                <a href="../../login.html" class="nav-link" title="Login">
+                    <span class="nav-icon"><i class="fas fa-user"></i></span>
+                    <span class="nav-text">Login</span>
+                </a>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="empacotamento-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="empacotamento-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="empacotamento.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>DGNH</h1>
+                <h2>DOSADOR DE GRANULADOS</h2>
+                <p>Dosador de disco volumetrico ideal para Granulados</p>
+                <a href="#" class="btn">SOLICITAR ORÇAMENTO</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Cards -->
+    <div class="container">
+        <div class="feature-cards">
+            <div class="feature-card">
+                <h3>ROBUSTEZ</h3>
+                <p>Estrutura reforçada para uso intensivo e durabilidade excepcional</p>
+            </div>
+            <div class="feature-card">
+                <h3>VERSATILIDADE</h3>
+                <p>Compatível com diversos tipos de produtos e maquinas</p>
+            </div>
+            <div class="feature-card">
+                <h3>PRODUTIVIDADE</h3>
+                <p>Nao sei</p>
+            </div>
+            <div class="feature-card">
+                <h3>TECNOLOGIA</h3>
+                <p>Sistema de controle de entrada de grao</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nova Seção Unificada -->
+    <section class="showcase-section">
+        <div class="showcase-container">
+            <!-- Lado Esquerdo: Modelo 3D (4/8) -->
+            <div class="model-box">
+                <h2 class="model-title">MODELO 3D</h2>
+                <div class="model-placeholder">
+                    <button class="btn">CARREGAR MODELO 3D</button>
+                </div>
+            </div>
+
+            <!-- Lado Direito: Galeria + Vídeo (2/8 + 2/8) -->
+            <div class="media-box">
+                <h2 class="model-title">IMAGENS</h2>
+                <div class="gallery-box">
+                    <div class="gallery-item">
+                        <img src="../../Imgs/maquinas-produtos/Empacotadeira/dosador/gaveta.png"
+                            alt="DSNH Vista Frontal">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../Imgs/maquinas-produtos/Empacotadeira/dosador/gaveta.png"
+                            alt="DSNH Vista Lateral">
+                    </div>
+                </div>
+
+                <div class="video-box">
+                    <h3 class="section-title">VÍDEO</h3>
+                    <div class="video-placeholder">
+                        <video src="/Imgs/video/enf.mp4" controls></video>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features Tab Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="tab1">CARACTERÍSTICAS</div>
+                <div class="tab" data-tab="tab2">DOWNLOADS</div>
+                <div class="tab" data-tab="tab3">PEDIDOS</div>
+            </div>
+
+            <div class="tab-content active" id="tab1">
+                <h2>CARACTERÍSTICAS TÉCNICAS</h2>
+                <table class="specs-table">
+                    <tr>
+                        <th>MODELO</th>
+                        <th>EVA 1000 G3</th>
+                        <th>EVA 1200 G3</th>
+                        <th>EVA 5000 G3</th>
+                    </tr>
+                    <tr>
+                        <td>ALTURA MÁXIMA DO PACOTE</td>
+                        <td>280 mm</td>
+                        <td>320 mm</td>
+                        <td>verificar mm</td>
+                    </tr>
+                    <tr>
+                        <td>LARGURA MÁXIMA DO FILME ABERTO</td>
+                        <td>390 mm</td>
+                        <td>480 mm</td>
+                        <td>verificar mm</td>
+                    </tr>
+                    <tr>
+                        <td>LARGURA DA MORDAÇA</td>
+                        <td>180 mm</td>
+                        <td>220 mm</td>
+                        <td>verificar mm</td>
+                    </tr>
+                    <tr>
+                        <td>ABERTURA DA MORDAÇA</td>
+                        <td>200 mm</td>
+                        <td>200 mm</td>
+                        <td>verificar mm</td>
+                    </tr>
+                    <tr>
+                        <td>PRODUÇÃO MÁXIMA POR MINUTO</td>
+                        <td>58 ppm</td>
+                        <td>55 ppm</td>
+                        <td>verificar</td>
+                    </tr>
+                </table>
+
+                <h2>DIMENSÕES</h2>
+                <table class="specs-table">
+                    <tr>
+                        <th>IDENTIFICADOR</th>
+                        <th></th>
+                        <th>EVA 1000 G3</th>
+                        <th>EVA 1200 G3</th>
+                        <th>EVA 5000 G3</th>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>LARGURA TOTAL</td>
+                        <td>1225 mm</td>
+                        <td>1225 mm</td>
+                        <td>verificar</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>PROFUNDIDADE TOTAL</td>
+                        <td>1900 mm</td>
+                        <td>1900 mm</td>
+                        <td>verificar</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>ALTURA TOTAL</td>
+                        <td>1590 mm</td>
+                        <td>1690 mm</td>
+                        <td>verificar</td>
+                    </tr>
+                </table>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="../../Imgs/maquinas-produtos/Empacotadeira/dimensoes.png" alt="Dimensões da máquina"
+                        class="dimensoes-img">
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab2">
+                <h2>DOWNLOADS DISPONÍVEIS</h2>
+                <ul>
+                    <li><a href="../../pdfs/Catalogo Digital - evanhg3.pdf" target="_blank">Catálogo Digital -
+                            EVANHG3</a></li>
+                </ul>
+
+            </div>
+
+            <div class="tab-content" id="tab3">
+                <h2>FAÇA SEU PEDIDO</h2>
+                <p>Entre em contato com nossa equipe comercial para solicitar um orçamento personalizado.</p>
+                <div class="contact-info">
+                    <p>
+                        <a href="mailto:vendas@nh.ind.br">
+                            <i class="fas fa-envelope"></i>
+                            vendas@nh.ind.br
+                        </a>
+                    </p>
+                    <p>
+                        <a href="tel:+551934512822">
+                            <i class="fas fa-phone"></i>
+                            +55 (19) 3451-2822
+                        </a>
+                    </p>
+                </div>
+                <div class="debug-info">
+                    <strong>Nota de Depuração:</strong> Esta aba está funcionando corretamente!
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Section -->
+
+    <!-- RODAPÉ -->
+    <footer class="site-footer">
+        <!-- Conteúdo principal do rodapé -->
+        <div class="footer-main-content">
+            <div class="container">
+                <div class="footer-content">
+                    <!-- Coluna 1: Logo e descrição -->
+                    <div class="footer-column">
+                        <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                        <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                        <div class="social-icons">
+                            <a href="#" target="_blank" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" target="_blank" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                                target="_blank" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a href="../../politica_de_privacidade.html"
+                                style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                                Política de Privacidade
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Coluna 2: Contato -->
+                    <div class="footer-column">
+                        <h5>Contato</h5>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                                target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                                Rua Dorival Faveri, 214<br>
+                                Jd. do Lago, Limeira-SP<br>
+                                CEP: 13481-604
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                                +55 (19) 3451-2822
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                                vendas@nh.ind.br
+                            </a>
+                        </p>
+                    </div>
+    
+                    <!-- Coluna 3: Links úteis -->
+                    <div class="footer-column">
+                        <h5>Links Úteis</h5>
+                        <ul class="footer-links">
+                            <li><a href="../../index.html">Início</a></li>
+                            <li><a href="../../sobre.html">Sobre Nós</a></li>
+                            <li><a href="../../produtos.html">Produtos</a></li>
+                            <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                            <li><a href="../../contatos.html">Contato</a></li>
+                            <li><a href="../../login.html">Login/ERP</a></li>
+                        </ul>
+                    </div>
+    
+                    <!-- Coluna 4: Vazia ou pode ser removida -->
+                    <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- Seção de financiadores -->
+        <div class="financiadores-section">
+            <div class="container">
+                <div class="financiadores-logos">
+                    <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                    <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                    <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                    <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <div class="footer-copyright-section">
+            <div class="container">
+                <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                    direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Atualizar ano automaticamente
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    </div>
+
+
+    <script>
+        // Menu Toggle
+        const menuBtn = document.querySelector('.menu-button');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                document.querySelector('.nav-menu')?.classList.toggle('active');
+            });
+        }
+
+        // Aguarda o carregamento completo do DOM
+        document.addEventListener('DOMContentLoaded', function () {
+            // Seleciona o container PRINCIPAL que existe no carregamento
+            const featuresSection = document.querySelector('.features-section');
+
+            // Delegação de evento correta
+            featuresSection.addEventListener('click', function (e) {
+                const clickedTab = e.target.closest('.tab');
+                if (!clickedTab) return;
+
+                // Remove classes ativas
+                document.querySelectorAll('.tab, .tab-content').forEach(el => {
+                    el.classList.remove('active');
+                });
+
+                // Ativa aba clicada
+                clickedTab.classList.add('active');
+
+                // Ativa conteúdo correspondente
+                const contentId = clickedTab.dataset.tab;
+                document.getElementById(contentId)?.classList.add('active');
+            });
+
+            // Debug
+            console.log("Sistema de abas inicializado com sucesso!");
+            console.log("Abas encontradas:", document.querySelectorAll('.tab').length);
+        });
+
+        /* No JS, a cada troca de aba você atualiza as variáveis inline: */
+        const tabsEl = document.querySelector('.tabs');
+        function updateIndicator(tabEl) {
+            const { offsetLeft: left, offsetWidth: width } = tabEl;
+            tabsEl.style.setProperty('--indicator-width', `${width}px`);
+            tabsEl.style.setProperty('--indicator-left', `${left}px`);
+        }
+    </script>
+</body>
+
+</html>

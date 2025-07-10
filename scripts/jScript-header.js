@@ -1,0 +1,1 @@
+$(function(){var o=0;$(window).scroll(function(n){var s=$(this).scrollTop();Math.abs(o-s)<=5||(s>o?$(".menu").css({top:"-4em"}).hover(function(){$(".menu").css({top:"0px"})}):$(".menu").css({top:"0px"}),o=s)})});

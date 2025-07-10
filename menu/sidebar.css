@@ -1,0 +1,627 @@
+/* sidebar.css */
+
+:root {
+    --primary-color: #d52029;
+    --secondary-color: #B4252C;
+    --dark-bg: #1a1a1a;
+    --light-bg: #f5f5f7;
+    --text-color: #333;
+    --light-text: #fff;
+    --border-color: #e0e0e0;
+    --primary-light: #ffe0e0;
+    --text-default: #513737;
+    --text-inverse: #FFFFFF;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Reset específico para componentes do menu */
+.nav-link,
+.nav-item,
+.nav-icon {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+    outline: none;
+}
+
+.sidebar-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1002;
+    background: #ffffffc4;
+    color: var(--secondary-color);
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Transições suaves para todas as propriedades */
+    transition: background 0.3s ease;
+    transform 0.3s ease;
+    box-shadow 0.3s ease;
+}
+    
+        /* Transição suave para a imagem também */
+        .sidebar-toggle img {
+            filter: brightness(1) invert(0);
+            /* estado padrão */
+            transition: filter 0.3s ease;
+        }
+    
+        /* Filtro branco aplicado durante o hover */
+                .sidebar-toggle:hover {
+                    background: var(--secondary-color);
+                }
+        
+                .sidebar-toggle:hover img {
+                    filter: brightness(0) invert(1);
+                }
+        
+                .sidebar-toggle.open:hover {
+                    background: var(--secondary-color);
+                }
+        
+                .sidebar-toggle.open:hover img {
+                    filter: brightness(0) invert(1);       
+                }
+        .sidebar-toggle.open {
+            background: var(--secondary-color);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+        
+        .sidebar-toggle.open img {
+            filter: brightness(0) invert(1);
+        }
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 100vh;
+    background: #fff;
+    border-right: 4px solid var(--primary-color);
+    z-index: 1000;
+    transition: width 0.3s ease;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+    overflow: visible;
+}
+
+.sidebar-container:hover {
+    width: 300px;
+}
+
+.sidebar-container.mobile {
+    left: -300px;
+    width: 300px;
+    overflow-y: auto;
+}
+
+.sidebar.mobile.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: var(--light-bg);
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+
+.sidebar-header p {
+    display: none;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+    display: none;
+}
+
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-nav {
+    padding: 0;
+}
+
+.nav-item {
+    margin: 0;
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+    height: 25px;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    background: var(--primary-light);
+}
+
+.nav-link.active {
+    background: var(--primary-light);
+    box-shadow: inset 4px 0 0 var(--primary-color);
+}
+
+.nav-icon {
+    font-size: 20px;
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.nav-text {
+    margin-left: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+.sidebar:hover .nav-text {
+    opacity: 1;
+}
+
+.nav-item.has-submenu .nav-arrow {
+    margin-left: auto;
+    font-size: 12px;
+    opacity: 0;
+    transition: all 0.3s ease 0.1s;
+}
+
+.sidebar:hover .nav-item.has-submenu .nav-arrow {
+    opacity: 1;
+}
+
+.nav-item.has-submenu.open .nav-arrow {
+    transform: rotate(-180deg);
+}
+
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.submenu.open {
+    max-height: 300px;
+}
+
+.submenu .nav-link {
+    padding: 15px 20px 15px 60px;
+    font-size: 14px;
+    height: 50px;
+}
+
+.submenu .nav-text {
+    margin-left: 0;
+}
+
+.submenu .nav-item {
+    margin: 10px 0;
+    /* Aumentar de 5px para 10px */
+}
+
+.sidebar-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.03);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    align-items: end;
+}
+
+.sidebar-footer p {
+    color: var(--text-color);
+    font-size: 12px;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+    white-space: nowrap;
+}
+
+.sidebar:hover .sidebar-footer p {
+    opacity: 1;
+}
+
+.language-switcher {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+    background: var(--light-bg);
+}
+
+.language-switcher img {
+    width: 24px;
+    height: 16px;
+    margin: 0 5px;
+    border-radius: 2px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.language-switcher img:hover {
+    opacity: 1;
+}
+
+.sidebar-main-content {
+    margin-left: 0px; /* aqui era 80px */
+    padding: 0px; /* aqui era 30px */
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+    background: var(--light-bg);
+}
+
+.content-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.content-card h1 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.content-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    @media (max-width: 768px) {
+    .sidebar-toggle {
+        z-index: 1002 !important;
+        display: block !important;
+    }
+    
+    .sidebar-container.mobile {
+        z-index: 1001 !important;
+    }
+    
+    .sidebar-overlay.active {
+        z-index: 1000 !important;
+    }   }
+    .menu-toggle {
+        display: block;
+    }
+
+    .close-btn {
+        display: block;
+    }
+
+    .sidebar-container.mobile {
+        left: -300px;
+        width: 300px;
+        overflow-y: auto;
+    }
+
+    .sidebar-container.active {
+        left: 0;
+    }
+
+    .sidebar-header {
+        padding: 30px 20px;
+        height: auto;
+    }
+
+    .sidebar-header h2 {
+        opacity: 1;
+        margin-bottom: 5px;
+    }
+
+    .sidebar-header .logo-icon {
+        display: none;
+    }
+
+    .sidebar-header p {
+        display: block;
+        color: var(--text-color);
+        font-size: 14px;
+    }
+
+    .nav-text {
+        opacity: 1;
+        margin-left: 15px;
+    }
+    
+    .sidebar-container.mobile {
+        transition: left 0.4s ease;   }
+}
+
+@media (max-width: 480px) {
+    .sidebar-container {
+        width: 100%;
+        left: -100%;
+    }
+
+    .main-content {
+        padding: 80px 15px 15px;
+    }
+}
+
+/* Garantir que o conteúdo principal tenha espaço para o sidebar */
+.main-content {
+    margin-left: 80px;
+    transition: margin-left 0.3s ease;
+    min-height: calc(100vh - 200px);
+    /* Ajuste conforme footer */
+    padding: 30px;
+}
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 80px 15px 15px;
+        /* Espaço para o botão mobile */
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+}
+
+/* Prevenir conflito de z-index */
+.site-footer {
+    position: relative;
+    z-index: 10;
+}
+
+@media (max-width: 768px) {
+    .sidebar-container.mobile {
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-container.active {
+        left: 0;
+    }
+
+    .main-content,
+    .site-footer {
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar-container.active+.main-content,
+    .sidebar-container.active+.main-content+.site-footer {
+        transform: translateX(300px);
+    }
+}
+
+/* Reset de estilos do Bootstrap para os itens do menu */
+.sidebar-nav .nav-item .nav-link {
+    display: flex !important;
+    padding: 20px !important;
+    align-items: center;
+}
+
+/* Garantir que os ícones fiquem corretamente alinhados */
+.nav-icon {
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+    margin: 0 !important;
+    /* Reset de margens do Bootstrap */
+    padding: 0 !important;
+    /* Reset de paddings do Bootstrap */
+}
+
+/* Ajuste adicional para subitens */
+.submenu .nav-link {
+    padding-left: 60px !important;
+}
+
+/* ===== CORREÇÃO TEXTO NÃO APARECE ===== */
+.sidebar-container:hover .nav-text,
+.sidebar-container.active .nav-text {
+    opacity: 1 !important;
+    display: inline-block !important;
+}
+
+/* ===== ESPAÇAMENTO SUBMENUS ===== */
+.submenu .nav-link {
+    padding: 18px 20px 18px 60px !important;
+    height: auto !important;
+}
+
+/* Aumentar espaçamento entre itens do submenu */
+.submenu .nav-item {
+    margin: 5px 0;
+}
+
+/* ===== TROCA DE LOGO ===== */
+/* Esconder logo expandida por padrão */
+.expanded-logo {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Mostrar miniatura por padrão */
+.default-logo {
+    display: block;
+}
+
+/* Quando sidebar expandido (hover ou ativo) */
+.sidebar-container:hover .default-logo,
+.sidebar-container.active .default-logo {
+    display: none;
+}
+
+.sidebar-container:hover .expanded-logo,
+.sidebar-container.active .expanded-logo {
+    display: block;
+    opacity: 1;
+}
+
+/* ===== CORREÇÃO ALINHAMENTO ÍCONES ===== */
+.nav-link {
+    display: flex !important;
+    align-items: center !important;
+    padding: 20px !important;
+}
+
+.nav-icon {
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 20px !important;
+}
+
+/* ===== AJUSTES RESPONSIVOS ===== */
+@media (max-width: 768px) {
+
+    /* Forçar exibição do texto em mobile */
+    .nav-text {
+        opacity: 1 !important;
+        display: inline-block !important;
+    }
+
+    /* Mostrar logo expandida em mobile quando menu aberto */
+    .sidebar-container.active .default-logo {
+        display: none;
+    }
+
+    .sidebar-container.active .expanded-logo {
+        display: block;
+        opacity: 1;
+    }
+
+    /* Aumentar espaçamento para toques */
+    .nav-link {
+        padding: 22px 20px !important;
+    }
+
+    .submenu .nav-link {
+        padding: 20px 20px 20px 70px !important;
+    }
+}
+
+/* ===== REMOVER REGRAS PROBLEMÁTICAS ===== */
+/* Remover esta seção problemática */
+
+/* Adicionar regras corretas para o toggle */
+.sidebar-toggle:hover {
+    background: var(--secondary-color);
+}
+
+.sidebar-toggle:hover img {
+    filter: brightness(0) invert(1);
+}
+
+.site-footer{
+    margin-left: auto !important;
+}
+
+/* ===== CORREÇÃO DA TROCA DE LOGO ===== */
+.sidebar-header .default-logo {
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-header .expanded-logo {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Quando sidebar expandido (hover em desktop ou active em mobile) */
+.sidebar-container:hover .default-logo,
+.sidebar-container.active .default-logo {
+    display: none;
+    opacity: 0;
+}
+
+.sidebar-container:hover .expanded-logo,
+.sidebar-container.active .expanded-logo {
+    display: block;
+    opacity: 1;
+}
+
+/* Centralização das logos */
+.sidebar-header {
+    justify-content: center;
+    position: relative;
+}
+
+.sidebar-header .default-logo,
+.sidebar-header .expanded-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Ajuste de tamanho para a logo completa */
+.expanded-logo img {
+    max-width: 200px;
+    height: auto;
+}

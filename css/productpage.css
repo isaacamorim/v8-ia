@@ -1,0 +1,32 @@
+#box-p{float:left;padding:0;color:#373637;line-height:20px;margin:63px 0 0}#box-back{float:left;padding:0 10px 0 5px;margin-top:60px;position:relative}
+.info{
+    width:60%;
+    height:auto;
+    padding:60px;
+    text-align:center;
+    display:inline-block;
+    justify-content:center;
+    border-radius:8px 8px 8px 8px;
+    -webkit-box-shadow:10px 0 7px rgba(0,0,0,.15),-10px 0 7px rgba(0,0,0,.15);
+    -moz-box-shadow:10px 0 7px rgba(0,0,0,.15),-10px 0 7px rgba(0,0,0,.15);
+    box-shadow:10px 0 7px rgba(0,0,0,.15),-10px 0 7px rgba(0,0,0,.15)
+}
+
+.box-card{
+    width:50%;
+    float:left
+}
+
+.box-image{width:85%;height:auto}#box_text,.box-image{margin-top:40px;float:left}
+#box_text{
+    width:50%;
+    height:490px;
+    margin-bottom:30px;
+    text-align:left;
+    position:relative;
+    color:#676567;
+    font-size:.875em;
+    overflow:hidden
+}
+
+.button_catalog{width:45%;float:right;height:33px;vertical-align:middle;background-color:#d52029;border:1px solid #d52029;color:#fff;font-family:Myriad Pro;font-size:.75em;letter-spacing:2px;text-decoration:none;cursor:pointer}a.button_catalog{display:inline-block;line-height:33px;padding-left:10px;padding-right:10px}.button_catalog:hover{border:1px solid #fb0b1d;background-color:#fb0b1d;transition:all .5s;color:#fff}.button_catalog:active{position:relative;top:1px;background-color:#fb0b1d;color:#fff}#plus{position:absolute;float:left;height:1em;width:1em}.grid{justify-content:center;height:100%;width:100%;position:relative;overflow:hidden;display:flex}.pop-img{margin-left:30px;margin-right:30px;width:300px;height:300px}.popup{z-index:100;width:100%;height:100%;display:none;position:fixed;top:0;left:0;background:rgba(0,0,0,.75)}.popup-inner{width:80%;padding:40px;position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);box-shadow:0 2px 6px #000;border-radius:3px;background:#fff}.popup-close{width:30px;height:30px;padding-top:4px;display:inline-block;position:absolute;top:0;right:0;transition:all .25s ease;-webkit-transform:translate(50%,-50%);transform:translate(50%,-50%);border-radius:1000px;background:rgba(0,0,0,.8);font-family:Arial,Sans-Serif;font-size:20px;text-align:center;line-height:100%;color:#fff}.popup-close:hover{-webkit-transform:translate(50%,-50%) rotate(180deg);transform:translate(50%,-50%) rotate(180deg);background:#000;text-decoration:none}

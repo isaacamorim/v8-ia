@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal</title>
+    
+        <link href="css/reset.css" rel="stylesheet">
+        <link href="css/generic.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
+        <link href="css/responsive-index.css" rel="stylesheet">
+        <link href="css/extensao.css" rel="stylesheet"> <!-- Estilos específicos da extensão -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" async></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" async></script>
+        <script src="scripts/jScript-header.js" async></script>
+        <script src="https://code.jquery.com/jquery-1.9.1.min.js" async></script>
+        <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js" async></script>
+        <link rel="stylesheet" href="/css/whatsapp-flutuante.css">
+        <script defer src="/scripts/whatsapp-flutuante.js"></script>
+        <!--CSS do menu lateral-->
+        <link rel="stylesheet" href="../../menu/sidebar.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- CSS do seu rodapé -->
+        <link rel="stylesheet" href="../../footer-rodape/footer.css">
+        
+        <!-- CDNs necessários -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #cc0000;
+            height: 60px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            max-height: 40px;
+            width: auto; /* Mantém a proporção da imagem */
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .menu-container {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .menu-section {
+            background: rgb(216, 216, 216);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .menu-title {
+            background-color: #d4d4d4;
+            padding: 15px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .menu-title:hover {
+            background-color: #e6e6e6;
+        }
+
+        .submenu {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .submenu.active {
+            display: block;
+        }
+
+        .submenu-item {
+            padding: 12px 25px;
+            color: #666;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .submenu-item:hover {
+            background-color: #f8f8f8;
+            padding-left: 30px;
+            color: #cc0000;
+        }
+
+        @media (min-width: 768px) {
+            .menu-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                max-width: 1200px;
+                margin: 80px auto 0 auto;
+            }
+            
+            .menu-section {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .menu-title {
+                font-size: 14px;
+            }
+            
+            .submenu-item {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Lateral -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <!-- Logo miniatura (sempre visível quando menu recolhido) -->
+            <a href="../../index.html" class="logo-icon default-logo">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+    
+            <!-- Logo completa (visível apenas quando menu expandido) -->
+            <h2 class="expanded-logo">
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+        </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link active" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                        <a href="#" class="nav-link">Reposição</a>
+                        -->
+                    <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nós">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Sobre nós</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item">
+                <a href="../../login.html" class="nav-link" title="Login">
+                    <span class="nav-icon"><i class="fas fa-user"></i></span>
+                    <span class="nav-text">Login</span>
+                </a>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="contatos-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="contatos-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="contatos.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+
+    <div class="menu-container">
+        <!-- Menu Estoque -->
+        <div class="menu-section">
+            <div class="menu-title" onclick="toggleMenu(this)">ESTOQUE</div>
+            <div class="submenu">
+                <a href="Kardex.html" class="submenu-item">Kardex (entrada/saída)</a>
+                <a href="Separação pedido de venda.html" class="submenu-item">Separação pedido de venda</a>
+                <a href="Separação ordem de fabricação.html" class="submenu-item">Separação ordem de fabricação</a>
+                <a href="Busca de endereços com desenhos.html" class="submenu-item">Busca de endereços com desenhos</a>
+            </div>
+        </div>
+
+        <!-- Menu Produção -->
+        <div class="menu-section">
+            <div class="menu-title" onclick="toggleMenu(this)">PRODUÇÃO</div>
+            <div class="submenu">
+                <a href="#" class="submenu-item">Sequenciamento de OF</a>
+                <a href="painel_producao.html" class="submenu-item">Apontamentos de produção</a>
+                <a href="#" class="submenu-item">Chat com PCP</a>
+            </div>
+        </div>
+
+        <!-- Menu Vendas -->
+        <div class="menu-section">
+            <div class="menu-title" onclick="toggleMenu(this)">VENDAS</div>
+            <div class="submenu">
+                <a href="#" class="submenu-item">Consulta de Preços</a>
+                <a href="#" class="submenu-item">Controle de Acessos</a>
+                <a href="#" class="submenu-item">Clientes</a>
+                <a href="#" class="submenu-item">Pedidos em Andamento</a>
+            </div>
+        </div>
+
+
+        <!-- Site Vendas -->
+        <div class="menu-section">
+            <div class="menu-title" onclick="toggleMenu(this)">Site Vendas</div>
+            <div class="submenu">
+                <a href="catalogo.html" class="submenu-item">Catalago</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="site-footer">
+        <!-- Conteúdo principal do rodapé -->
+        <div class="footer-main-content">
+            <div class="container">
+                <div class="footer-content">
+                    <!-- Coluna 1: Logo e descrição -->
+                    <div class="footer-column">
+                        <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                        <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                        <div class="social-icons">
+                            <a href="#" target="_blank" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" target="_blank" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                                target="_blank" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a href="../../politica-privacidade.html"
+                                style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                                Política de Privacidade
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Coluna 2: Contato -->
+                    <div class="footer-column">
+                        <h5>Contato</h5>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                                target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                                Rua Dorival Faveri, 214<br>
+                                Jd. do Lago, Limeira-SP<br>
+                                CEP: 13481-604
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                                +55 (19) 3451-2822
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                                vendas@nh.ind.br
+                            </a>
+                        </p>
+                    </div>
+    
+                    <!-- Coluna 3: Links úteis -->
+                    <div class="footer-column">
+                        <h5>Links Úteis</h5>
+                        <ul class="footer-links">
+                            <li><a href="../../index.html">Início</a></li>
+                            <li><a href="../../sobre.html">Sobre Nós</a></li>
+                            <li><a href="../../produtos.html">Produtos</a></li>
+                            <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                            <li><a href="../../contatos.html">Contato</a></li>
+                            <li><a href="../../login.html">Login/ERP</a></li>
+                        </ul>
+                    </div>
+    
+                    <!-- Coluna 4: Vazia ou pode ser removida -->
+                    <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- Seção de financiadores -->
+        <div class="financiadores-section">
+            <div class="container">
+                <div class="financiadores-logos">
+                    <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                    <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                    <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                    <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <div class="footer-copyright-section">
+            <div class="container">
+                <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                    direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Atualizar ano automaticamente
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+
+    
+    <script>
+        function toggleMenu(element) {
+            const menuSection = element.parentElement;
+            const submenu = menuSection.querySelector('.submenu');
+            submenu.classList.toggle('active');
+        }
+
+        function logout() {
+            if(confirm('Deseja realmente sair do sistema?')) {
+                // Redirecionar para tela de login
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Fechar menus ao clicar fora
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.menu-section')) {
+                document.querySelectorAll('.submenu').forEach(submenu => {
+                    submenu.classList.remove('active');
+                });
+            }
+        });
+    </script>
+    <!-- Carregar script do menu CORRETAMENTE -->
+    <script src="../../menu/sidebar.js"></script>
+</body>
+</html>

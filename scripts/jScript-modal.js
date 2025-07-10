@@ -1,0 +1,1 @@
+$(function(){$("#dialog-modal-alerts").dialog({draggable:!0,resizable:!1,dialogClass:"alertDialog",modal:!0,position:{my:"center",at:"center",of:window}})});

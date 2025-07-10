@@ -1,0 +1,1314 @@
+/****** Redesign Stylesheet - Iteration 4 (Layout Corrections & Footer) ******/
+
+/* Global Resets & Body */
+body {
+    font-family: 'Open Sans', 'Montserrat', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0; /* Padding removido do body */
+    background-color: #f2f2f2; /* Paleta: Cinza claro para o fundo geral da página */
+    color: #373637; /* Paleta: 373637 para texto principal */
+    display: flex;
+    /* For lateral menu layout */
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+* {
+    box-sizing: border-box;
+    text-shadow: none !important;
+    /* Ensure no text shadows */
+}
+
+a {
+    color: #d52029;
+    /* Red for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* Card Style */
+.card-section {
+    background-color: #ffffff; /* Paleta: #FFFFFF para fundo do card */
+    padding: 40px 15px; /* Mantido padding interno */
+    margin-top: 90px;    /* Espaçamento triplicado no topo */
+    margin-bottom: 90px; /* Espaçamento triplicado na base */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 0.7px solid #E6E6E6; /* Paleta: #E6E6E6 para borda suave */
+}
+
+/* Grid System */
+.container {
+    width: 95%;
+    max-width: auto;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.container .banner-text{
+    padding: 0 40px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    .col-md-4 {
+        flex: 0 0 33.3333%;
+        max-width: 33.3333%;
+    }
+    .col-md-5 {
+        flex: 0 0 41.6667%;
+        max-width: 41.6667%;
+    }
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .col-md-7 {
+        flex: 0 0 58.3333%;
+        max-width: 58.3333%;
+    }
+    .col-md-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Banner Principal */
+.banner-principal-product-focused {
+    position: relative;
+    background-image: url("../Imgs/bainer 16x9-3.jpeg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 60px 0; /* Increased padding */
+}
+
+.banner-principal-product-focused .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.banner-principal-product-focused .banner-text {
+    max-width: 50%;
+}
+
+.banner-principal-product-focused .banner-text h1 {
+    font-size: 3em;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.banner-principal-product-focused .banner-text p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+.banner-principal-product-focused .banner-image {
+    max-width: 45%;
+}
+
+.banner-principal-product-focused .banner-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Seção "Sobre Nós" - Layout Colunas */
+.sobre-nos-colunas-layout {
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 60px 42px; /* Increased padding */
+    color: #ffffff;
+}
+
+.sobre-nos-colunas-layout::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.sobre-nos-colunas-layout .container {
+    position: relative;
+    z-index: 2;
+}
+
+.sobre-nos-coluna-esquerda {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-right: 17px; /* Espaço entre colunas */
+}
+
+.sobre-nos-coluna-direita {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 3px; /* Espaço entre colunas */
+}
+
+.conteudo-coluna-esquerda h1 {
+    font-size: 3.5em;
+    color: #2b2b2b;
+    font-weight: 700;
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+.conteudo-coluna-esquerda .btn-primary {
+    padding: 15px 35px;
+    font-size: 1.2em;
+}
+
+.sobre-nos-coluna-direita .paragrafo-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 7px;
+}
+
+.sobre-nos-coluna-direita .paragrafo-item:last-child {
+    margin-bottom: 0;
+}
+
+.sobre-nos-coluna-direita .paragrafo-icon {
+    font-size: 1.8em;
+    color: #3d3d3d; /* Vermelho da identidade visual */
+    margin-right: 20px;
+    min-width: 30px; 
+    
+}
+
+.sobre-nos-coluna-direita .paragrafo-conteudo h3 {
+    font-size: 1.6em;
+    color: #3d3d3d;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.sobre-nos-coluna-direita .paragrafo-conteudo p {
+    font-size: 1em;
+    color: #3d3d3d;
+    line-height: 1.7;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+/* Seção "Soluções Completas" - Novo Estilo de Cards */
+.destaque-produtos-novo-estilo {
+    padding: 60px 15px; /* Increased padding */
+}
+
+.destaque-produtos-novo-estilo h2 {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.solucao-card {
+    position: relative;
+    height: 450px;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 30px; /* Espaço entre cards */
+    color: #ffffff; /* Cor do texto padrão */
+}
+
+.solucao-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(105, 105, 105, 0.4    ); /* Overlay escuro sutil */
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.solucao-card-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Espaça título e botão */
+    align-items: center;
+    height: 100%;
+}
+
+.solucao-card h3 {
+    font-size: 2em;
+    color: #ffffff;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: auto; /* Empurra o botão para baixo */
+}
+
+.solucao-card .btn-light {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 25px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.solucao-card .btn-light:hover {
+    background-color: #ffffff;
+    color: #d52029;
+}
+
+/* Seção de Diferenciais/Valores */
+.diferenciais {
+    padding: 60px 15px; /* Increased padding */
+}
+
+.diferenciais h2 {
+    margin-bottom: 40px;
+}
+
+.diferenciais .card-section {
+    margin-bottom: 0;
+}
+
+/* Clientes */
+.clientes-logos {
+    padding: 60px 15px; /* Increased padding */
+}
+
+.clientes-logos h2 {
+    margin-bottom: 40px;
+}
+
+.clientes-logos img {
+    height: 60px;
+    margin: 15px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.clientes-logos img:hover {
+    opacity: 1;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+
+    .main-content-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.75em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    .sobre-nos-coluna-esquerda {
+        padding-right: 0; /* Remove padding for stacked layout */
+        margin-bottom: 40px;
+    }
+    .sobre-nos-coluna-direita {
+        padding-left: 0; /* Remove padding for stacked layout */
+    }
+    .conteudo-coluna-esquerda h1 {
+        font-size: 2.8em;
+    }
+    .sobre-nos-coluna-direita .paragrafo-conteudo h3 {
+        font-size: 1.4em;
+    }
+
+    .solucao-card {
+        height: auto; /* Auto height for mobile */
+        min-height: 250px; /* Minimum height */
+    }
+
+}
+
+
+
+/* ===== Global Button Standardization ===== */
+.btn-custom {
+    background-color: #d52029 !important;
+    color: #ffffff !important;
+    border: 1px solid #d52029 !important;
+    padding: 10px 20px;
+    border-radius: 25px !important; /* Rounded corners */
+    text-decoration: none !important;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #b01820 !important; /* Darker red on hover */
+    border-color: #b01820 !important;
+    color: #ffffff !important;
+}
+
+/* Apply to existing buttons that need this style */
+.banner-principal-product-focused .btn-primary,
+.conteudo-coluna-esquerda .btn-primary {
+    background-color: #d52029 !important;
+    color: #ffffff !important;
+    border: 1px solid #d52029 !important;
+    border-radius: 25px !important;
+}
+
+.conteudo-coluna-esquerda .btn-primary:hover {
+    background-color: #b01820 !important;
+    border-color: #b01820 !important;
+}
+
+/* ===== Section: Quem Somos ===== */
+.sobre-nos-coluna-direita .paragrafo-item {
+    align-items: center; /* Vertically align icon and content */
+}
+
+.sobre-nos-coluna-direita .paragrafo-icon {
+    margin-top: 0; /* Adjust if necessary for perfect alignment */
+    display: flex;
+    align-items: center;
+}
+
+/* ===== Section: Soluções Completas para o Beneficiamento de Grãos ===== */
+.destaque-produtos-novo-estilo .row.justify-content-center > .col-md-6.col-lg-5 {
+    padding-left: 15px; /* Add spacing between cards */
+    padding-right: 15px; /* Add spacing between cards */
+}
+
+.destaque-produtos-novo-estilo .solucao-card {
+    margin-bottom: 30px; /* Ensure vertical spacing if they wrap */
+}
+
+.solucao-card h3 {
+    color: #333333 !important; /* Dark grey for card titles */
+    font-weight: bold;
+}
+
+.solucao-card .btn-custom-solucao {
+    background-color: #d52029 !important;
+    color: #ffffff !important;
+    border: 1px solid #d52029 !important;
+    padding: 10px 20px;
+    border-radius: 25px !important;
+    text-decoration: none !important;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.solucao-card .btn-custom-solucao:hover {
+    background-color: #b01820 !important;
+    border-color: #b01820 !important;
+    color: #ffffff !important;
+}
+
+/* ===== Section: Por que Escolher a Novo Horizonte? ===== */
+.diferenciais h2 {
+    text-align: center;
+}
+
+.diferenciais .row > .col-md-3 {
+    padding-left: 15px; /* Add spacing between cards */
+    padding-right: 15px; /* Add spacing between cards */
+    margin-bottom: 30px; /* Ensure vertical spacing */
+}
+
+.diferenciais .card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%; /* Ensure cards have same height for alignment if needed */
+}
+
+.diferenciais .placeholder-image {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.diferenciais h4,
+.diferenciais .placeholder-text {
+    text-align: center;
+}
+
+/* ===== Section: Confiança de Grandes Nomes do Mercado ===== */
+.clientes-logos h2 {
+    text-align: center;
+}
+
+.clientes-logos .placeholder-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+/* General Section Spacing - Increase top/bottom margin for sections */
+.card-section {
+    margin-top: -0px; /* Increased top margin */
+    margin-bottom: 40px; /* Increased bottom margin */
+}
+
+
+
+
+/* ===== Button Standardization and Adjustments (Refined) ===== */
+
+/* Standard Red Button Style (Applied to .btn-primary by default and .btn-custom) */
+.btn-primary,
+.btn-custom,
+.conteudo-coluna-esquerda .btn-primary /* Specific for Quem Somos button */
+{
+    background-color: #D52029 !important; /* Paleta: D52029 */
+    color: #FFFFFF !important;
+    border: 1px solid #D52029 !important; /* Paleta: D52029 */
+    padding: 12px 25px !important; /* Default padding, ensure !important */
+    border-radius: 25px !important; /* Rounded corners */
+    text-decoration: none !important;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-custom:hover,
+.conteudo-coluna-esquerda .btn-primary:hover {
+    background-color: #B4252C !important; /* Paleta: B4252C (darker red) */
+    border-color: #B4252C !important; /* Paleta: B4252C */
+    color: #FFFFFF !important;
+}
+
+/* Banner Principal Button - Make it Larger */
+/* Targets <a href="#" class="btn btn-primary">Descubra Mais</a> */
+.banner-principal-product-focused .banner-text .btn-primary {
+    padding: 18px 40px !important; /* Larger padding */
+    font-size: 1.4em !important;   /* Larger font size */
+}
+
+/* Soluções Completas Buttons - Standardize to Red and Rounded */
+/* Targets <a href="..." class="btn btn-light btn-sm">Ver Detalhes</a> */
+.solucao-card .btn.btn-light { /* Specific to override Bootstrap .btn-light */
+    background-color: #D52029 !important; /* Paleta: D52029 */
+    color: #FFFFFF !important;
+    border: 1px solid #D52029 !important; /* Paleta: D52029 */
+    padding: 12px 25px !important; /* Consistent padding */
+    border-radius: 25px !important; /* Rounded corners */
+    font-weight: bold !important;
+    font-size: 0.95em !important; /* Adjust font size if needed, btn-sm is small */
+}
+
+.solucao-card .btn.btn-light:hover {
+    background-color: #B4252C !important; /* Paleta: B4252C */
+    border-color: #B4252C !important;
+    color: #FFFFFF !important;
+}
+
+/* Quem Somos Button - Ensure it follows the standard and size if needed */
+/* Targets <a href="sobre.html" class="btn btn-primary btn-lg">QUEM SOMOS</a> */
+/* .btn-lg class might already increase size, this ensures color and rounding */
+.conteudo-coluna-esquerda .btn-primary.btn-lg {
+    /* Styles for color, border, radius are inherited from .btn-primary above */
+    /* Adjust padding and font-size if Bootstrap .btn-lg is not sufficient or to override */
+    padding: 15px 35px !important; /* Example: specific padding for this large button */
+    font-size: 1.25em !important;  /* Example: specific font size for this large button */
+}
+
+
+
+/* ===== Section: Quem Somos - Icon Alignment & Color Update (Refined) ===== */
+.sobre-nos-coluna-direita .paragrafo-item {
+    display: flex;
+    /* align-items: center; /* Option 1: Center vertically if title and icon are similar height */
+    align-items: flex-start; /* Option 2: Align to the top, good if title is multi-line */
+    margin-bottom: 25px !important; /* Increased spacing between items */
+}
+
+.sobre-nos-coluna-direita .paragrafo-icon {
+    font-size: 1.8em !important; /* Ensure icon size is consistent */
+    color: #373637 !important;    /* Paleta: 373637 (dark grey/black for icon) */
+    margin-right: 15px !important;
+    min-width: 30px !important; /* Ensure space for icon */
+    line-height: 1.3 !important; /* Adjust to align with the title's first line */
+    /* margin-top: 2px; /* Optional: Fine-tune vertical alignment if needed */
+}
+
+.sobre-nos-coluna-direita .paragrafo-conteudo h3 {
+    font-size: 1.6em !important; /* Ensure title size is consistent */
+    color: #373637 !important;    /* Paleta: 373637 (dark grey/black for title) */
+    margin-top: 0 !important; /* Remove default top margin for better alignment */
+    margin-bottom: 8px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important; /* Match icon's line-height or adjust for visual alignment */
+}
+
+.sobre-nos-coluna-direita .paragrafo-conteudo p {
+    font-size: 1em !important;
+    color: #373637 !important; /* Paleta: 373637 for paragraph text */
+    line-height: 1.7 !important;
+    margin-bottom: 0 !important;
+    text-align: left !important;
+}
+
+
+
+
+/* ===== Paleta de Cores - Revisão Geral e Aplicação Fina (Refined) ===== */
+
+/* Links Globais */
+a {
+    color: #D52029; /* Paleta: Vermelho principal para links */
+    text-decoration: none;
+}
+a:hover {
+    color: #B4252C; /* Paleta: Vermelho escuro para hover de links */
+    text-decoration: underline;
+}
+
+
+/* Títulos Gerais das Seções (h1, h2, h3, h4) */
+h1, h2, h3, h4, h5, h6 {
+    color: #373637; /* Paleta: Texto escuro para todos os títulos por padrão */
+}
+
+/* Banner Principal - Text Color */
+.banner-principal-product-focused .banner-text h1,
+.banner-principal-product-focused .banner-text p {
+    color: #FFFFFF; /* Texto branco sobre imagem de fundo escura */
+}
+
+/* Seção Sobre Nós - Cores de Texto */
+.conteudo-coluna-esquerda h1 {
+    color: #373637 !important; /* Já definido, mas reforçando */
+}
+/* Ícones e texto da coluna direita já definidos para #373637 */
+
+/* Seção Soluções Completas - Títulos dos Cards */
+.solucao-card h3 {
+    color: #373637 !important; /* Paleta: Texto escuro para títulos dos cards (sobre overlay claro) */
+    /* Se o overlay for escuro, usar #FFFFFF */
+}
+
+/* Seção Diferenciais - Ícones e Texto */
+.diferenciais .placeholder-image i {
+    color: #D52029 !important; /* Paleta: Vermelho principal para ícones */
+}
+.diferenciais h4 {
+    color: #373637 !important; /* Paleta: Texto escuro para títulos dos cards de diferenciais */
+}
+.diferenciais p {
+    color: #373637 !important; /* Paleta: Texto escuro para parágrafos */
+}
+
+/* Seção Clientes - Títulos */
+.clientes-logos h2 {
+    color: #373637 !important;
+}
+
+
+/* Outros elementos que podem precisar de ajuste de cor */
+/* Exemplo: Se houver separadores hr, definir cor */
+hr {
+    border-top: 1px solid #E6E6E6; /* Paleta: Cinza claro para separadores */
+}
+
+
+
+
+
+
+
+
+/* ===== Animations - Quem Somos Section ===== */
+
+/* Keyframes for slide-down and fade-in effect */
+@keyframes slideDownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Keyframes for fade-in effect (for button) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Apply animation to Quem Somos title */
+.sobre-nos-colunas-layout .conteudo-coluna-esquerda h1 {
+    animation-name: slideDownFadeIn;
+    animation-duration: 0.8s; /* Duration of the animation */
+    animation-timing-function: ease-out; /* Easing function */
+    animation-fill-mode: backwards; /* Element will be invisible before animation starts */
+    /* animation-delay: 0.2s; /* Optional delay before title animation starts */
+}
+
+/* Apply animation to Quem Somos button */
+.sobre-nos-colunas-layout .conteudo-coluna-esquerda .btn-primary {
+    animation-name: fadeIn;
+    animation-duration: 0.6s; /* Duration of the animation */
+    animation-timing-function: ease-in;
+    animation-fill-mode: backwards;
+    animation-delay: 0.5s; /* Delay to start after title animation (0.8s duration for title) */
+}
+
+/* Add a class to trigger animations on scroll with JavaScript later if needed */
+/* For now, animations will play on load. */
+/* Example: .animate-on-scroll */
+
+
+
+/* ===== Animations - Quem Somos Section - Right Column Content ===== */
+
+/* Keyframes for slide-in from right and fade-in effect */
+@keyframes slideInFromRightFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Applying staggered animation to each item in the right column */
+.sobre-nos-coluna-direita .paragrafo-item {
+    opacity: 0; /* Start hidden */
+    animation-fill-mode: forwards; /* Keep state after animation */
+}
+
+/* Animate Icon first, then Title, then Paragraph for each item */
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-icon {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    /* Delays will be set per item below */
+}
+
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-conteudo h3 {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    /* Delays will be set per item below, after its icon */
+}
+
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-conteudo p {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    /* Delays will be set per item below, after its title */
+}
+
+/* Staggering the animation for each .paragrafo-item */
+/* Assuming the left side (H1 and Button) animations take about 1.3s to complete */
+/* (H1: 0.8s, Button: 0.6s with 0.5s delay) */
+
+/* First item */
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(1) {
+    animation-name: fadeIn; /* Overall item fade-in to manage opacity */
+    animation-duration: 0.1s; /* Quick fade to make it visible for children animations */
+    animation-delay: 1.0s; /* Start after button on left is mostly done */
+    animation-fill-mode: forwards;
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(1) .paragrafo-icon {
+    animation-delay: 1.0s; /* Icon starts */
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(1) .paragrafo-conteudo h3 {
+    animation-delay: 1.2s; /* Title starts after icon (1.0s + 0.2s stagger) */
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(1) .paragrafo-conteudo p {
+    animation-delay: 1.4s; /* Paragraph starts after title (1.2s + 0.2s stagger) */
+}
+
+/* Second item */
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(2) {
+    animation-name: fadeIn;
+    animation-duration: 0.1s;
+    animation-delay: 1.6s; /* Stagger from previous item's last animation (1.4s + 0.2s) */
+    animation-fill-mode: forwards;
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(2) .paragrafo-icon {
+    animation-delay: 1.6s;
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(2) .paragrafo-conteudo h3 {
+    animation-delay: 1.8s;
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(2) .paragrafo-conteudo p {
+    animation-delay: 2.0s;
+}
+
+/* Third item */
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(3) {
+    animation-name: fadeIn;
+    animation-duration: 0.1s;
+    animation-delay: 2.2s; /* Stagger from previous item's last animation (2.0s + 0.2s) */
+    animation-fill-mode: forwards;
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(3) .paragrafo-icon {
+    animation-delay: 2.2s;
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(3) .paragrafo-conteudo h3 {
+    animation-delay: 2.4s;
+}
+.sobre-nos-coluna-direita .paragrafo-item:nth-child(3) .paragrafo-conteudo p {
+    animation-delay: 2.6s;
+}
+
+/* Ensure child elements are initially hidden if their parent .paragrafo-item is managing overall visibility */
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-icon,
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-conteudo h3,
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-conteudo p {
+    opacity: 0; /* Start hidden, animation will make them visible */
+    animation-fill-mode: forwards; /* Keep visible after animation */
+}
+
+
+/* ===== Animations & Style Update - Soluções Completas Cards ===== */
+
+.solucao-card {
+    /* Add transition for the zoom effect */
+    transition: transform 0.4s ease-out;
+    /* Ensure overflow is hidden (already present in existing styles but good to confirm) */
+    overflow: hidden;
+}
+
+.solucao-card:hover {
+    transform: scale(1.05); /* Zoom effect: scales the card slightly */
+    /* The background image will appear to zoom due to the card scaling */
+}
+
+/* Adjustments for the text inside the card */
+.solucao-card h3 {
+    font-size: 2.4em !important; /* Texto maior */
+    color: #FFFFFF !important;   /* Cor clara (já estava, mas reforçando com !important se necessário) */
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para melhor legibilidade sobre imagens variadas */
+    /* Outras propriedades como margin-top, margin-bottom já estão definidas */
+}
+
+/* Ensure the overlay and content scale with the card naturally. */
+/* The ::before pseudo-element for overlay and .solucao-card-content will scale with .solucao-card */
+
+
+
+/* ===== Animations - Diferenciais Section (Por que Escolher) ===== */
+
+/* Keyframes for fade-in and slight scale-up effect */
+@keyframes fadeInScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Targeting the cards in the Diferenciais section */
+.diferenciais .row > .col-md-3 {
+    opacity: 0; /* Start hidden */
+    animation-fill-mode: forwards; /* Keep state after animation */
+}
+
+/* Applying staggered animation to each card and its contents */
+.diferenciais .row > .col-md-3 .card-section .placeholder-image i,
+.diferenciais .row > .col-md-3 .card-section h4,
+.diferenciais .row > .col-md-3 .card-section p {
+    opacity: 0; /* Start hidden */
+    animation-name: fadeInScaleUp;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+/* Staggering the animation for each card and its internal elements */
+/* Base delay for the section, can be adjusted if it needs to wait for other sections */
+/* Let's assume previous animations (Solucoes Completas hover is not an entry animation) */
+/* and Quem Somos animations take around 3 seconds total. */
+
+/* Card 1 */
+.diferenciais .row > .col-md-3:nth-child(1) {
+    animation-name: fadeIn; /* Parent card fade in */
+    animation-duration: 0.1s; animation-delay: 0.2s; animation-fill-mode: forwards;
+}
+.diferenciais .row > .col-md-3:nth-child(1) .card-section .placeholder-image i {
+    animation-delay: 0.3s; /* Icon first */
+}
+.diferenciais .row > .col-md-3:nth-child(1) .card-section h4 {
+    animation-delay: 0.5s; /* Title after icon */
+}
+.diferenciais .row > .col-md-3:nth-child(1) .card-section p {
+    animation-delay: 0.7s; /* Text after title */
+}
+
+/* Card 2 */
+.diferenciais .row > .col-md-3:nth-child(2) {
+    animation-name: fadeIn; animation-duration: 0.1s; animation-delay: 0.9s; animation-fill-mode: forwards;
+}
+.diferenciais .row > .col-md-3:nth-child(2) .card-section .placeholder-image i {
+    animation-delay: 1.0s;
+}
+.diferenciais .row > .col-md-3:nth-child(2) .card-section h4 {
+    animation-delay: 1.2s;
+}
+.diferenciais .row > .col-md-3:nth-child(2) .card-section p {
+    animation-delay: 1.4s;
+}
+
+/* Card 3 */
+.diferenciais .row > .col-md-3:nth-child(3) {
+    animation-name: fadeIn; animation-duration: 0.1s; animation-delay: 1.6s; animation-fill-mode: forwards;
+}
+.diferenciais .row > .col-md-3:nth-child(3) .card-section .placeholder-image i {
+    animation-delay: 1.7s;
+}
+.diferenciais .row > .col-md-3:nth-child(3) .card-section h4 {
+    animation-delay: 1.9s;
+}
+.diferenciais .row > .col-md-3:nth-child(3) .card-section p {
+    animation-delay: 2.1s;
+}
+
+/* Card 4 */
+.diferenciais .row > .col-md-3:nth-child(4) {
+    animation-name: fadeIn; animation-duration: 0.1s; animation-delay: 2.3s; animation-fill-mode: forwards;
+}
+.diferenciais .row > .col-md-3:nth-child(4) .card-section .placeholder-image i {
+    animation-delay: 2.4s;
+}
+.diferenciais .row > .col-md-3:nth-child(4) .card-section h4 {
+    animation-delay: 2.6s;
+}
+.diferenciais .row > .col-md-3:nth-child(4) .card-section p {
+    animation-delay: 2.8s;
+}
+
+
+
+/* ===== Animations - Clientes Logos Section ===== */
+
+/* Using a similar fadeInScaleUp or just fadeIn for simplicity */
+/* @keyframes fadeInScaleUp already defined */
+
+/* Targeting the images within the .clientes-logos section */
+.clientes-logos .placeholder-text img {
+    opacity: 0; /* Start hidden */
+    animation-name: fadeInScaleUp; /* Re-use existing or create a new one like fadeIn */
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards; /* Keep state after animation */
+    /* Delays will be staggered below */
+}
+
+/* Staggering the animation for each logo */
+/* Base delay for this section, assuming previous animations (Diferenciais) take about 3 seconds. */
+
+.clientes-logos .placeholder-text img:nth-child(1) {
+    animation-delay: 0.3s; /* Start after a brief pause when section is visible */
+}
+
+.clientes-logos .placeholder-text img:nth-child(2) {
+    animation-delay: 0.6s; /* Stagger by 0.3s */
+}
+
+.clientes-logos .placeholder-text img:nth-child(3) {
+    animation-delay: 0.9s; /* Stagger by 0.3s */
+}
+
+.clientes-logos .placeholder-text img:nth-child(4) {
+    animation-delay: 1.2s;
+    /* Stagger by 0.3s */
+}
+
+.clientes-logos .placeholder-text img:nth-child(5) {
+    animation-delay: 1.5s;
+    /* Stagger by 0.3s */
+}
+
+/* Add more nth-child selectors if there are more logos */
+/* Example for a 4th logo */
+/*
+.clientes-logos .placeholder-text img:nth-child(4) {
+    animation-delay: 1.2s; 
+}
+*/
+
+/* Note: These animations will trigger on page load. 
+   For triggering on scroll into view, JavaScript (Intersection Observer API) would be needed. 
+   The current implementation is CSS-only and will play once when the CSS is parsed. 
+   If elements are initially off-screen, they will animate before being visible. 
+   For a true "on scroll" effect, the animation class would be added by JS. */
+
+
+
+
+/* ===== Estilos para Cards de Produto (Inspirado em Teltonika) ===== */
+.product-list .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.product-card-wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 30px;
+    display: flex; /* Para garantir altura igual em flex items */
+    flex-direction: column; /* Para alinhar conteúdo do card verticalmente */
+}
+
+.product-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0; /* Borda sutil, similar ao Teltonika */
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Faz o card ocupar toda a altura do wrapper */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.product-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    padding-top: 75%; /* Aspect ratio 4:3 para a imagem, pode ajustar */
+    position: relative;
+    background-color: #f8f8f8; /* Fundo para a área da imagem */
+}
+
+.product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Para a imagem caber sem cortar, ou 'cover' se preferir */
+    padding: 10px; /* Pequeno padding interno para a imagem não colar nas bordas */
+}
+
+.product-info {
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Faz esta seção crescer para preencher o espaço */
+}
+
+.product-info h4 {
+    font-size: 1.25em; /* Tamanho do título do produto */
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.product-category {
+    font-size: 0.85em;
+    color: #777777;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.product-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    color: #555555;
+    flex-grow: 1; /* Permite que a lista cresça */
+}
+
+.product-features li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.product-features li::before {
+    content: "\f00c"; /* Ícone de check do FontAwesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #d52029; /* Cor principal do site */
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+.product-info .btn {
+    background-color: #d52029;
+    color: #ffffff;
+    border-color: #d52029;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: auto; /* Empurra o botão para o final do card */
+    align-self: flex-start; /* Alinha o botão à esquerda */
+}
+
+.product-info .btn:hover {
+    background-color: #b01820;
+    border-color: #b01820;
+    color: #ffffff;
+}
+
+/* Ajustes para o banner de segmento e switcher */
+.segmento-banner {
+    background-size: cover;
+    background-position: center;
+    padding: 80px 15px;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+}
+
+.segmento-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+
+.segmento-banner .container {
+    position: relative;
+    z-index: 2;
+}
+
+.segmento-banner h1 {
+    font-size: 3em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.segmento-banner p {
+    font-size: 1.2em;
+}
+
+.segmento-switcher {
+    padding: 30px 15px;
+    text-align: center;
+    background-color: #f8f8f8;
+}
+
+.segmento-switcher h2 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.segmento-botoes .btn {
+    margin: 0 10px;
+    padding: 12px 25px;
+    font-size: 1em;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.segmento-botoes .btn-primary {
+    background-color: #d52029;
+    border-color: #d52029;
+    color: #ffffff;
+}
+
+.segmento-botoes .btn-primary:hover {
+    background-color: #b01820;
+    border-color: #b01820;
+}
+
+.segmento-botoes .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #ffffff;
+}
+
+.segmento-botoes .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 1200px) {
+
+    /* Tablet adjustments */
+    .banner-principal-product-focused .banner-text h1 {
+        font-size: 2.5em;
+    }
+
+    .diferenciais .col-md-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Mobile adjustments */
+    .main-content-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* Banner adjustments */
+    .banner-principal-product-focused .container {
+        flex-direction: column;
+    }
+
+    .banner-principal-product-focused .banner-text,
+    .banner-principal-product-focused .banner-image {
+        max-width: 100%;
+    }
+
+    .banner-principal-product-focused .banner-text h1 {
+        font-size: 2em;
+    }
+
+    /* Sobre Nós adjustments */
+    .sobre-nos-colunas-layout .row {
+        flex-direction: column;
+    }
+
+    .sobre-nos-coluna-esquerda,
+    .sobre-nos-coluna-direita {
+        padding: 0 !important;
+        width: 100%;
+    }
+
+    .conteudo-coluna-esquerda h1 {
+        font-size: 2.5em !important;
+    }
+
+    /* Soluções adjustments */
+    .destaque-produtos-novo-estilo .row>div {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    /* Diferenciais adjustments */
+    .diferenciais .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    /* Clientes adjustments */
+    .clientes-logos img {
+        max-width: 40%;
+        margin: 10px;
+    }
+
+    /* General spacing */
+    .card-section {
+        margin-bottom: 60px;
+        padding: 25px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Extra small devices */
+    .banner-principal-product-focused .banner-text h1 {
+        font-size: 1.8em;
+    }
+
+    .conteudo-coluna-esquerda h1 {
+        font-size: 2em !important;
+    }
+
+    .clientes-logos img {
+        max-width: 80%;
+        margin: 10px auto;
+    }
+
+    .sobre-nos-coluna-direita .paragrafo-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .sobre-nos-coluna-direita .paragrafo-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}

@@ -1,0 +1,211 @@
+.contact{
+    clear:top;
+    padding-top:15px;
+    text-align:center;
+    padding-bottom:15px
+}
+    .button_about{
+        width:auto;
+        height:33px;
+        float:right;
+        vertical-align:middle;
+        background-color:#d52029;
+        border:1px solid #d52029;
+        color:#fff;
+        font-size:12px;
+        letter-spacing:1px;
+        text-decoration:none
+    }
+    a.button_about{
+        display:inline-block;
+        line-height:33px;
+        padding-left:10px;
+        padding-right:10px
+    }
+    .button_about:hover{
+        border:1px solid #fb0b1d;
+        background-color:#fb0b1d;
+        transition:all .5s;
+        color:#fff
+    }
+    .button_about:active{
+        position:relative;
+        top:1px;
+        background-color:#fb0b1d;
+        color:#fff
+    }
+    .button_file{
+        width:60%;
+        line-height:30px;
+        margin:auto;
+        float:left;
+        background-color:#d52029;
+        border:1px solid #d52029;
+        color:#fff;
+        font-family:Myriad Pro;
+        font-size:12px;
+        letter-spacing:2px;
+        text-decoration:none;
+        padding:0;display:block
+    }
+    a.button_file{
+        display:inline-block;
+        line-height:33px
+    }
+    .button_file:hover{
+        border:1px solid #fb0b1d;
+        background-color:#fb0b1d;
+        transition:all .5s;
+        color:#fff
+    }
+    .button_file:active{
+        position:relative;
+        background-color:#fb0b1d;
+        color:#fff
+    }
+    .input-file{
+        height:33px;
+        display:none;
+        position:relative;
+        z-index:-1
+    }
+    .input-file+.js-labelFile{
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        cursor:pointer
+    }
+    .form-style-9{
+        max-width:40%;
+        padding:20px 150px 10px;
+        margin:0 auto;
+        color:#606
+    }
+    .form-style-9 ul{
+        padding:0;
+        margin:0;
+        list-style:none
+    }
+    .form-style-9 ul li{
+        display:block;
+        margin-bottom:10px;
+        min-height:35px
+    }
+    .form-style-9 ul li .field-style{
+        box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        padding:8px;outline:none;
+        border:1px solid #939393;
+        resize:none
+    }
+    .form-style-9 ul li .field-style:focus{
+        box-shadow:0 0 5px #ce6a6a;
+        border:1px solid #ce6a6a
+    }
+    .form-style-9 ul li .field-split{
+        width:49%
+    }
+    .form-style-9 ul li .field-full{
+        width:100%
+    }
+    .form-style-9 ul li input.align-left{
+        float:left;
+        height:auto
+    }
+    .form-style-9 ul li input.align-right{
+        float:right;
+        height:auto
+    }
+    .form-style-9 ul li textarea{width:100%;
+        height:100px
+    }
+    input::-webkit-input-placeholder{color:#373637
+    }
+    input:-moz-placeholder,input::-moz-placeholder{
+        color:#373637
+    }
+    input:-ms-input-placeholder{
+        color:#373637
+    }
+    textarea::-webkit-input-placeholder{
+        color:#373637
+    }
+    textarea:-moz-placeholder,textarea::-moz-placeholder{
+        color:#373637
+    }
+    textarea:-ms-input-placeholder{
+        color:#373637
+    }
+    select{
+        float:right;
+        color:#373637
+    }
+    .info{
+        width:100%;height:auto;
+        margin-top:20px;
+        margin-bottom:20px;
+        text-align:center
+    }
+    .info_columns{
+        width:250px;
+        height:100%;
+        position:relative;
+        vertical-align:top;
+        display:inline-block;
+        display:inline;
+        zoom:1
+    }
+    #email,#location,#tel{
+        margin:0 30px;
+        padding:10px
+    }
+    .tab{
+        padding-top:15px;
+        padding-bottom:15px;
+        height:auto;
+        overflow:hidden;
+        background-color:#e6e6e6;
+        width:100%;
+        display:table
+    }
+    .tab,.tab a{
+        text-align:center
+    }
+    .tab a{
+        width:auto;
+        color:#000;
+        padding:20px;
+        text-decoration:none;
+        transition:.3s;
+        font-size:20px;
+        font-weight:700;
+        color:#939393
+    }
+    .tab a:hover{
+        background-color:#fff
+    }
+    .active,.tab a:focus{
+        background-color:#f2f2f2;
+        color:#fb0b1d
+    }
+    .tabcontent{
+        display:none;
+        padding:6px 12px;
+        -webkit-animation:fadeEffect 1s;
+        animation:fadeEffect 1s
+    }
+    @-webkit-keyframes fadeEffect{
+        0%{opacity:0}to{opacity:1}
+    }
+    @keyframes fadeEffect{
+        0%{opacity:0}to{opacity:1}
+    }
+    #map{
+        width:100%;
+        height:400px
+    }
+    .grid{
+        width:100%;
+        height:auto
+    }

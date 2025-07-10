@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://nh.ind.br/sitemap.xml

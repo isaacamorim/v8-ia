@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia NIST STEP File Analyzer - Passo a Passo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .step-section {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .step-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .step-content {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .step-content p {
+            margin-bottom: 15px;
+        }
+
+        .step-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .step-content li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            margin: 5px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .code-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .requirements {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .requirements h4 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .requirements ul {
+            margin-left: 20px;
+        }
+
+        .requirements li {
+            margin-bottom: 8px;
+            color: #6c757d;
+        }
+
+        .tab-container {
+            margin-top: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #495057;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .step-section {
+                padding: 20px 15px;
+            }
+
+            .step-title {
+                font-size: 1.5em;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 NIST STEP File Analyzer & Viewer</h1>
+            <p>Guia Completo Passo a Passo para Visualizar Modelos 3D</p>
+        </div>
+
+        <div class="content">
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showTab('quick')">🚀 Início Rápido</button>
+                    <button class="tab-btn" onclick="showTab('detailed')">📋 Guia Detalhado</button>
+                    <button class="tab-btn" onclick="showTab('build')">🔨 Compilar Próprio</button>
+                    <button class="tab-btn" onclick="showTab('troubleshoot')">🔧 Solução de Problemas</button>
+                </div>
+
+                <!-- ABA INÍCIO RÁPIDO -->
+                <div id="quick" class="tab-content active">
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">1</div>
+                            <span>Download da Versão Oficial</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Baixe a versão pré-compilada (mais fácil):</strong></p>
+                            <a href="https://github.com/usnistgov/STEP-File-Analyzer/releases" target="_blank"
+                                class="download-btn">
+                                📥 Download STEP-File-Analyzer.exe
+                            </a>
+                            <div class="info-box">
+                                <strong>💡 Dica:</strong> Vá para a seção "Releases" no GitHub oficial do NIST e baixe o
+                                arquivo ZIP mais recente.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">2</div>
+                            <span>Instalação e Primeira Execução</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Passos para instalar:</strong></p>
+                            <ul>
+                                <li>Extraia o arquivo ZIP baixado</li>
+                                <li>Execute o arquivo <code>STEP-File-Analyzer.exe</code></li>
+                                <li>Na primeira execução, carregue um arquivo STEP de exemplo</li>
+                                <li>Isso instalará componentes adicionais necessários</li>
+                            </ul>
+                            <div class="warning-box">
+                                <strong>⚠️ Importante:</strong> Execute o software oficial do NIST primeiro para
+                                instalar todas as dependências necessárias.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">3</div>
+                            <span>Carregando Seu Arquivo STEP</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Como carregar e visualizar:</strong></p>
+                            <ul>
+                                <li>Clique em <strong>"Browse"</strong> para selecionar seu arquivo .step ou .stp</li>
+                                <li>Selecione <strong>"Generate Spreadsheet"</strong> se quiser análise detalhada</li>
+                                <li>Marque <strong>"Generate Visualization"</strong> para ver o modelo 3D</li>
+                                <li>Clique em <strong>"Generate"</strong> para processar</li>
+                            </ul>
+                            <div class="success-box">
+                                <strong>✅ Resultado:</strong> Você verá uma planilha Excel com dados do modelo e uma
+                                visualização 3D interativa no navegador.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">4</div>
+                            <span>Navegando na Visualização 3D</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Controles da visualização:</strong></p>
+                            <ul>
+                                <li><strong>Mouse esquerdo + arrastar:</strong> Rotacionar modelo</li>
+                                <li><strong>Scroll do mouse:</strong> Zoom in/out</li>
+                                <li><strong>Botão direito + arrastar:</strong> Mover modelo</li>
+                                <li><strong>Duplo clique:</strong> Centralizar visualização</li>
+                            </ul>
+                            <div class="info-box">
+                                <strong>🎯 Dica:</strong> Use os controles da interface para mudar cores, transparência
+                                e outros aspectos visuais.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA GUIA DETALHADO -->
+                <div id="detailed" class="tab-content">
+                    <div class="requirements">
+                        <h4>📋 Requisitos do Sistema</h4>
+                        <ul>
+                            <li><strong>Sistema Operacional:</strong> Windows (versão pré-compilada)</li>
+                            <li><strong>Microsoft Excel:</strong> Para gerar planilhas (opcional - gera CSV sem Excel)
+                            </li>
+                            <li><strong>Navegador Web:</strong> Para visualização 3D</li>
+                            <li><strong>Arquivos Suportados:</strong> .step, .stp (ISO 10303 Part 21)</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">A</div>
+                            <span>Funcionalidades Principais</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>O que o NIST SFA faz:</strong></p>
+                            <ul>
+                                <li><strong>Análise de Estrutura:</strong> Gera planilha detalhada com todas as
+                                    entidades do arquivo STEP</li>
+                                <li><strong>Visualização 3D:</strong> Converte geometria B-rep para X3D/WebGL</li>
+                                <li><strong>Validação:</strong> Verifica conformidade com padrões ISO 10303</li>
+                                <li><strong>Metadados:</strong> Extrai informações sobre material, propriedades, etc.
+                                </li>
+                                <li><strong>Relatórios:</strong> Gera relatórios de qualidade e conformidade</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">B</div>
+                            <span>Interface Detalhada</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Opções principais da interface:</strong></p>
+                            <ul>
+                                <li><strong>File Input:</strong> Selecionar arquivo STEP</li>
+                                <li><strong>Spreadsheet Options:</strong> Configurar quais dados extrair</li>
+                                <li><strong>Visualization Options:</strong> Configurar renderização 3D</li>
+                                <li><strong>Quality Options:</strong> Configurar validação e verificações</li>
+                                <li><strong>Output Directory:</strong> Onde salvar os resultados</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">C</div>
+                            <span>Tipos de Saída</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Arquivos gerados:</strong></p>
+                            <ul>
+                                <li><strong>.xlsx:</strong> Planilha Excel com análise completa</li>
+                                <li><strong>.x3d:</strong> Modelo 3D em formato X3D</li>
+                                <li><strong>.html:</strong> Visualizador web interativo</li>
+                                <li><strong>.csv:</strong> Dados em formato CSV (se Excel não disponível)</li>
+                                <li><strong>.log:</strong> Log de processamento e erros</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA COMPILAR PRÓPRIO -->
+                <div id="build" class="tab-content">
+                    <div class="warning-box">
+                        <strong>⚠️ Aviso:</strong> Esta opção é para usuários avançados. Recomenda-se usar a versão
+                        pré-compilada oficial.
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">1</div>
+                            <span>Baixar Código Fonte</span>
+                        </div>
+                        <div class="step-content">
+                            <p>Baixe os arquivos necessários:</p>
+                            <ul>
+                                <li><a href="https://github.com/usnistgov/STEP-File-Analyzer" target="_blank"
+                                        class="download-btn">📥 Código Fonte (GitHub)</a></li>
+                                <li><a href="https://github.com/usnistgov/STEP-File-Analyzer/raw/master/freewrap651.zip"
+                                        target="_blank" class="download-btn">📥 freewrap651.zip</a></li>
+                                <li><a href="https://github.com/usnistgov/STEP-File-Analyzer/raw/master/source/teapot.zip"
+                                        target="_blank" class="download-btn">📥 teapot.zip</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">2</div>
+                            <span>Configurar Ambiente</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Preparar diretórios:</strong></p>
+                            <div class="code-box">
+                                mkdir C:\STEP-Analyzer
+                                mkdir C:\Tcl\lib
+                                cd C:\STEP-Analyzer</div>
+                            <p><strong>Extrair arquivos:</strong></p>
+                            <ul>
+                                <li>Extraia todos os arquivos do diretório 'source' para <code>C:\STEP-Analyzer</code>
+                                </li>
+                                <li>Extraia <code>freewrap.exe</code> para <code>C:\STEP-Analyzer</code></li>
+                                <li>Extraia <code>teapot.zip</code> para <code>C:\Tcl\lib\teapot</code></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">3</div>
+                            <span>Compilar Executável</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Executar comando de compilação:</strong></p>
+                            <div class="code-box">
+                                cd C:\STEP-Analyzer
+                                freewrap -f sfa-files.txt</div>
+                            <p>Isso gerará o arquivo <code>sfa.exe</code></p>
+
+                            <p><strong>Para versão linha de comando (opcional):</strong></p>
+                            <div class="code-box">
+                                # Baixar freewrapTCLSH.zip e extrair freewrapTCLSH.exe
+                                # Editar sfa-files.txt: trocar 'sfa.tcl' por 'sfa-cl.tcl'
+                                freewrapTCLSH -f sfa-files.txt</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA SOLUÇÃO DE PROBLEMAS -->
+                <div id="troubleshoot" class="tab-content">
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">!</div>
+                            <span>Problemas Comuns e Soluções</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>❌ Erro: "Arquivo não encontrado"</strong></p>
+                            <ul>
+                                <li>Verifique se o arquivo STEP está no formato correto (.step ou .stp)</li>
+                                <li>Teste com um arquivo STEP de exemplo primeiro</li>
+                                <li>Verifique se o caminho do arquivo não tem caracteres especiais</li>
+                            </ul>
+
+                            <p><strong>❌ Erro: "Visualização não carrega"</strong></p>
+                            <ul>
+                                <li>Verifique se tem um navegador web instalado</li>
+                                <li>Desative bloqueadores de pop-up</li>
+                                <li>Teste com outro navegador</li>
+                            </ul>
+
+                            <p><strong>❌ Erro: "Excel não encontrado"</strong></p>
+                            <ul>
+                                <li>Instale Microsoft Excel ou</li>
+                                <li>Use a opção para gerar apenas CSV</li>
+                                <li>Verifique se Excel está registrado no sistema</li>
+                            </ul>
+
+                            <p><strong>❌ Erro: "Compilação falhou"</strong></p>
+                            <ul>
+                                <li>Use exatamente freewrap651 (versões mais recentes não funcionam)</li>
+                                <li>Verifique se todos os arquivos estão nos diretórios corretos</li>
+                                <li>Execute como administrador</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step-section">
+                        <div class="step-title">
+                            <div class="step-number">📚</div>
+                            <span>Recursos Adicionais</span>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Links úteis:</strong></p>
+                            <ul>
+                                <li><a href="https://www.nist.gov/services-resources/software/step-file-analyzer-and-viewer"
+                                        target="_blank">Site oficial NIST</a></li>
+                                <li><a href="https://github.com/usnistgov/STEP-File-Analyzer"
+                                        target="_blank">Repositório GitHub</a></li>
+                                <li><a href="https://www.nist.gov/document/step-file-analyzer-user-guide"
+                                        target="_blank">Manual do usuário</a></li>
+                                <li><a href="https://www.nist.gov/document/step-file-analyzer-release-notes"
+                                        target="_blank">Notas de versão</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Esconder todas as abas
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remover classe active de todos os botões
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Mostrar aba selecionada
+            document.getElementById(tabName).classList.add('active');
+
+            // Ativar botão correspondente
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

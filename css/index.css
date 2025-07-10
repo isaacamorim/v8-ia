@@ -1,0 +1,482 @@
+.slide_mobile{
+    width:100%;
+    height:380px;
+    overflow:hidden;
+    display:none;
+    position:relative
+}
+
+.slide_mobile_img,.slideshow-container{
+    width:100%;
+    height:100%
+}
+
+.slideshow-container{
+    position:relative;
+    margin:auto;
+    z-index:10
+}
+
+.slideimage{
+    width:100%;
+    height:100%
+}
+
+.next,.prev{
+    cursor:pointer;
+    width:auto;
+    color:#000;
+    font-weight:700;
+    transition:.6s ease;
+    border-radius:0 3px 3px 0
+}
+
+.next:hover,.prev:hover{
+    color:#fff;
+    background-color:#d52029
+}
+
+.dot{
+    top:80%;
+    cursor:pointer;
+    height:13px;
+    width:13px;
+    margin:0 3px;
+    background-color:#bbb;
+    border-radius:50%;
+    display:inline-block;
+    transition:background-color .6s ease
+}
+
+.active,.dot:hover{
+    background-color:#717171
+}
+
+.fade{
+    -webkit-animation-name:fade;
+    -webkit-animation-duration:1.5s;
+    animation-name:fade;
+    animation-duration:1.5s
+}
+
+@-webkit-keyframes fade{
+    0%{
+        opacity:.4
+    }
+
+    to{
+        opacity:1
+    }
+}
+
+@keyframes fade{
+    0%{
+        opacity:.4
+    }
+    to{
+        opacity:1
+    }
+}
+
+#welcome{
+    margin-top:0
+}
+
+.barras{
+    width:auto;
+    margin:0 auto;
+    padding-left:35%;
+    padding-right:35%
+}
+
+.barras,.barras_mobile{
+    position:relative;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:1px;
+    color:#373637
+}
+
+.barras_mobile{
+    display:none
+}
+
+#formEmail{
+    border:1px solid #939393;
+    display:inline-block;
+    text-align:center
+}
+
+#mailIcon{
+    background-color:#fff;
+    vertical-align:middle
+}
+
+input[type=text]
+
+{height:12px;
+    text-decoration:none;
+    border:#fff;
+    color:#939393
+}
+
+#campoEmail{
+    width:300px;
+    height:25px;
+    padding:3px 3px 3px 1px;
+    font-size:15px;
+    vertical-align:middle;
+    background-color:#fff;
+    outline:none
+}
+
+#sobreBG{
+    background-image:url(../Imgs/index/1background-factory.jpg);
+    background-attachment:fixed;
+    width:100%;height:auto
+}
+
+.opacity{
+    background-color:hsla(0, 0%, 100%, 0.8)
+}
+
+#about{
+    position:relative;
+    padding-top:5px;
+    height:auto;
+    width:100%;
+    justify-content:center
+}
+
+#text_about{
+    font-weight:500;
+    font-size:.938em;
+    letter-spacing:1px;
+    color:#fff;
+    text-align:center;
+    width:500px;
+    margin:0 auto
+}
+
+.titles_about{
+    font-weight:900;
+    font-size:17px;
+    color:#e6e6e6;
+    text-align:center
+}
+
+.columns{
+    font-size:12px;
+    font-weight:400;
+    letter-spacing:1px;
+    text-align:justify;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom:20px;
+    color:#fff;
+    width:250px;
+    height:100%;
+    position:relative;
+    vertical-align:top;
+    display:inline-block;
+    *display:inline;
+    zoom:1
+}
+#products{
+    margin-top:70px;
+    width:auto;
+    height:100%;
+    margin-bottom:30px
+}
+
+.products_content{
+    height:auto;
+    width:auto;
+    justify-content:center;
+    padding-right:20px;
+    margin-top:-20px
+}
+
+.img_product{
+    width:340px;
+    height:500px;
+    vertical-align:top;
+    display:inline-block;
+    *display:inline
+}
+
+#content_p,#text_products,.img_product{
+    position:relative
+}
+
+#text_products{
+    text-align:left;
+    line-height:20px;
+    padding-bottom:30px;
+    padding-left:10px;
+    padding-top:10px;
+    color:#373637;
+    width:300px;
+    height:100%;
+    vertical-align:top;
+    display:inline-block;
+    *display:inline;
+    zoom:1
+}
+
+#clientesBG{
+    /*background-color:#e6e6e6;*/
+    width:100%;
+    height:100%
+}
+
+#clientes{
+    height:auto;
+    width:100%;
+    justify-content:center;
+    padding-top:1em;
+    padding-bottom:30px
+}
+
+/*animacao para alguns de nossos clientes */
+.logo_container{
+    margin:10px 20px 20px 10px;
+    height:90px;
+    width:110px;
+    position:relative;
+    vertical-align:top;
+    display:inline-block;
+    *display:inline;
+    zoom:1
+}
+
+.logo_cliente{
+    margin:auto;
+    height:100%;
+    width:100%
+}
+
+/* 1) Defina a animação */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        /* 2) estado inicial (invisível) */
+        #clientes .logo_container {
+            opacity: 0;
+        }
+    
+        /* 3) quando #clientes receber .animate, dispara a animação */
+        #clientes.animate .logo_container {
+            animation: fadeInUp 4.0s ease forwards;
+        }
+    
+        /* delays sequenciais */
+        #clientes.animate .logo_container:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+    
+        #clientes.animate .logo_container:nth-child(2) {
+            animation-delay: 1.0s;
+        }
+    
+        #clientes.animate .logo_container:nth-child(3) {
+            animation-delay: 1.5s;
+        }
+    
+        #clientes.animate .logo_container:nth-child(4) {
+            animation-delay: 2.0s;
+        }
+    
+        #clientes.animate .logo_container:nth-child(5) {
+            animation-delay: 2.5s;
+        }
+
+.ui-widget.ui-widget-content{
+    border:2px solid;
+    display:none;
+    left:50%;
+    top:30%
+}
+
+.ui-dialog>.ui-widget-header{
+    background:#d52029
+}
+
+/* Redesign da seção Sobre Nós */
+.about-section-redesigned {
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+        url('Imgs/background-factory.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 5rem 0;
+    color: #373637;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.about-title {
+    font-style: normal !important;
+    font-family: 'Arial Black', sans-serif;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    color: #373637;
+}
+
+.about-divider {
+    height: 4px;
+    width: 80px;
+    background: #D52029;
+    margin: 0 auto;
+}
+
+.about-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: #373637;
+}
+
+.about-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.about-card {
+    background: #f2f2f2;
+    border-radius: 8px;
+    padding: 2rem;
+    flex: 1;
+    min-width: 300px;
+    max-width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 3px solid #D52029;
+}
+
+.about-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    color: #D52029;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.about-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #D52029;
+    text-align: center;
+}
+
+.about-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.about-cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-about {
+    display: inline-block;
+    background: #D52029;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-about:hover {
+    background: #b4181f;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .about-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .about-intro {
+        font-size: 1.1rem;
+    }
+
+    .about-title {
+        font-size: 2rem;
+    }
+}
+/* Responsividade para telas menores */
+@media (max-width: 480px) {
+    .about-title {
+        font-size: 1.8rem;
+    }
+    .about-intro {
+        font-size: 1rem;
+    }
+
+    .about-card {
+        padding: 1.5rem;
+    }
+
+    .card-icon {
+        font-size: 2rem;
+    }
+
+    .about-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .about-card p {
+        font-size: 0.9rem;
+    }
+
+    .btn-about {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+t-size: 0.9rem; 
+    .btn-about {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    

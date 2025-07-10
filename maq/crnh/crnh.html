@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>CRNH</title>
+    <meta charset="utf-8">
+    <meta content="text/html" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="beneficiamento, máquinas agrícolas, novo horizonte, cereais, feijão, grãos" name="keywords">
+    <meta content="index, follow" name="robots">
+    <meta content="Novo Horizonte" name="author">
+    <meta content="Página de máquinas de beneficiamento da Novo Horizonte." name="description">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="../../Imgs/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="../../Imgs/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- WhatsApp Flutuante CSS & JS (from original site) -->
+    <link rel="stylesheet" href="../../css/whatsapp-flutuante.css">
+    <script defer src="../../scripts/whatsapp-flutuante.js"></script>
+    <script defer src="../../scripts/scroll_animations.js"></script> <!-- Added new animation JS -->
+    <script defer src="../../php/whatsapp-flutuante.php"></script>
+    <!--CSS do menu lateral-->
+    <link rel="stylesheet" href="../../menu/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS do seu rodapé -->
+    <link rel="stylesheet" href="../../footer-rodape/footer.css">
+    
+    <!-- CDNs necessários -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- css basico-->
+    <link rel="stylesheet" href="../../css/product.css">
+
+    <style>
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7),
+                    rgba(0, 0, 0, 0.7)),
+                url('../../Imgs/maquinas-produtos/Classificacao/CRNH1.png');
+            background-size: cover;
+            background-position: center;
+            color: var(--light-text);
+            padding: 70px 0;
+            height: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <!-- Logo miniatura (sempre visível quando menu recolhido) -->
+            <a href="../../index.html" class="logo-icon default-logo">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+    
+            <!-- Logo completa (visível apenas quando menu expandido) -->
+            <h2 class="expanded-logo">
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+        </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link active" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                            <a href="#" class="nav-link">Reposição</a>
+                            -->
+                    <a href="../../beneficiamento.html" class="nav-link active">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Empresa">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Empresa</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item">
+                <a href="../../login.html" class="nav-link" title="Login">
+                    <span class="nav-icon"><i class="fas fa-user"></i></span>
+                    <span class="nav-text">Login</span>
+                </a>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="contatos-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="contatos-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="contatos.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+
+    <div class="main-content-wrapper">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>CRNH</h1>
+                    <h2>CONJUNTO RETIFICADOR</h2>
+                    <p>
+                        Solução de precisão para classificação e limpeza final de produtos pré-beneficiados com baixo teor de impurezas.
+                        Especialmente desenvolvido para especiarias e grãos nobres, o CRNH elimina até 99,9% de contaminantes residuais
+                        enquanto mantém a integridade do produto, garantindo padrões de exportação.
+                    </p>
+                    <a href="#" class="btn">SOLICITAR ORÇAMENTO</a>
+                </div>
+            </div>
+
+
+            <!-- Feature Cards -->
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <h3>PRECISÃO MICROMÉTRICA</h3>
+                    <p>Remoção de partículas estranhas >0,3mm com eficiência de 99,9%</p>
+                </div>
+                <div class="feature-card">
+                    <h3>PROTEÇÃO DO PRODUTO</h3>
+                    <p>Taxa de quebra < 0,1% em grãos nobres via tecnologia de baixo impacto</p>
+                </div>
+                <div class="feature-card">
+                    <h3>EFICIÊNCIA PRODUTIVA</h3>
+                    <p>Alta capacidade de produção com até 200 sacos por hora</p>
+                </div>
+                <div class="feature-card">
+                    <h3>INTEGRAÇÃO PERFEITA</h3>
+                    <p>Sistema de controle intuitivo e recursos avançados, sem a nessecidade de compressor</p>
+                </div>
+            </div>
+
+            <!-- Indicadores abaixo do carrossel -->
+            <div class="carousel-indicators">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <!-- Opcional: dica para arrastar -->
+            <div class="drag-hint">← deslize →</div>
+        </section>
+
+        <!-- Nova Seção Unificada -->
+        <section class="showcase-section">
+            <div class="showcase-container">
+                <div class="model-box">
+                    <h2 class="model-title">MODELO 3D</h2>
+                    <div class="model-placeholder">
+                        <div id="stl-container" class="stl-viewer-container"></div>
+                        <button id="start-viewer-btn" class="btn">Carregar Modelo 3D</button>
+                    </div>
+                </div>
+
+                <!-- Lado Direito: Galeria + Vídeo (2/8 + 2/8) -->
+                <div class="media-box">
+                    <h2 class="model-title">IMAGENS</h2>
+                    <div class="gallery-box">
+                        <div class="gallery-item">
+                            <img src="../../Imgs/maquinas-produtos/Classificacao/CRNH1.png"
+                                alt="EVANH Vista Frontal">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="../../Imgs/maquinas-produtos/Classificacao/CRNH2.png"
+                                alt="EVANH Vista Lateral">
+                        </div>
+                    </div>
+
+                    <div class="video-box">
+                        <h3 class="model-title">VÍDEO</h3>
+                        <div class="video-placeholder">
+                            <video src="/Imgs/video/enf.mp4" controls></video>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal de Galeria -->
+                <div id="imageModal" class="image-modal">
+                    <button class="close-btn">&times;</button>
+                    <button class="nav-btn prev-btn">&#10094;</button>
+                    <img class="modal-content" id="modalImage" alt="Imagem ampliada">
+                    <button class="nav-btn next-btn">&#10095;</button>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Features Tab Section -->
+        <section class="features-section">
+            <div class="container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="tab1">CARACTERÍSTICAS</div>
+                    <div class="tab" data-tab="tab2">DOWNLOADS</div>
+                    <div class="tab" data-tab="tab3">PEDIDOS</div>
+                </div>
+
+                <div class="tab-content active" id="tab1">
+                    <h2>CARACTERÍSTICAS TÉCNICAS</h2>
+                    <div class="specs-table-wrapper">
+                        <table class="specs-table">
+                            <tr>
+                                <th>MODELO</th>
+                                <th>12B15</th>
+                                <th>12B24</th>
+                                <th>12B35</th>
+                            </tr>
+                            <tr>
+                                <td>POTÊNCIA</td>
+                                <td>6,88</td>
+                                <td>6,88</td>
+                                <td>7,33</td>
+                            </tr>
+                            <tr>
+                                <td>CAPACIDADE SACOS/H</td>
+                                <td>100</td>
+                                <td>150</td>
+                                <td>200</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                    <h2>DIMENSÕES</h2>
+                    <div class="specs-table-wrapper">
+                        <table class="specs-table">
+                            <tr>
+                                <th>IDENTIFICADOR</th>
+                                <th>DESCRIÇÃO</th>
+                                <th>12B15</th>
+                                <th>12B24</th>
+                                <th>12B35</th>
+                            </tr>
+                            <tr>
+                                <td>A</td>
+                                <td>COMPRIMENTO TOTAL</td>
+                                <td> mm</td>
+                                <td>3370 mm</td>
+                                <td>4040 mm</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>ALTURA TOTAL</td>
+                                <td> mm</td>
+                                <td>5245 mm</td>
+                                <td>3930 mm</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>LARGURA TOTAL</td>
+                                <td> mm</td>
+                                <td>2272 mm</td>
+                                <td>2110 mm</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="text-align: center; margin: 30px 0;">
+                        <img src="../../Imgs/maquinas-produtos/Classificacao/dimensões crnh.png" alt="Dimensões da máquina"
+                            class="dimensoes-img">
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab2">
+                    <h2>DOWNLOADS DISPONÍVEIS</h2>
+                    <ul>
+                        <li><a href="../../pdfs/Catalogo Digital - crnh.pdf" target="_blank">Catálogo Digital - CRNH</a></li>
+                    </ul>
+                </div>
+
+                <div class="tab-content" id="tab3">
+                    <h2>FAÇA SEU PEDIDO</h2>
+                    <p>Entre em contato com nossa equipe comercial para solicitar um orçamento personalizado.</p>
+                    <div class="contact-info">
+                        <p>
+                            <a href="mailto:vendas@nh.ind.br">
+                                <i class="fas fa-envelope"></i>
+                                vendas@nh.ind.br
+                            </a>
+                        </p>
+                        <p>
+                            <a href="tel:+551934512822">
+                                <i class="fas fa-phone"></i>
+                                +55 (19) 3451-2822
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Package Types Section -->
+
+        <!-- Dosadores Section -->
+
+        <!-- Layout-Esteira Section -->
+
+        <!-- RODAPÉ -->
+        <footer class="site-footer">
+            <!-- Conteúdo principal do rodapé -->
+            <div class="footer-main-content">
+                <div class="container">
+                    <div class="footer-content">
+                        <!-- Coluna 1: Logo e descrição -->
+                        <div class="footer-column">
+                            <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                            <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                            <div class="social-icons">
+                                <a href="#" target="_blank" aria-label="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" target="_blank" aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                                    target="_blank" aria-label="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="../../politica_de_privacidade.html"
+                                    style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                                    Política de Privacidade
+                                </a>
+                            </div>
+                        </div>
+        
+                        <!-- Coluna 2: Contato -->
+                        <div class="footer-column">
+                            <h5>Contato</h5>
+                            <p>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                                    target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                                    Rua Dorival Faveri, 214<br>
+                                    Jd. do Lago, Limeira-SP<br>
+                                    CEP: 13481-604
+                                </a>
+                            </p>
+                            <p>
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                                    +55 (19) 3451-2822
+                                </a>
+                            </p>
+                            <p>
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                                    vendas@nh.ind.br
+                                </a>
+                            </p>
+                        </div>
+        
+                        <!-- Coluna 3: Links úteis -->
+                        <div class="footer-column">
+                            <h5>Links Úteis</h5>
+                            <ul class="footer-links">
+                                <li><a href="../../index.html">Início</a></li>
+                                <li><a href="../../sobre.html">Sobre Nós</a></li>
+                                <li><a href="../../produtos.html">Produtos</a></li>
+                                <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                                <li><a href="../../contatos.html">Contato</a></li>
+                                <li><a href="../../login.html">Login/ERP</a></li>
+                            </ul>
+                        </div>
+        
+                        <!-- Coluna 4: Vazia ou pode ser removida -->
+                        <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+                    </div>
+                </div>
+            </div>
+            </div>
+        
+            <!-- Seção de financiadores -->
+            <div class="financiadores-section">
+                <div class="container">
+                    <div class="financiadores-logos">
+                        <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                        <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                        <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                        <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Copyright -->
+            <div class="footer-copyright-section">
+                <div class="container">
+                    <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                        direitos reservados.</p>
+                </div>
+            </div>
+        </footer>
+        
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Incluir dependências do Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/OutlinePass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    
+    <!-- Incluir nossos arquivos personalizados -->
+    <link rel="stylesheet" href="../3d/stl-viewer.css">
+    <script src="../3d/stl-viewer.js"></script>
+    
+    <!--js Padrão para produtos-->
+    <script src="../../scripts/products.js"></script>
+    
+    <!-- Carregar script do menu CORRETAMENTE -->
+    <script src="../../menu/sidebar.js"></script>
+    </body>
+    
+    </html>
+    </body>
+    
+    </html>

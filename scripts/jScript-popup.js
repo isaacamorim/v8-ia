@@ -1,0 +1,1 @@
+$(function(){$("[data-popup-open]").on("click",function(p){var a=jQuery(this).attr("data-popup-open");$('[data-popup="'+a+'"]').fadeIn(350),p.preventDefault()}),$("[data-popup-close]").on("click",function(p){var a=jQuery(this).attr("data-popup-close");$('[data-popup="'+a+'"]').fadeOut(350),p.preventDefault()})});

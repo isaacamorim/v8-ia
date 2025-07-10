@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Mobile</title>
+    <!--CSS do menu lateral-->
+    <link rel="stylesheet" href="../../menu/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS do seu rodapé -->
+    <link rel="stylesheet" href="../../footer-rodape/footer.css">
+    
+    <!-- CDNs necessários -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #b0b2b4;
+        }
+
+        .login-container {
+            background: rgb(197, 197, 197);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #000000;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #4e4e4e;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Lateral -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <!-- Logo miniatura (sempre visível quando menu recolhido) -->
+            <a href="../../index.html" class="logo-icon default-logo">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+    
+            <!-- Logo completa (visível apenas quando menu expandido) -->
+            <h2 class="expanded-logo">
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+        </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link active" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                        <a href="#" class="nav-link">Reposição</a>
+                        -->
+                    <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nós">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Sobre nós</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item">
+                <a href="../../login.html" class="nav-link" title="Login">
+                    <span class="nav-icon"><i class="fas fa-user"></i></span>
+                    <span class="nav-text">Login</span>
+                </a>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="contatos-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="contatos-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="contatos.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+    
+    <div class="login-container">
+        <div class="logo-container">
+            <img src="logo-normal.png" alt="Logo" class="logo">
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="button" id="loginButton">Entrar</button>
+        </form>
+    </div>
+
+<!-- RODAPÉ -->
+<footer class="site-footer">
+    <!-- Conteúdo principal do rodapé -->
+    <div class="footer-main-content">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Coluna 1: Logo e descrição -->
+                <div class="footer-column">
+                    <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                    <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                    <div class="social-icons">
+                        <a href="#" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                            target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <a href="../../politica-privacidade.html"
+                            style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                            Política de Privacidade
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Coluna 2: Contato -->
+                <div class="footer-column">
+                    <h5>Contato</h5>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                            target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                            Rua Dorival Faveri, 214<br>
+                            Jd. do Lago, Limeira-SP<br>
+                            CEP: 13481-604
+                        </a>
+                    </p>
+                    <p>
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                            +55 (19) 3451-2822
+                        </a>
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                            vendas@nh.ind.br
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Coluna 3: Links úteis -->
+                <div class="footer-column">
+                    <h5>Links Úteis</h5>
+                    <ul class="footer-links">
+                        <li><a href="../../index.html">Início</a></li>
+                        <li><a href="../../sobre.html">Sobre Nós</a></li>
+                        <li><a href="../../produtos.html">Produtos</a></li>
+                        <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                        <li><a href="../../contatos.html">Contato</a></li>
+                        <li><a href="../../login.html">Login/ERP</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 4: Vazia ou pode ser removida -->
+                <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Seção de financiadores -->
+    <div class="financiadores-section">
+        <div class="container">
+            <div class="financiadores-logos">
+                <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-copyright-section">
+        <div class="container">
+            <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Atualizar ano automaticamente
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+
+    <script>
+        const loginButton = document.getElementById('loginButton');
+
+        loginButton.addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                alert('Por favor, preencha todos os campos!');
+                return; // Impede a abertura do menu se os campos estiverem vazios
+            }
+
+            // Aqui você pode adicionar a lógica de autenticação (se necessário)
+            // Por exemplo, uma chamada AJAX para verificar as credenciais no servidor
+
+            // Se a validação (e possível autenticação) for bem-sucedida, redireciona:
+            window.location.href = 'menu.html';
+        });
+    </script>
+    <!-- Carregar script do menu CORRETAMENTE -->
+    <script src="../../menu/sidebar.js"></script>
+</body>
+</html>

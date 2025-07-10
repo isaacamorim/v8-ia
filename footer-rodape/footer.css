@@ -1,0 +1,277 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-main-content-wrapper {
+    flex: 1;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== RODAPÉ RESPONSIVO ===== */
+footer.site-footer {
+    margin-top: auto;
+    padding: 0;
+}
+
+/* Seção principal do rodapé */
+.footer-main-content {
+    background-color: #B4252C;
+    color: #ffffff;
+    padding: 50px 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 30px;
+}
+
+.footer-column h5 {
+    color: #ffffff;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 10px;
+}
+
+.footer-column p {
+    color: #f0f0f0;
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Links de contato com hover */
+.footer-column a {
+    color: #f0f0f0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-logo {
+    max-width: 180px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Links do rodapé */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links li a:hover {
+    color: #ffffff;
+    transform: translateX(5px);
+    text-decoration: underline;
+}
+
+/* Ícones sociais */
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    text-align: center;
+    line-height: 45px;
+    margin: 0 10px 10px 0;
+    border-radius: 50%;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.social-icons a:hover {
+    background: #ffffff;
+    color: #B4252C;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Seção de financiadores */
+.financiadores-section {
+    background-color: #2c2c2c;
+    padding: 25px 0;
+}
+
+.financiadores-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.financiadores-logos img {
+    max-height: 50px;
+    height: auto;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    filter: brightness(0) invert(1);
+}
+
+.financiadores-logos img:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Seção de copyright */
+.footer-copyright-section {
+    background-color: #E6E6E6;
+    color: #373637;
+    padding: 25px 0;
+    text-align: center;
+    border-top: 1px solid #D0D0D0;
+}
+
+.footer-copyright-section p {
+    margin: 0;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+/* Desktop - 4 colunas lado a lado */
+@media (min-width: 992px) {
+    .footer-content {
+        justify-content: space-between;
+    }
+
+    .footer-column {
+        flex: 0 1 23%;
+        min-width: auto;
+        text-align: center;
+    }
+}
+
+/* Tablet - 2 colunas */
+@media (min-width: 768px) and (max-width: 991px) {
+    .footer-content {
+        justify-content: space-around;
+    }
+
+    .footer-column {
+        flex: 0 1 45%;
+        min-width: auto;
+        text-align: center;
+    }
+}
+
+/* Mobile - 1 coluna, cada bloco empilhado */
+@media (max-width: 767px) {
+    .footer-main-content {
+        padding: 40px 0;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .footer-column {
+        flex: none;
+        width: 100%;
+        text-align: center;
+        min-width: auto;
+    }
+
+    .footer-logo {
+        max-width: 150px;
+    }
+
+    .social-icons a {
+        margin: 0 8px 10px 0;
+    }
+
+    .financiadores-logos {
+        gap: 15px;
+    }
+
+    .financiadores-logos img {
+        max-height: 40px;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 576px) {
+    .footer-main-content {
+        padding: 30px 0;
+    }
+
+    .footer-column {
+        padding: 0 15px;
+    }
+
+    .footer-column h5 {
+        font-size: 1.2em;
+    }
+
+    .footer-column p {
+        font-size: 0.9em;
+    }
+}
+
+/* Garantir comportamento responsivo com sidebar */
+.site-footer {
+    width: 100%;
+    margin-left: 80px;
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        margin-left: 0;
+    }
+}
+
+/* Prevenir sobreposição de z-index */
+.sidebar-container {
+    z-index: 1000;
+}
+
+.sidebar-overlay {
+    z-index: 999;
+}
+
+.sidebar-toggle {
+    z-index: 1001;
+}

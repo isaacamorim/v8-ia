@@ -1,0 +1,340 @@
+/* ===== Animations - Quem Somos Section (On Scroll Trigger) ===== */
+
+/* Keyframes (already defined, just for reference)
+@keyframes slideDownFadeIn { ... }
+@keyframes fadeIn { ... }
+*/
+
+/* Initial state for elements to be animated */
+.sobre-nos-colunas-layout .conteudo-coluna-esquerda h1,
+.sobre-nos-colunas-layout .conteudo-coluna-esquerda .btn-primary {
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Smooth transition for JS class add */
+}
+
+.sobre-nos-colunas-layout .conteudo-coluna-esquerda h1 {
+    transform: translateY(-40px);
+}
+
+/* Animation application when .animate-in-view is added to the section or a parent */
+.quem-somos-section.animate-in-view .conteudo-coluna-esquerda h1 {
+    animation-name: slideDownFadeIn;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards; /* Keep state after animation */
+    /* animation-delay: 0.2s; /* Base delay after trigger */
+    opacity: 1; /* Ensure it becomes visible */
+    transform: translateY(0);
+}
+
+.quem-somos-section.animate-in-view .conteudo-coluna-esquerda .btn-primary {
+    animation-name: fadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: 0.5s; /* Delay to start after title animation */
+    opacity: 1; /* Ensure it becomes visible */
+}
+
+/* Remove previous direct animation rules from .sobre-nos-colunas-layout .conteudo-coluna-esquerda h1 and .btn-primary */
+/* The previous CSS for these elements that directly applied animations on load needs to be removed or commented out. */
+
+
+
+/* ===== Animations - Quem Somos Section - Right Column Content (On Scroll Trigger) ===== */
+
+/* Keyframes (already defined, just for reference)
+@keyframes slideInFromRightFadeIn { ... }
+@keyframes fadeIn { ... } 
+*/
+
+/* Initial state for elements to be animated */
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-icon,
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-conteudo h3,
+.sobre-nos-coluna-direita .paragrafo-item .paragrafo-conteudo p {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Animation application when .animate-in-view is added to the section or a parent */
+/* Staggering the animation for each .paragrafo-item and its children */
+
+/* First item */
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(1) .paragrafo-icon {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1.0s; /* Start after button on left is mostly done */
+    opacity: 1; transform: translateX(0);
+}
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(1) .paragrafo-conteudo h3 {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1.2s; /* Title starts after icon */
+    opacity: 1; transform: translateX(0);
+}
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(1) .paragrafo-conteudo p {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1.4s; /* Paragraph starts after title */
+    opacity: 1; transform: translateX(0);
+}
+
+/* Second item */
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(2) .paragrafo-icon {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1.6s; /* Stagger from previous item */
+    opacity: 1; transform: translateX(0);
+}
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(2) .paragrafo-conteudo h3 {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1.8s;
+    opacity: 1; transform: translateX(0);
+}
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(2) .paragrafo-conteudo p {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 2.0s;
+    opacity: 1; transform: translateX(0);
+}
+
+/* Third item */
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(3) .paragrafo-icon {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 2.2s; /* Stagger from previous item */
+    opacity: 1; transform: translateX(0);
+}
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(3) .paragrafo-conteudo h3 {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 2.4s;
+    opacity: 1; transform: translateX(0);
+}
+.quem-somos-section.animate-in-view .paragrafo-item:nth-child(3) .paragrafo-conteudo p {
+    animation-name: slideInFromRightFadeIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 2.6s;
+    opacity: 1; transform: translateX(0);
+}
+
+/* Remove previous direct animation rules from .sobre-nos-coluna-direita .paragrafo-item and its children */
+/* The previous CSS for these elements that directly applied animations on load needs to be removed or commented out from redesign_style.css. */
+
+
+
+/* ===== Animations & Style Update - Soluções Completas Cards (On Scroll Trigger) ===== */
+
+/* Keyframes (fadeInScaleUp already defined, or create a new one if needed) */
+/* @keyframes fadeInScaleUp { ... } */
+
+/* Initial state for cards in Soluções Completas section */
+.destaque-produtos-novo-estilo .solucao-card {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    /* Existing hover transition for zoom should be kept in redesign_style.css */
+    /* Existing styles for text size and color should be in redesign_style.css */
+}
+
+/* Animation application when .animate-in-view is added to the section */
+/* Staggering the animation for each card */
+.solucoes-completas-section.animate-in-view .solucao-card:nth-child(1) {
+    animation-name: fadeInScaleUp; /* Re-use or define new */
+    animation-duration: 0.7s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0.2s; /* Base delay for the first card */
+    opacity: 1; transform: scale(1);
+}
+
+.solucoes-completas-section.animate-in-view .solucao-card:nth-child(2) {
+    animation-name: fadeInScaleUp;
+    animation-duration: 0.7s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0.5s; /* Stagger subsequent cards */
+    opacity: 1; transform: scale(1);
+}
+
+/* Text adjustments (ensure these are in redesign_style.css or here if specific to animation state) */
+.solucao-card h3 {
+    font-size: 2.4em !important; /* Texto maior - ensure this is applied */
+    color: #FFFFFF !important;   /* Cor clara - ensure this is applied */
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para legibilidade */
+}
+
+/* Remove previous direct animation rules from .solucao-card if any were for entry animation on load */
+/* The hover zoom effect in redesign_style.css should remain. */
+
+
+
+/* ===== Animations - Diferenciais Section (On Scroll Trigger) ===== */
+
+/* Keyframes (fadeInScaleUp already defined, or create a new one if needed) */
+/* @keyframes fadeInScaleUp { ... } */
+
+/* Initial state for cards in Diferenciais section */
+.diferenciais .row > .col-md-3 .card-section {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Initial state for elements within each card */
+.diferenciais .row > .col-md-3 .card-section .placeholder-image i,
+.diferenciais .row > .col-md-3 .card-section h4,
+.diferenciais .row > .col-md-3 .card-section p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+/* Animation application when .animate-in-view is added to the section */
+/* Staggering the animation for each card and its internal elements */
+
+/* Card 1 */
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(1) .card-section {
+    opacity: 1; transform: translateY(0) scale(1);
+    transition-delay: 0.2s; /* Card itself animates in */
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(1) .card-section .placeholder-image i {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 0.4s; /* Icon first */
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(1) .card-section h4 {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 0.6s; /* Title after icon */
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(1) .card-section p {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 0.8s; /* Text after title */
+}
+
+/* Card 2 */
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(2) .card-section {
+    opacity: 1; transform: translateY(0) scale(1);
+    transition-delay: 0.5s; /* Stagger card animation */
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(2) .card-section .placeholder-image i {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 0.7s;
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(2) .card-section h4 {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 0.9s;
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(2) .card-section p {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.1s;
+}
+
+/* Card 3 */
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(3) .card-section {
+    opacity: 1; transform: translateY(0) scale(1);
+    transition-delay: 0.8s; /* Stagger card animation */
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(3) .card-section .placeholder-image i {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.0s;
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(3) .card-section h4 {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.2s;
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(3) .card-section p {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.4s;
+}
+
+/* Card 4 */
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(4) .card-section {
+    opacity: 1; transform: translateY(0) scale(1);
+    transition-delay: 1.1s; /* Stagger card animation */
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(4) .card-section .placeholder-image i {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.3s;
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(4) .card-section h4 {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.5s;
+}
+.diferenciais-section.animate-in-view .row > .col-md-3:nth-child(4) .card-section p {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.7s;
+}
+
+/* Remove previous direct animation rules from .diferenciais .row > .col-md-3 and its children if any were for entry animation on load */
+
+
+
+/* ===== Animations - Clientes Logos Section (On Scroll Trigger) ===== */
+
+/* Keyframes (fadeInScaleUp already defined, or create a new one if needed) */
+/* @keyframes fadeInScaleUp { ... } */
+
+/* Initial state for logos in Clientes Logos section */
+.clientes-logos .placeholder-text img {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Animation application when .animate-in-view is added to the section */
+/* Staggering the animation for each logo */
+.clientes-logos-section.animate-in-view .placeholder-text img:nth-child(1) {
+    opacity: 1; transform: scale(1) translateY(0);
+    transition-delay: 0.2s; /* Base delay for the first logo */
+}
+
+.clientes-logos-section.animate-in-view .placeholder-text img:nth-child(2) {
+    opacity: 1; transform: scale(1) translateY(0);
+    transition-delay: 0.4s; /* Stagger subsequent logos */
+}
+
+.clientes-logos-section.animate-in-view .placeholder-text img:nth-child(3) {
+    opacity: 1; transform: scale(1) translateY(0);
+    transition-delay: 0.6s;
+}
+
+.clientes-logos-section.animate-in-view .placeholder-text img:nth-child(4) {
+    opacity: 1; transform: scale(1) translateY(0);
+    transition-delay: 0.8s;
+}
+
+.clientes-logos-section.animate-in-view .placeholder-text img:nth-child(5) {
+    opacity: 1; transform: scale(1) translateY(0);
+    transition-delay: 1.0s;
+}
+
+.clientes-logos-section.animate-in-view .placeholder-text img:nth-child(6) {
+    opacity: 1; transform: scale(1) translateY(0);
+    transition-delay: 1.2s;
+}
+
+/* Add more nth-child selectors if there are more logos, adjusting the delay. */
+
+/* Remove previous direct animation rules from .clientes-logos .placeholder-text img if any were for entry animation on load */
+

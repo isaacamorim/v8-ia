@@ -1,0 +1,211 @@
+/* Todos os estilos CSS que você desenvolveu */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #cc0000;
+    color: white;
+    padding: 15px 30px;
+    /* ... demais estilos ... */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #cc0000;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+header img {
+    height: 40px;
+}
+
+.container {
+    padding: 30px;
+    max-width: 1000px;
+    margin: 80px auto 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.job-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+.job-table th,
+.job-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.job-table th {
+    background-color: #eee;
+    font-weight: bold;
+}
+
+.btn {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #a00000;
+    transform: scale(1.05);
+}
+
+.btn:focus {
+    outline: 2px solid #ff4444;
+    outline-offset: 2px;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pendente {
+    background: #ffeb3b;
+    color: #000;
+}
+
+.em-progresso {
+    background: #2196f3;
+    color: #fff;
+}
+
+.concluido {
+    background: #4caf50;
+    color: #fff;
+}
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+#operatorDisplay {
+    transition: color 0.3s ease;
+}
+
+.operator-error {
+    color: #cc0000 !important;
+    animation: shake 0.5s;
+}
+
+.step-path {
+    max-width: 250px;
+    word-break: break-all;
+}
+
+.step-error {
+    color: #cc0000;
+    font-style: italic;
+}
+
+.btn.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin-top: 70px;
+    }
+
+    .job-table {
+        font-size: 14px;
+    }
+
+    .job-table th,
+    .job-table td {
+        padding: 8px;
+    }
+
+    header {
+        padding: 10px 15px;
+    }
+
+    header img {
+        height: 30px;
+    }
+}
+

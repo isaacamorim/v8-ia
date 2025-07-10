@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+    <title>Novo Horizonte - Inovação e Robustez para o Campo</title>
+    <meta charset="utf-8">
+    <meta content="text/html" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta
+        content="dosadores, acessórios, agrupamento, movimentação, qualidade, tradição, precisão, novohorizonte, novo horizonte, agrícolas, máquinas agrícolas, maquina agricola, cereais, feijão, grãos"
+        name="keywords">
+    <meta content="index, follow" name="robots">
+    <meta content="Novo Horizonte" name="author">
+    <meta
+        content="Líder brasileira em máquinas para feijão e cereais, a Novo Horizonte é especializada na fabricação de máquinas de beneficiamento, empacotadoras e enfardadeiras."
+        name="description">
+    <meta content="-22.604102; -47.422662" name="geo.position">
+    <meta content="Limeira-SP" name="geo.placename">
+    <meta content="SP-BR" name="geo.region">
+
+    <link href="Imgs/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="Imgs/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+
+    <!-- Font Awesome for Icons (example) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- New Redesign Stylesheet -->
+    <link href="css/redesign_style.css" rel="stylesheet">
+    <link href="css/animations_on_scroll.css" rel="stylesheet"> <!-- Added new animation CSS -->
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- WhatsApp Flutuante CSS & JS (from original site) -->
+    <link rel="stylesheet" href="css/whatsapp-flutuante.css">
+    <script defer src="scripts/whatsapp-flutuante.js"></script>
+    <script defer src="scripts/scroll_animations.js"></script> <!-- Added new animation JS -->
+    <script defer src="php/whatsapp-flutuante.php"></script>
+
+    <!--CSS do menu lateral-->
+    <link rel="stylesheet" href="../../menu/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS do seu rodapé -->
+    <link rel="stylesheet" href="../../footer-rodape/footer.css">
+    
+    <!-- CDNs necessários -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Indústria de Máquinas Agrícolas Novo Horizonte",
+        "description": "Líder brasileira em máquinas para feijão e cereais, a Novo Horizonte é especializada na fabricação de máquinas de beneficiamento, empacotadoras e enfardadeiras.",
+        "url": "https://nh.ind.br",
+        "logo": "https://nh.ind.br/Imgs/logo-bottom-2.png",
+        "email": "novo.horizonte@nh.ind.br",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "BR",
+            "postalCode": "13481604",
+            "streetAddress": "214 Avenida Dorival Faveri"
+        },
+        "foundingDate": "1981-04-08",
+        "sameAs" : [
+            "https://www.informecadastral.com.br/cnpj/industria-de-maquinas-agricolas-novo-horizonte-ltda-45737822000198",
+            "https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte",
+            "https://www.youtube.com/@maquinasnh"
+        ],
+        "contactPoint" : [
+            {
+                "@type" : "ContactPoint",
+                "contactType" : "customer service",
+                "email": "vendas@nh.ind.br",
+                "url": "https://nh.ind.br"
+            }
+        ]
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <!-- Logo miniatura (sempre visível quando menu recolhido) -->
+            <a href="../../index.html" class="logo-icon default-logo">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+    
+            <!-- Logo completa (visível apenas quando menu expandido) -->
+            <h2 class="expanded-logo">
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+            </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link active" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                    <a href="#" class="nav-link">Reposição</a>
+                    -->
+                    <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Empresa">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Empresa</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item">
+                <a href="../../Reposicao/catalogo.html" class="nav-link" title="Login">
+                    <span class="nav-icon"><i class="fas fa-user"></i></span>
+                    <span class="nav-text">Login</span>
+                </a>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="contatos-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="contatos-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="contatos.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+
+    <div class="main-content-wrapper">
+        <main>
+            <!-- 1. Banner Principal Product Focused -->
+            <section class="banner-principal-product-focused card-section">
+                <div class="container">
+                    <div class="banner-text">
+                        <h1>Nova Empacotadeira eletrica</h1>
+                        <p class="placeholder-text">Descrição concisa e impactante do produto, ressaltando seus
+                            principais benefícios e diferenciais. Texto placeholder para o cliente preencher.</p>
+                        <a href="/maq/evanh/evanh1000e.html" class="btn btn-primary">Descubra Mais</a>
+                    </div>
+                    <div class="banner-image">
+                        <img src="Imgs\maquinas-produtos\Empacotadeira\EMA12001.png"
+                            alt="Produto em Destaque Placeholder">
+                    </div>
+                </div>
+            </section>
+            <br><br>
+            <!-- 2. Nova Seção "Sobre Nós" - Layout Colunas -->
+            <section class="sobre-nos-colunas-layout card-section"
+                style="background-image: url('Imgs/fundo\ feijao\ desfocado.jpeg');">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-12 sobre-nos-coluna-esquerda">
+                            <div class="conteudo-coluna-esquerda">
+                                <h1>QUEM SOMOS</h1>
+                                <a href="sobre.html" class="btn btn-primary btn-lg">QUEM SOMOS</a>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-12 sobre-nos-coluna-direita">
+                            <div class="paragrafo-item">
+                                <div class="paragrafo-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="paragrafo-conteudo">
+                                    <h3>NOSSA HISTÓRIA</h3>
+                                    <p>Desde 1981, a Máquinas Agrícolas Novo Horizonte transforma o agronegócio
+                                        brasileiro com tecnologia 100% nacional. Localizados em Limeira (SP), temos
+                                        orgulho em crescer com o país.</p>
+                                </div>
+                            </div>
+                            <div class="paragrafo-item">
+                                <div class="paragrafo-icon">
+                                    <i class="fas fa-globe-americas"></i>
+                                </div>
+                                <div class="paragrafo-conteudo">
+                                    <h3>PRESENÇA NO MERCADO</h3>
+                                    <p>Com mais de 30 anos de atuação, somos líderes no desenvolvimento de máquinas para
+                                        beneficiamento de feijão. Nossos equipamentos estão presentes em todo o Brasil e
+                                        América Latina.</p>
+                                </div>
+                            </div>
+                            <div class="paragrafo-item">
+                                <div class="paragrafo-icon">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <div class="paragrafo-conteudo">
+                                    <h3>INFRAESTRUTURA</h3>
+                                    <p>Nosso parque industrial de 7.500 m² conta com tecnologia de ponta e uma equipe
+                                        altamente capacitada, pronta para entregar eficiência e inovação.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <!-- 3. Destaque de Produtos/Soluções - Novo Estilo de Cards -->
+            <section class="destaque-produtos-novo-estilo card-section">
+                <div class="container">
+                    <h2>Soluções Completas para o Beneficiamento de Grãos</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-lg-5">
+                            <div class="solucao-card"
+                                style="background-image: url('Imgs/beneficiamento.png');">
+                                <div class="solucao-card-content">
+                                    <h3>Beneficiamento</h3>
+                                    <a href="beneficiamento.html" class="btn btn-light btn-sm">Ver Detalhes</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-5">
+                            <div class="solucao-card"
+                                style="background-image: url('Imgs/empacotamento.png');">
+                                <div class="solucao-card-content">
+                                    <h3>Empacotamento</h3>
+                                    <a href="empacotamento.html" class="btn btn-light btn-sm">Ver Detalhes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <!-- 4. Seção de Diferenciais/Valores -->
+            <section class="diferenciais card-section">
+                <div class="container">
+                    <h2>Por que Escolher a Novo Horizonte?</h2>
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <div class="card-section" style="margin-bottom: 0;">
+                                <div class="placeholder-image"
+                                    style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;"><i
+                                        class="fas fa-check-circle fa-3x" style="color:#d52029;"></i></div>
+                                <h4>Qualidade Comprovada</h4>
+                                <p class="placeholder-text">Nossos equipamentos são desenvolvidos com os mais altos
+                                    padrões.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="card-section" style="margin-bottom: 0;">
+                                <div class="placeholder-image"
+                                    style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;"><i
+                                        class="fas fa-microchip fa-3x" style="color:#d52029;"></i></div>
+                                <h4>Tecnologia Nacional</h4>
+                                <p class="placeholder-text">Soluções inovadoras com engenharia 100% brasileira.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="card-section" style="margin-bottom: 0;">
+                                <div class="placeholder-image"
+                                    style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;"><i
+                                        class="fas fa-headset fa-3x" style="color:#d52029;"></i></div>
+                                <h4>Suporte Especializado</h4>
+                                <p class="placeholder-text">Atendimento ágil e equipe técnica qualificada à sua
+                                    disposição.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="card-section" style="margin-bottom: 0;">
+                                <div class="placeholder-image"
+                                    style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;"><i
+                                        class="fas fa-shield-alt fa-3x" style="color:#d52029;"></i></div>
+                                <h4>Durabilidade</h4>
+                                <p class="placeholder-text">Máquinas robustas construídas para durar e performar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <!-- 5. Clientes -->
+            <section class="clientes-logos card-section">
+                <div class="container text-center">
+                    <h2>Confiança de Grandes Nomes do Mercado</h2>
+                    <div class="placeholder-text" style="margin-top: 20px;">
+                        <img src="Imgs/logo/Kicaldo-colorido.png" alt="Kicaldo" style="height: 60px; margin: 15px;">
+                        <img src="Imgs/logo/camil-colorido.png" alt="Camil" style="height: 60px; margin: 15px;">
+                        <img src="Imgs/logo/caldobom-colorido.png" alt="Caldobom" style="height: 60px; margin: 15px;">
+                        <img src="Imgs/logo/combrasil-colorido.png" alt="combrasil" style="height: 60px; margin: 15px;">
+                        <img src="Imgs/logo/cgl-colorido.png" alt="cgl" style="height: 60px; margin: 15px;">
+                        <!-- Add more logos as needed -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        <!-- RODAPÉ -->
+        <footer class="site-footer">
+            <!-- Conteúdo principal do rodapé -->
+            <div class="footer-main-content">
+                <div class="container">
+                    <div class="footer-content">
+                        <!-- Coluna 1: Logo e descrição -->
+                        <div class="footer-column">
+                            <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                            <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                            <div class="social-icons">
+                                <a href="#" target="_blank" aria-label="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" target="_blank" aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                                    target="_blank" aria-label="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="../../politica-privacidade.html"
+                                    style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                                    Política de Privacidade
+                                </a>
+                            </div>
+                        </div>
+        
+                        <!-- Coluna 2: Contato -->
+                        <div class="footer-column">
+                            <h5>Contato</h5>
+                            <p>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                                    target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                                    Rua Dorival Faveri, 214<br>
+                                    Jd. do Lago, Limeira-SP<br>
+                                    CEP: 13481-604
+                                </a>
+                            </p>
+                            <p>
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                                    +55 (19) 3451-2822
+                                </a>
+                            </p>
+                            <p>
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                                    vendas@nh.ind.br
+                                </a>
+                            </p>
+                        </div>
+        
+                        <!-- Coluna 3: Links úteis -->
+                        <div class="footer-column">
+                            <h5>Links Úteis</h5>
+                            <ul class="footer-links">
+                                <li><a href="../../index.html">Início</a></li>
+                                <li><a href="../../sobre.html">Sobre Nós</a></li>
+                                <li><a href="../../produtos.html">Produtos</a></li>
+                                <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                                <li><a href="../../contatos.html">Contato</a></li>
+                                <li><a href="../../login.html">Login/ERP</a></li>
+                            </ul>
+                        </div>
+        
+                        <!-- Coluna 4: Vazia ou pode ser removida -->
+                        <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+                    </div>
+                </div>
+            </div>
+            </div>
+        
+            <!-- Seção de financiadores -->
+            <div class="financiadores-section">
+                <div class="container">
+                    <div class="financiadores-logos">
+                        <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                        <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                        <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                        <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Copyright -->
+            <div class="footer-copyright-section">
+                <div class="container">
+                    <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                        direitos reservados.</p>
+                </div>
+            </div>
+        </footer>
+        
+        <!-- Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Atualizar ano automaticamente
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        </script>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+        $(document).ready(function () {
+            // Toggle menu by clicking on the logo container
+            $(".logo-container a").on("click", function (e) {
+                e.preventDefault(); // Prevent default anchor behavior if logo is a link to homepage
+                $(".lateral-menu").toggleClass("minimized");
+                // Adjust main content margin based on menu state
+                // CSS handles this transition now
+            });
+        });
+
+    </script>
+    <!-- Carregar script do menu CORRETAMENTE -->
+    <script src="../../menu/sidebar.js"></script>
+</body>
+
+</html>

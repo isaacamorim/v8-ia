@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apontamento Laser</title>
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* ========== MENU LATERAL ========== */
+        .lateral-menu {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #ffffff;
+            color: #343a40;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            border-right: 3px solid #d52029;
+            transition: width 0.3s ease;
+        }
+
+        .lateral-menu.minimized {
+            width: 80px;
+        }
+
+        .lateral-menu .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lateral-menu.minimized .logo-container img.full-logo {
+            display: none;
+        }
+
+        .lateral-menu .logo-container img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .lateral-menu.minimized .logo-container img {
+            max-width: 40px;
+        }
+
+        .lateral-menu nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lateral-menu nav ul li a {
+            display: flex;
+            align-items: center;
+            color: #343a40;
+            padding: 12px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .lateral-menu nav ul li a .menu-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            min-width: 24px;
+            transition: color 0.2s ease;
+        }
+
+        .lateral-menu.minimized nav ul li a .menu-text {
+            display: none;
+        }
+
+        .lateral-menu.minimized nav ul li a {
+            justify-content: center;
+            padding: 12px 0;
+        }
+
+        .lateral-menu.minimized nav ul li a .menu-icon {
+            color: #343a40;
+            margin-right: 0;
+        }
+
+        .lateral-menu.minimized nav ul li a.active .menu-icon {
+            color: #d52029;
+        }
+
+        .lateral-menu.minimized nav ul li a:hover .menu-icon {
+            color: #d52029;
+        }
+
+        .lateral-menu:not(.minimized) nav ul li a:hover,
+        .lateral-menu:not(.minimized) nav ul li a.active {
+            background-color: #f2f2f2;
+            color: #d52029;
+        }
+
+        .lateral-menu:not(.minimized) nav ul li a:hover .menu-icon,
+        .lateral-menu:not(.minimized) nav ul li a.active .menu-icon {
+            color: #d52029;
+        }
+
+        .lateral-menu .language-switcher {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .lateral-menu.minimized .language-switcher {
+            padding: 0 5px;
+        }
+
+        .lateral-menu .language-switcher img {
+            width: 30px;
+            height: 20px;
+            margin: 0 5px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .lateral-menu.minimized .language-switcher img {
+            width: 24px;
+            height: 16px;
+            margin: 0 2px;
+        }
+
+        .lateral-menu .language-switcher img:hover {
+            opacity: 1;
+        }
+
+        .main-content-wrapper {
+            margin-left: 80px;
+            padding: 0;
+            width: calc(100% - 80px);
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        .lateral-menu:not(.minimized)+.main-content-wrapper {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+        }
+
+        /* ========== ESTILOS ORIGINAIS ========== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 20px;
+            /* Margem superior aumentada */
+            padding: 30px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .apontamento-title {
+            background: #f2f2f2;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #f2f2f2;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            background-color: #D52029;
+            color: #f2f2f2;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            margin: 5px 5px 0 0;
+        }
+
+        .btn:hover {
+            background-color: #a00000;
+            transform: scale(1.05);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #f2f2f2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #dashboard,
+        #apontamentoSection {
+            display: none;
+        }
+
+        #jobTable,
+        #pendingApontamentosTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .job-table th,
+        .job-table td,
+        #pendingApontamentosTable th,
+        #pendingApontamentosTable td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            font-size: 0.85em;
+            text-align: left;
+        }
+
+        #pendingApontamentosTable input[type="number"] {
+            width: 80px;
+            padding: 5px;
+        }
+
+        #pdfExtractResults {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+
+        #pdfExtractResults pre {
+            background: #f2f2f2;
+            padding: 10px;
+            max-height: 150px;
+            overflow: auto;
+            margin-bottom: 10px;
+        }
+
+        /* ====== TOASTS ====== */
+        .toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 2000;
+        }
+
+        .toast {
+            min-width: 200px;
+            max-width: 350px;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            color: #f2f2f2;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast.success {
+            background: #28a745;
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        .toast.info {
+            background: #007bff;
+        }
+
+        .toast button.close-btn {
+            background: transparent;
+            border: none;
+            color: #f2f2f2;
+            font-size: 1.1rem;
+            cursor: pointer;
+            line-height: 1;
+            margin-left: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ======== MODAL DE QUANTIDADE ======== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: #f2f2f2;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 90%;
+            transform: scale(0.7) translateY(50px);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #FB0B1D, #B4252C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f2f2f2;
+            font-size: 24px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .modal-subtitle {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f2f2f2;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #ea6666;
+            background: #f2f2f2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-field.error {
+            border-color: #e74c3c;
+            background: #f2f2f2;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+
+        .btn-cancel {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e1e5e9;
+        }
+
+        .btn-cancel:hover {
+            background: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+        .btn-confirm {
+            background: linear-gradient(45deg, #FB0B1D, #B4252C);
+            color: #f2f2f2;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-confirm:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <aside class="lateral-menu minimized">
+        <div class="logo-container" onclick="document.querySelector('.lateral-menu').classList.toggle('minimized')">
+            <a href="#"><img src="/imgs/logo-white.png" alt="Logo NH"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home menu-icon"></i><span class="menu-text">Início</span></a>
+                </li>
+                <li><a href="sobre.html"><i class="fas fa-info-circle menu-icon"></i><span class="menu-text">Sobre
+                            Nós</span></a></li>
+                <li><a href="produtos.html"><i class="fas fa-cogs menu-icon"></i><span
+                            class="menu-text">Produtos</span></a></li>
+                <li><a href="catalogo.html"><i class="fas fa-book menu-icon"></i><span class="menu-text">Catálogo de
+                            Peças</span></a></li>
+                <li><a href="contatos.html"><i class="fas fa-envelope menu-icon"></i><span
+                            class="menu-text">Contato</span></a></li>
+                <li><a href="login.html" class="active"><i class="fas fa-sign-in-alt menu-icon"></i><span
+                            class="menu-text">Login/ERP</span></a></li>
+            </ul>
+        </nav>
+        <div class="language-switcher">
+            <a href="index-en.html" hreflang="en-us" target="_self"><img src="/Imgs/bandeiras/ingles.png" alt="English"
+                    title="English"></a>
+            <a href="index-es.html" hreflang="es" target="_self"><img src="/Imgs/bandeiras/espanhol.png" alt="Español"
+                    title="Español"></a>
+            <a href="index.html" hreflang="x-default" target="_self"><img src="/Imgs/bandeiras/portugues.png"
+                    alt="Português" title="Português"></a>
+        </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content-wrapper">
+        <!-- Seções originais mantidas intactas -->
+        <!-- Login -->
+        <div class="container" id="login">
+            <h1>Login do Operador</h1>
+            <div class="form-group">
+                <label for="operatorInput">Número do Operador (JLB_CODERP)</label>
+                <input type="text" id="operatorInput" placeholder="Digite seu número" />
+            </div>
+            <button class="btn" id="loginBtn">Entrar</button>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="container" id="dashboard">
+            <h1>Sequenciamento do Operador: <span id="operatorCodeLabel"></span> - <span id="operatorNameLabel"></span>
+            </h1>
+            <button class="btn" id="loadBtn">
+                <span id="loadText">Carregar Sequenciamento</span>
+                <span id="loadSpinner" class="loading" style="display:none"></span>
+            </button>
+            <table id="jobTable" class="job-table">
+                <thead>
+                    <tr>
+                        <th>OF</th>
+                        <th>Empresa</th>
+                        <th>Seq</th>
+                        <th>Produto</th>
+                        <th>Descrição</th>
+                        <th>Qtd Prog.</th>
+                        <th>Qtd Real.</th>
+                        <th>Arquivo .step</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="jobBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Apontamento -->
+        <div class="container" id="apontamentoSection">
+            <div id="apontamentoOfInfo" class="apontamento-title"></div>
+            <div class="form-group">
+                <label for="pdfFile">1. Selecionar Relatório de Produção (PDF)</label>
+                <input type="file" id="pdfFile" accept=".pdf" />
+            </div>
+            <button class="btn" id="processPdfBtn">2. Processar e Adicionar PDF à Lista</button>
+
+            <!-- === Botões de Controle de Apontamento === -->
+            <div id="apontamentoControlBtns" style="margin-top: 15px; margin-bottom: 15px;">
+                <button class="btn" id="startApontamentoBtn" style="background-color: #28a745;">Iniciar
+                    Apontamento</button>
+                <button class="btn" id="pauseApontamentoBtn" style="background-color: #ffc107; color: #333;"
+                    disabled>Pausar Apontamento</button>
+                <button class="btn" id="manualFinishApontamentoBtn" style="background-color: #dc3545;"
+                    disabled>Finalizar Apontamento (Manual)</button>
+            </div>
+            <!-- ========================================== -->
+
+            <div id="pdfExtractResults" style="display:none;">
+                <h4>Dados Extraídos do Último PDF:</h4>
+                <pre id="extractedDataDebug"></pre>
+                <p><strong>Início:</strong> <span id="pdfStartTime"></span></p>
+                <p><strong>Tempo Total:</strong> <span id="pdfTotalTime"></span></p>
+                <p><strong>Peça:</strong> <span id="pdfPartName"></span></p>
+                <p><strong>Qtd. no PDF:</strong> <span id="pdfPartCount"></span></p>
+            </div>
+
+            <h3>Barras/PDFs Processados para esta OF:</h3>
+            <table id="pendingApontamentosTable">
+                <thead>
+                    <tr>
+                        <th>Arquivo PDF</th>
+                        <th>Hora Início</th>
+                        <th>Tempo Total</th>
+                        <th>Qtd. no PDF</th>
+                        <th>Qtd. a Apontar</th>
+                    </tr>
+                </thead>
+                <tbody id="pendingApontamentosBody"></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align:right; font-weight:bold;">TOTAIS:</td>
+                        <td id="totalQtdPdf" style="font-weight:bold;">0</td>
+                        <td id="totalQtdApontar" style="font-weight:bold;">0</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:right; font-weight:bold;">Tempo Total Acumulado:</td>
+                        <td id="totalTempoAcumulado" style="font-weight:bold;" colspan="3">00:00:00.000</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <button class="btn" id="confirmAllPendingBtn" style="margin-top:15px;">Confirmar Todos os Apontamentos
+                Pendentes</button>
+            <button class="btn" id="finishApontamentoBtn" style="margin-top:20px">Voltar para Sequenciamento</button>
+        </div>
+
+        <!-- Container para toasts -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- Modal de Quantidade -->
+        <div id="modalOverlay" class="modal-overlay">
+            <div class="modal">
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+
+                <div class="modal-header">
+                    <div class="modal-icon">📈</div>
+                    <h2 class="modal-title">Quantidade Realizada</h2>
+                    <p class="modal-subtitle">Informe a quantidade total realizada para este apontamento</p>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="quantityInput">Quantidade*</label>
+                    <input type="number" id="quantityInput" class="input-field" placeholder="Ex: 100" min="0"
+                        step="1.00" />
+                    <div id="errorMessage" class="error-message">
+                        Por favor, informe uma quantidade válida
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="modal-btn btn-cancel" onclick="closeModal()">
+                        Cancelar
+                    </button>
+                    <button class="modal-btn btn-confirm" onclick="confirmQuantity()">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Definição de elementos DOM e variáveis globais
+            const loginSection = document.getElementById("login");
+            const dashboard = document.getElementById("dashboard");
+            const apontamentoSection = document.getElementById("apontamentoSection");
+            const operatorInput = document.getElementById("operatorInput");
+            const loginBtn = document.getElementById("loginBtn");
+            const operatorCodeLabel = document.getElementById("operatorCodeLabel");
+            const operatorNameLabel = document.getElementById("operatorNameLabel");
+            const loadBtn = document.getElementById("loadBtn");
+            const loadText = document.getElementById("loadText");
+            const loadSpinner = document.getElementById("loadSpinner");
+            const jobTable = document.getElementById("jobTable");
+            const jobBody = document.getElementById("jobBody");
+            const apontamentoOfInfo = document.getElementById("apontamentoOfInfo");
+            const pdfFile = document.getElementById("pdfFile");
+            const processPdfBtn = document.getElementById("processPdfBtn");
+            const pdfExtractResults = document.getElementById("pdfExtractResults");
+            const extractedDataDebug = document.getElementById("extractedDataDebug");
+            const pdfStartTime = document.getElementById("pdfStartTime");
+            const pdfTotalTime = document.getElementById("pdfTotalTime");
+            const pdfPartName = document.getElementById("pdfPartName");
+            const pdfPartCount = document.getElementById("pdfPartCount");
+            const pendingApontamentosTable = document.getElementById("pendingApontamentosTable");
+            const pendingApontamentosBody = document.getElementById("pendingApontamentosBody");
+            const totalQtdPdf = document.getElementById("totalQtdPdf");
+            const totalQtdApontar = document.getElementById("totalQtdApontar");
+            const totalTempoAcumulado = document.getElementById("totalTempoAcumulado");
+            const confirmAllPendingBtn = document.getElementById("confirmAllPendingBtn");
+            const finishApontamentoBtn = document.getElementById("finishApontamentoBtn");
+            const startApontamentoBtn = document.getElementById("startApontamentoBtn");
+            const pauseApontamentoBtn = document.getElementById("pauseApontamentoBtn");
+            const manualFinishApontamentoBtn = document.getElementById("manualFinishApontamentoBtn");
+
+            // Variáveis de estado
+            let currentOperatorCode = "";
+            let currentOperatorName = "";
+            let allJobsData = [];
+            let currentSelectedOfData = null;
+            let pendingApontamentos = [];
+            let currentApontamentoState = "idle"; // idle, started, paused
+            let currentApontamentoId = null; // Store the ID (e.g., SOF_APONTAOFID) of the active record
+            const API_BASE_URL = ""; // Configure se necessário, ex: http://localhost:5000
+
+            // --- Funções de Controle de Estado dos Botões ---
+            function updateApontamentoControlButtons() {
+                const isStarted = currentApontamentoState === "started";
+                const apontamentoControlsActive = apontamentoSection && apontamentoSection.style.display === "block";
+
+                if (startApontamentoBtn) startApontamentoBtn.disabled = isStarted || !apontamentoControlsActive;
+                if (pauseApontamentoBtn) pauseApontamentoBtn.disabled = !isStarted || !apontamentoControlsActive;
+                if (manualFinishApontamentoBtn) manualFinishApontamentoBtn.disabled = !isStarted || !apontamentoControlsActive;
+
+                if (processPdfBtn) processPdfBtn.disabled = !(currentApontamentoState === 'idle' || currentApontamentoState === 'started') || !apontamentoControlsActive;
+                if (confirmAllPendingBtn) {
+                    confirmAllPendingBtn.disabled = !(currentApontamentoState === "started" && pendingApontamentos.length > 0 && apontamentoControlsActive);
+                }
+            }
+
+            // --- Funções de Toast e Confirmação ---
+            function showToast(type, message, duration = 5000) { // Aumentado duration padrão
+                const container = document.getElementById("toast-container");
+                const toast = document.createElement("div");
+                toast.className = `toast ${type}`;
+                toast.innerHTML = `
+            <span>${message}</span>
+            <button class="close-btn">&times;</button>
+            `;
+                container.appendChild(toast);
+                toast.querySelector(".close-btn").onclick = () => {
+                    toast.style.animation = "slideOut 0.3s ease-out forwards";
+                    setTimeout(() => { if (container.contains(toast)) container.removeChild(toast); }, 300);
+                };
+                if (duration > 0) {
+                    setTimeout(() => {
+                        if (container.contains(toast)) {
+                            toast.style.animation = "slideOut 0.3s ease-out forwards";
+                            setTimeout(() => { if (container.contains(toast)) container.removeChild(toast); }, 300);
+                        }
+                    }, duration);
+                }
+            }
+
+            function askConfirmation(message) {
+                return new Promise(resolve => {
+                    const result = confirm(message);
+                    resolve(result);
+                });
+            }
+
+            // --- Funções de Chamada API (Apontamento) ---
+            async function callApi(endpoint, method = "POST", body = null) {
+                try {
+                    const options = {
+                        method: method,
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    };
+                    if (body) {
+                        options.body = JSON.stringify(body);
+                    }
+                    const response = await fetch(`${API_BASE_URL}/api/laser/apontamento${endpoint}`, options);
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({ error: `Erro HTTP: ${response.status}` }));
+                        throw new Error(errorData.error || `Erro ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error(`Erro na chamada API (${endpoint}):`, error);
+                    showToast("error", `Erro API: ${error.message}`);
+                    throw error; // Re-throw para que o chamador possa tratar
+                }
+            }
+
+            // --- Login ---
+            loginBtn.addEventListener("click", async () => { // Tornar async para aguardar loadSequencing
+                const opCode = operatorInput.value.trim();
+                if (!opCode) {
+                    showToast("error", "Informe seu número de operador.");
+                    return;
+                }
+                currentOperatorCode = opCode;
+                loginBtn.disabled = true; // Desabilita botão durante a validação
+                loginBtn.textContent = "Validando...";
+
+                try {
+                    // Chama loadSequencing para validar o operador e carregar dados
+                    const success = await loadSequencing();
+                    if (success) {
+                        // Só esconde login e mostra dashboard se loadSequencing for bem-sucedido
+                        loginSection.style.display = "none";
+                        dashboard.style.display = "block";
+                        operatorCodeLabel.textContent = currentOperatorCode; // Atualiza código no dashboard
+                        // O nome será atualizado dentro de loadSequencing
+                    } else {
+                        // Se loadSequencing falhar (operador inválido, erro de API, sem OFs), 
+                        // mantém na tela de login e mostra erro (já tratado em loadSequencing)
+                        loginBtn.disabled = false; // Reabilita botão
+                        loginBtn.textContent = "Entrar";
+                    }
+                } catch (error) {
+                    // Erro inesperado durante o processo de login/validação
+                    showToast("error", `Erro no login: ${error.message}`);
+                    loginBtn.disabled = false; // Reabilita botão
+                    loginBtn.textContent = "Entrar";
+                }
+            });
+
+            // --- Carregar Sequenciamento ---
+            loadBtn.addEventListener("click", loadSequencing);
+            async function loadSequencing() {
+                loadText.style.display = "none";
+                loadSpinner.style.display = "inline-block";
+                loadBtn.disabled = true;
+                jobTable.style.display = "none";
+                jobBody.innerHTML = "";
+                let success = false; // Flag para indicar sucesso
+                try {
+                    const res = await fetch(`${API_BASE_URL}/api/laser/sequencing_v2?operator_code=${encodeURIComponent(currentOperatorCode)}`);
+                    if (!res.ok) {
+                        const errorData = await res.json().catch(() => null);
+                        // Se o erro for 404 (Not Found), pode ser operador inválido
+                        if (res.status === 404) {
+                            throw new Error(errorData?.error || "Operador não encontrado ou sem permissão.");
+                        } else {
+                            throw new Error(errorData?.error || `Erro HTTP: ${res.status}`);
+                        }
+                    }
+                    const data = await res.json();
+                    if (!data.success || !data.jobs) {
+                        // Backend indicou falha ou não retornou jobs
+                        throw new Error(data.error || "Dados de sequenciamento inválidos ou operador sem OFs.");
+                    }
+                    allJobsData = data.jobs;
+                    if (!allJobsData.length) {
+                        // Operador válido, mas sem OFs sequenciadas
+                        showToast("info", "Nenhuma OF sequenciada para este operador.");
+                        operatorNameLabel.textContent = "(Nenhuma OF)";
+                        // Consideramos sucesso no login, mas sem jobs para mostrar
+                        success = true;
+                        // Não renderiza a tabela, mas permite o login
+                        jobTable.style.display = "none";
+                    } else {
+                        // Operador válido e com OFs
+                        if (allJobsData[0] && allJobsData[0].JLB_NOMECB) {
+                            currentOperatorName = allJobsData[0].JLB_NOMECB;
+                            operatorNameLabel.textContent = currentOperatorName;
+                        } else {
+                            operatorNameLabel.textContent = "(Nome não encontrado)";
+                        }
+                        renderJobTable(allJobsData);
+                        success = true; // Sucesso completo
+                    }
+                } catch (e) {
+                    console.error("Erro ao carregar sequenciamento:", e);
+                    showToast("error", `Erro ao carregar sequenciamento: ${e.message}`);
+                    operatorNameLabel.textContent = "(Erro ao carregar)";
+                    success = false; // Falha
+                } finally {
+                    loadText.style.display = "inline-block";
+                    loadSpinner.style.display = "none";
+                    loadBtn.disabled = false;
+                }
+                return success; // Retorna o status
+            }
+
+            function renderJobTable(jobs) {
+                jobBody.innerHTML = jobs.map(job => `
+            <tr id="of-row-${job.SOC_CODIOF}-${job.SOC_EMPRESA}"> 
+                <td>${job.SOC_CODIOF || "-"}</td>
+                <td>${job.SOC_EMPRESA || "-"}</td>
+                <td>${job.SOC_SEQUEN || "-"}</td>
+                <td>${job.JRO_PROERP || "-"}</td>
+                <td>${job.JRO_DESCRI || "-"}</td>
+                <td>${job.QUANTIDADE_PROGRAMADA ?? "-"}</td>
+                <td>${job.QUANTIDADE_REALIZADA ?? "-"}</td>
+                <td>${job.JPC_DESENHO_ENG
+                        ? `<button class="btn btn-download-step" data-path="${job.JPC_DESENHO_ENG}">Baixar</button>`
+                        : "Sem arquivo"
+                    }</td>
+                <td><button class="btn btn-start-apontamento" data-of-id="${job.SOC_CODIOF}" data-empresa-id="${job.SOC_EMPRESA}">Iniciar</button></td> 
+            </tr>
+            `).join("");
+                jobTable.style.display = "table";
+                document.querySelectorAll(".btn-download-step").forEach(btn => btn.addEventListener("click", handleDownloadStep));
+                document.querySelectorAll(".btn-start-apontamento").forEach(btn => btn.addEventListener("click", handleStartApontamento));
+            }
+
+            function handleDownloadStep(e) {
+                const path = e.target.dataset.path;
+                if (!path) {
+                    showToast("error", "Caminho do arquivo .step não encontrado.");
+                    return;
+                }
+                // AVISO: O download direto via window.location pode não funcionar se o backend
+                // não estiver configurado para servir arquivos de qualquer caminho. 
+                // O ideal é que o backend valide o caminho e sirva o arquivo.
+                window.location = `${API_BASE_URL}/api/laser/download_step?file_path=${encodeURIComponent(path)}`;
+            }
+
+            // --- Configuração do PDF.js ---
+            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js";
+
+            // --- Função de Início de Apontamento (CORRIGIDA) ---
+            function handleStartApontamento(e) {
+                const ofIdFromDataset = e.target.dataset.ofId;
+                const empresaIdFromDataset = e.target.dataset.empresaId;
+
+                // Validação inicial dos parâmetros
+                if (!ofIdFromDataset || !empresaIdFromDataset) {
+                    showToast("error", "Dados da OF não encontrados. Tente recarregar a página.");
+                    console.error("Dataset incompleto:", { ofIdFromDataset, empresaIdFromDataset });
+                    return;
+                }
+
+                // Busca a OF nos dados carregados (comparação como strings para consistência)
+                currentSelectedOfData = allJobsData.find(job =>
+                    String(job.SOC_CODIOF) === String(ofIdFromDataset) &&
+                    String(job.SOC_EMPRESA) === String(empresaIdFromDataset)
+                );
+
+                // Validação se a OF foi encontrada
+                if (!currentSelectedOfData) {
+                    showToast("error", `OF ${ofIdFromDataset} (Empresa: ${empresaIdFromDataset}) não encontrada. Verifique se os dados foram carregados corretamente.`);
+                    console.error("OF não encontrada:", {
+                        procurado: { ofId: ofIdFromDataset, empresaId: empresaIdFromDataset },
+                        disponivel: allJobsData.map(j => ({ ofId: j.SOC_CODIOF, empresaId: j.SOC_EMPRESA }))
+                    });
+                    return;
+                }
+
+                // Atualiza a interface com as informações da OF selecionada
+                updateOfDisplay();
+
+                // Reseta o estado do apontamento
+                resetApontamentoState();
+
+                // Alterna para a tela de apontamento
+                switchToApontamentoView();
+            }
+
+            function updateOfDisplay() {
+                const prod = currentSelectedOfData.JRO_PROERP || "";
+                const desc = currentSelectedOfData.JRO_DESCRI || "";
+
+                apontamentoOfInfo.innerHTML =
+                    `OF: <strong>${currentSelectedOfData.SOC_CODIOF}</strong> ` +
+                    `(Empresa: ${currentSelectedOfData.SOC_EMPRESA})` +
+                    (prod ? ` - ${prod}` : "") +
+                    (desc ? ` - ${desc}` : "");
+            }
+
+            function resetApontamentoState() {
+                // Limpa lista de apontamentos pendentes
+                pendingApontamentos = [];
+
+                // Limpa campos do PDF
+                if (typeof pdfFile !== 'undefined') {
+                    pdfFile.value = "";
+                }
+
+                // Esconde resultados de extração anteriores
+                clearPdfResults();
+            }
+
+            function switchToApontamentoView() {
+                // Esconde dashboard
+                if (typeof dashboard !== 'undefined') {
+                    dashboard.style.display = "none";
+                }
+
+                // Mostra seção de apontamento
+                if (typeof apontamentoSection !== 'undefined') {
+                    apontamentoSection.style.display = "block";
+                }
+
+                // Renderiza tabela (inicialmente vazia)
+                renderPendingApontamentosTable();
+
+                // Atualiza estado dos botões
+                if (typeof updateApontamentoControlButtons === 'function') {
+                    updateApontamentoControlButtons();
+                }
+            }
+
+            // --- Funções Auxiliares ---
+            function clearPdfResults() {
+                pdfStartTime.textContent = "";
+                pdfTotalTime.textContent = "";
+                pdfPartName.textContent = "";
+                pdfPartCount.textContent = "";
+                extractedDataDebug.textContent = "";
+                pdfExtractResults.style.display = "none";
+            }
+
+            function setBtnLoading(btn, isLoading, originalText) {
+                btn.disabled = isLoading;
+                btn.innerHTML = isLoading
+                    ? "Processando... <span class=\"loading\"></span>"
+                    : originalText;
+            }
+
+            async function extractTextFromPdf(file) {
+                const buf = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(new Uint8Array(buf)).promise;
+                let fullText = "";
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const items = await page.getTextContent();
+                    fullText += items.items.map(item => item.str).join(" ") + "\n";
+                }
+
+                return fullText;
+            }
+
+            function extractDataFromText(fullText) {
+                const compact = fullText.replace(/\s+/g, "");
+
+                // Extrai Start Time
+                const stMatch = compact.match(/StartTime(\d{4}-\d{2}-\d{2})(\d{2}:\d{2}:\d{2})/i);
+                const startTime = stMatch ? `${stMatch[1]} ${stMatch[2]}` : "Não encontrado";
+
+                // Extrai Total Time
+                const ttMatch = compact.match(/TotalTime(\d{2}:\d{2}:\d{2}\.\d{3})/i);
+                const totalTime = ttMatch ? ttMatch[1] : "Não encontrado";
+
+                // Extrai Part Name (P + 6 dígitos + _ + 1 ou mais dígitos)
+                const pnMatch = fullText.match(/\b(P\d{6}_\d+)\b/);
+                const partName = pnMatch ? pnMatch[1] : "Não encontrado";
+
+                // Extrai Part Count
+                let partCount = 0;
+                if (partName !== "Não encontrado") {
+                    const regex = new RegExp(`^.*${partName}.*?(\\d+)\\s*$`, "im");
+                    const countMatch = fullText.match(regex);
+
+                    if (countMatch && countMatch[1]) {
+                        partCount = parseInt(countMatch[1], 10);
+                    } else {
+                        console.warn(`Não foi possível encontrar a quantidade para a peça ${partName}`);
+                    }
+                }
+
+                return { startTime, totalTime, partName, partCount };
+            }
+
+            function displayExtractedData(data, fullText) {
+                pdfStartTime.textContent = data.startTime;
+                pdfTotalTime.textContent = data.totalTime;
+                pdfPartName.textContent = data.partName;
+                pdfPartCount.textContent = data.partCount;
+
+                extractedDataDebug.textContent =
+                    "Texto extraído (primeiros 500 caracteres):\n" +
+                    fullText.substring(0, 500) +
+                    (fullText.length > 500 ? "..." : "");
+
+                pdfExtractResults.style.display = "block";
+            }
+
+            function validateExtractedData(data) {
+                if (data.startTime === "Não encontrado" || data.totalTime === "Não encontrado") {
+                    throw new Error("Não foi possível extrair Data de Início ou Tempo Total do PDF. Verifique o formato do arquivo.");
+                }
+            }
+
+            function addToPendingList(file, data) {
+                pendingApontamentos.push({
+                    id: Date.now(),
+                    pdfFileName: file.name,
+                    startTime: data.startTime,
+                    totalTime: data.totalTime,
+                    partName: data.partName,
+                    qtdPdf: data.partCount,
+                    qtdApontar: data.partCount
+                });
+
+                renderPendingApontamentosTable();
+                pdfFile.value = "";
+                showToast("success", `PDF ${file.name} processado e adicionado à lista.`);
+            }
+
+            // --- Event Listener Principal ---
+            processPdfBtn.addEventListener("click", async () => {
+                // Validações iniciais
+                if (!currentSelectedOfData) {
+                    showToast("error", "Nenhuma OF selecionada para o apontamento.");
+                    return;
+                }
+
+                if (!pdfFile.files.length) {
+                    showToast("error", "Selecione um arquivo PDF para processar.");
+                    return;
+                }
+
+                const file = pdfFile.files[0];
+                const originalBtnText = "2. Processar e Adicionar PDF à Lista";
+
+                setBtnLoading(processPdfBtn, true, originalBtnText);
+                clearPdfResults();
+
+                try {
+                    // Extrai texto do PDF
+                    const fullText = await extractTextFromPdf(file);
+
+                    // Extrai dados específicos
+                    const extractedData = extractDataFromText(fullText);
+
+                    // Exibe dados extraídos
+                    displayExtractedData(extractedData, fullText);
+
+                    // Valida dados essenciais
+                    validateExtractedData(extractedData);
+
+                    // Adiciona à lista de apontamentos pendentes
+                    addToPendingList(file, extractedData);
+
+                } catch (error) {
+                    console.error("Erro detalhado ao processar PDF:", error);
+                    showToast("error", `Erro ao processar PDF: ${error.message}`);
+                } finally {
+                    setBtnLoading(processPdfBtn, false, originalBtnText);
+                }
+            });
+
+            // --- Renderização da Tabela ---
+            function renderPendingApontamentosTable() {
+                pendingApontamentosBody.innerHTML = "";
+
+                if (pendingApontamentos.length === 0) {
+                    pendingApontamentosTable.style.display = "none";
+                    return;
+                }
+
+                pendingApontamentosTable.style.display = "table";
+
+                pendingApontamentos.forEach((item, index) => {
+                    const row = pendingApontamentosBody.insertRow();
+
+                    // Células básicas
+                    row.insertCell().textContent = item.pdfFileName;
+                    row.insertCell().textContent = item.startTime;
+                    row.insertCell().textContent = item.totalTime;
+                    row.insertCell().textContent = item.qtdPdf;
+
+                    // Célula com input para quantidade a apontar
+                    const qtdApontarCell = row.insertCell();
+                    const qtdInput = createQuantityInput(item.qtdApontar, index);
+                    qtdApontarCell.appendChild(qtdInput);
+                });
+
+                updateTotals();
+                updateApontamentoControlButtons();
+            }
+
+            function createQuantityInput(value, index) {
+                const qtdInput = document.createElement("input");
+                qtdInput.type = "number";
+                qtdInput.value = value;
+                qtdInput.min = "0";
+                qtdInput.dataset.index = index;
+
+                qtdInput.addEventListener("change", (e) => {
+                    const newQtd = parseInt(e.target.value, 10);
+                    const itemIndex = parseInt(e.target.dataset.index, 10);
+
+                    if (!isNaN(newQtd) && newQtd >= 0) {
+                        pendingApontamentos[itemIndex].qtdApontar = newQtd;
+                    } else {
+                        e.target.value = pendingApontamentos[itemIndex].qtdApontar;
+                    }
+
+                    updateTotals();
+                });
+
+                return qtdInput;
+            }
+
+            // --- Atualização de Totais ---
+            function updateTotals() {
+                const totals = calculateTotals();
+
+                totalQtdPdf.textContent = totals.qtdPdf;
+                totalQtdApontar.textContent = totals.qtdApontar;
+                totalTempoAcumulado.textContent = formatTime(totals.timeMs);
+            }
+
+            function calculateTotals() {
+                let qtdPdf = 0;
+                let qtdApontar = 0;
+                let timeMs = 0;
+
+                pendingApontamentos.forEach(item => {
+                    qtdPdf += item.qtdPdf;
+                    qtdApontar += item.qtdApontar;
+
+                    if (item.totalTime !== "Não encontrado") {
+                        timeMs += parseTimeToMs(item.totalTime);
+                    }
+                });
+
+                return { qtdPdf, qtdApontar, timeMs };
+            }
+
+            function parseTimeToMs(timeString) {
+                const timeParts = timeString.match(/(\d{2}):(\d{2}):(\d{2})\.(\d{3})/);
+
+                if (!timeParts) return 0;
+
+                const hours = parseInt(timeParts[1]);
+                const minutes = parseInt(timeParts[2]);
+                const seconds = parseInt(timeParts[3]);
+                const milliseconds = parseInt(timeParts[4]);
+
+                return (hours * 3600 + minutes * 60 + seconds) * 1000 + milliseconds;
+            }
+
+            function formatTime(milliseconds) {
+                const hours = Math.floor(milliseconds / 3600000);
+                const minutes = Math.floor((milliseconds % 3600000) / 60000);
+                const seconds = Math.floor((milliseconds % 60000) / 1000);
+                const ms = milliseconds % 1000;
+
+                return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(ms).padStart(3, "0")}`;
+            }
+
+            // --- Event Listeners para Botões de Controle ---
+            startApontamentoBtn.addEventListener("click", async () => {
+                if (!currentSelectedOfData || !currentOperatorCode) {
+                    showToast("error", "Dados da OF ou do operador não carregados.");
+                    return;
+                }
+                startApontamentoBtn.disabled = true; // Desabilita imediatamente
+                try {
+                    const result = await callApi("/start", "POST", {
+                        of_id: currentSelectedOfData.SOC_CODIOF,
+                        empresa_id: currentSelectedOfData.SOC_EMPRESA,
+                        operator_code: currentOperatorCode,
+                        // Usar SOC_CODSEQ para o campo operac, conforme esperado pelo backend
+                        operac: currentSelectedOfData.SOC_CODSEQ || null,
+                        codtur: currentSelectedOfData.SOC_CODTUR || null
+                    });
+                    if (result.success && result.apontamento_id) {
+                        currentApontamentoId = result.apontamento_id;
+                        currentApontamentoState = "started";
+                        showToast("success", `Apontamento ${currentApontamentoId} iniciado para OF ${currentSelectedOfData.SOC_CODIOF}.`);
+                        updateApontamentoControlButtons();
+                    } else {
+                        throw new Error(result.error || "Falha ao iniciar apontamento no backend.");
+                    }
+                } catch (error) {
+                    startApontamentoBtn.disabled = false; // Reabilita em caso de erro
+                }
+            });
+
+            pauseApontamentoBtn.addEventListener("click", async () => {
+                if (currentApontamentoState !== "started" || !currentApontamentoId) {
+                    showToast("error", "Nenhum apontamento ativo para pausar.");
+                    return;
+                }
+                pauseApontamentoBtn.disabled = true; // Desabilita imediatamente
+                try {
+                    const result = await callApi("/pause", "POST", {
+                        apontamento_id: currentApontamentoId
+                    });
+                    if (result.success) {
+                        currentApontamentoState = "paused";
+                        showToast("success", `Apontamento ${currentApontamentoId} pausado.`);
+                        updateApontamentoControlButtons();
+                        // Importante: Resetar currentApontamentoId aqui? Não, pois pode ser necessário para finalizar.
+                        // O fluxo de retomada cria um novo registro, então o estado "paused" aqui
+                        // significa que este ID específico está pausado.
+                        // Ao clicar em "Iniciar" novamente, um novo ID será gerado.
+                    } else {
+                        throw new Error(result.error || "Falha ao pausar apontamento no backend.");
+                    }
+                } catch (error) {
+                    pauseApontamentoBtn.disabled = false; // Reabilita em caso de erro, mas só se ainda estiver 'started'
+                    if (currentApontamentoState === 'started') pauseApontamentoBtn.disabled = false;
+                }
+            });
+
+            // MODAL DE QUANTIDADE - FUNÇÕES
+            let resolveCallback = null;
+
+            function showQuantityModal() {
+                return new Promise((resolve) => {
+                    resolveCallback = resolve;
+                    const overlay = document.getElementById('modalOverlay');
+                    const input = document.getElementById('quantityInput');
+
+                    // Reset input
+                    input.value = '';
+                    input.classList.remove('error');
+                    document.getElementById('errorMessage').classList.remove('show');
+
+                    // Show modal
+                    overlay.classList.add('active');
+
+                    // Focus input após animação
+                    setTimeout(() => {
+                        input.focus();
+                    }, 300);
+                });
+            }
+
+            function closeModal() {
+                const overlay = document.getElementById('modalOverlay');
+                overlay.classList.remove('active');
+
+                if (resolveCallback) {
+                    resolveCallback(null); // Usuário cancelou
+                    resolveCallback = null;
+                }
+            }
+
+            function confirmQuantity() {
+                const input = document.getElementById('quantityInput');
+                const value = input.value.trim();
+                const numValue = parseFloat(value);
+
+                // Validação
+                if (!value || isNaN(numValue) || numValue < 0) {
+                    showError();
+                    return;
+                }
+
+                // Sucesso
+                const overlay = document.getElementById('modalOverlay');
+                overlay.classList.remove('active');
+
+                if (resolveCallback) {
+                    resolveCallback(numValue);
+                    resolveCallback = null;
+                }
+            }
+
+            function showError() {
+                const input = document.getElementById('quantityInput');
+                const errorMsg = document.getElementById('errorMessage');
+                const modal = document.querySelector('.modal');
+
+                input.classList.add('error');
+                errorMsg.classList.add('show');
+                modal.classList.add('shake');
+
+                // Remove shake animation
+                setTimeout(() => {
+                    modal.classList.remove('shake');
+                }, 300);
+
+                // Focus input
+                input.focus();
+            }
+
+            // Função para usar no código (substitui o prompt)
+            async function getQuantityInput() {
+                const qtdRealizada = await showQuantityModal();
+                if (qtdRealizada === null) return null; // Usuário cancelou
+                return qtdRealizada;
+            }
+
+            // Event listeners para o modal
+            document.getElementById('quantityInput').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    confirmQuantity();
+                } else if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Remove error on input
+            document.getElementById('quantityInput').addEventListener('input', function () {
+                this.classList.remove('error');
+                document.getElementById('errorMessage').classList.remove('show');
+            });
+
+            // Close modal on overlay click
+            document.getElementById('modalOverlay').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // USANDO MODAL NO APONTAMENTO MANUAL
+            manualFinishApontamentoBtn.addEventListener("click", async () => {
+                if (currentApontamentoState !== "started" || !currentApontamentoId) {
+                    showToast("error", "Nenhum apontamento ativo para finalizar manualmente.");
+                    return;
+                }
+
+                // Usar modal em vez de prompt
+                const qtdRealizada = await getQuantityInput();
+                if (qtdRealizada === null) return; // Usuário cancelou
+
+                // Verificar se a quantidade é válida (já feita no modal, mas double-check)
+                if (isNaN(qtdRealizada) || qtdRealizada < 0) {
+                    showToast("error", "Quantidade inválida. Informe um número inteiro não negativo.");
+                    return;
+                }
+
+                manualFinishApontamentoBtn.disabled = true; // Desabilita imediatamente
+                try {
+                    const result = await callApi("/finish", "POST", {
+                        apontamento_id: currentApontamentoId,
+                        quantidade_boa: qtdRealizada
+                    });
+                    if (result.success) {
+                        showToast("success", `Apontamento ${currentApontamentoId} finalizado manualmente com quantidade ${qtdRealizada}.`);
+                        currentApontamentoState = "idle";
+                        currentApontamentoId = null;
+                        updateApontamentoControlButtons();
+                        pendingApontamentos = [];
+                        renderPendingApontamentosTable();
+                    } else {
+                        throw new Error(result.error || "Falha ao finalizar apontamento no backend.");
+                    }
+                } catch (error) {
+                    manualFinishApontamentoBtn.disabled = false; // Reabilita em caso de erro, mas só se ainda estiver 'started'
+                    if (currentApontamentoState === 'started') manualFinishApontamentoBtn.disabled = false;
+                }
+            });
+
+            // --- Confirma Todos os Apontamentos Pendentes ---
+            confirmAllPendingBtn.addEventListener("click", async () => {
+                    console.log("[1] Botão clicado - Início da função");
+
+                    try {
+                        console.log("[2] Verificando pendentes:", pendingApontamentos.length);
+
+                        if (pendingApontamentos.length === 0) {
+                            console.log("[3] Nenhum apontamento pendente");
+                            showToast("info", "Nenhum apontamento pendente para confirmar.");
+                            return;
+                        }
+
+                        console.log("[4] Verificando estado do apontamento:", currentApontamentoState);
+
+                        if (currentApontamentoState !== "started" || !currentApontamentoId) {
+                            console.log("[5] Apontamento não está ativo");
+                            showToast("error", "Nenhum apontamento ativo para associar estas confirmações.");
+                            return;
+                        }
+
+                        console.log("[6] Preparando payload");
+
+                        // Mostrar estado de carregamento
+                        const originalText = confirmAllPendingBtn.innerHTML;
+                        confirmAllPendingBtn.disabled = true;
+                        confirmAllPendingBtn.innerHTML = "Confirmando... <span class=\"loading\"></span>";
+
+                        // Preparar os dados
+                        const payload = {
+                            apontamento_id: currentApontamentoId,
+                            operator_code: currentOperatorCode,
+                            soc_empresa: currentSelectedOfData.SOC_EMPRESA,
+                            soc_codseq: currentSelectedOfData.SOC_CODSEQ,
+                            items: pendingApontamentos.map(item => ({
+                                start_time: item.startTime,
+                                total_time: item.totalTime,
+                                qtd_apontar: item.qtdApontar
+                            }))
+                        };
+
+                        console.log("[7] Payload preparado:", JSON.stringify(payload, null, 2));
+
+                        console.log("[8] Enviando para API");
+                        const res = await fetch(`${API_BASE_URL}/api/laser/apontamento/confirm_batch`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload)
+                        });
+
+                        console.log("[9] Resposta recebida. Status:", res.status);
+
+                        const json = await res.json();
+                        console.log("[10] Resposta JSON:", json);
+
+                        if (!res.ok || !json.success) {
+                            throw new Error(json.error || "Erro ao confirmar os apontamentos");
+                        }
+
+                        console.log("[11] Sucesso! Atualizando estado");
+
+                        // Sucesso!
+                        showToast("success", "Todos os PDFs confirmados com sucesso!");
+
+                        // Limpar lista de pendentes
+                        pendingApontamentos = [];
+                        renderPendingApontamentosTable();
+
+                        // Finalizar o apontamento
+                        currentApontamentoState = "idle";
+                        currentApontamentoId = null;
+                        updateApontamentoControlButtons();
+
+                    } catch (error) {
+                        console.error("[ERROR] Erro ao confirmar lote:", error);
+                        showToast("error", `Erro: ${error.message}`);
+                    } finally {
+                        console.log("[12] Finalizando - Restaurando botão");
+                        // Restaurar estado do botão
+                        if (confirmAllPendingBtn) {
+                            confirmAllPendingBtn.disabled = false;
+                            confirmAllPendingBtn.innerHTML = "Confirmar Todos os Apontamentos Pendentes";
+                        }
+                    }
+                    });
+
+            // --- Voltar para Sequenciamento ---
+            finishApontamentoBtn.addEventListener("click", async () => {
+                let proceed = true;
+                // Aviso 1: Apontamento ativo não pausado/finalizado?
+                if (currentApontamentoState === "started") {
+                    // Usamos showToast para aviso não bloqueante, mas pedimos confirmação bloqueante
+                    // para garantir que o usuário veja antes de sair.
+                    showToast("info", `Atenção: Existe um apontamento iniciado para a OF ${currentSelectedOfData?.SOC_CODIOF} que não foi pausado ou finalizado.`, 10000);
+                    proceed = await askConfirmation(`Atenção: Existe um apontamento iniciado para a OF ${currentSelectedOfData?.SOC_CODIOF} que não foi pausado ou finalizado. Deseja sair mesmo assim?`);
+                    if (!proceed) return;
+                }
+
+                // Aviso 2: PDFs pendentes de confirmação?
+                if (proceed && pendingApontamentos.length > 0) {
+                    showToast("info", `Atenção: Existem ${pendingApontamentos.length} apontamento(s) de PDF pendentes de confirmação para a OF ${currentSelectedOfData?.SOC_CODIOF}.`, 10000);
+                    proceed = await askConfirmation(`Atenção: Existem ${pendingApontamentos.length} apontamento(s) de PDF pendentes de confirmação para a OF ${currentSelectedOfData?.SOC_CODIOF}. Deseja sair mesmo assim?`);
+                    if (!proceed) return;
+                }
+
+                // Se passou pelas confirmações ou não havia avisos
+                showDashboard();
+            });
+
+            function showDashboard() {
+                apontamentoSection.style.display = "none";
+                dashboard.style.display = "block";
+                // Resetar estado do apontamento ao voltar? Sim, para garantir consistência.
+                currentSelectedOfData = null;
+                pendingApontamentos = [];
+                renderPendingApontamentosTable();
+                currentApontamentoState = "idle";
+                currentApontamentoId = null;
+                // Não precisa chamar updateApontamentoControlButtons pois a seção está oculta
+                // Recarregar sequenciamento para refletir Qtd Realizada?
+                // loadSequencing(); // Opcional, pode ser pesado. Melhor deixar o usuário clicar em carregar se quiser.
+            }
+
+            // --- Inicialização ---
+            function init() {
+                // Esconder seções exceto login
+                if (dashboard) dashboard.style.display = "none";
+                if (apontamentoSection) apontamentoSection.style.display = "none";
+                if (loginSection) loginSection.style.display = "block";
+                // Inicializar estado dos botões de apontamento (eles começam desabilitados no HTML ou via JS)
+                // Chamada inicial para garantir estado correto dos botões na seção de apontamento
+                updateApontamentoControlButtons();
+            }
+
+            // Chama a inicialização quando o script carrega
+            document.addEventListener("DOMContentLoaded", function () {
+                init();
+            });
+        </script>
+</body>
+
+</html>

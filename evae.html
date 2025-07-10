@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empacotadeira EVAeNH1000 - Novo Horizonte</title>
+    <link rel="stylesheet" href="/css/whatsapp-flutuante.css">
+    <script defer src="/scripts/whatsapp-flutuante.js"></script>
+    <!--CSS do menu lateral-->
+    <link rel="stylesheet" href="../../menu/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS do seu rodapé -->
+    <link rel="stylesheet" href="../../footer-rodape/footer.css">
+    
+    <!-- CDNs necessários -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #e30613;
+            --dark-gray: #333;
+            --light-gray: #f5f5f5;
+            --white: #fff;
+            --bp-sm: 576px;
+            --bp-md: 768px;
+            --bp-lg: 992px;
+            --bp-xl: 1200px;
+
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--dark-gray);
+            background-color: var(--white);
+            line-height: 1.5;
+            padding: 0.5rem;
+        }
+
+        .hero-section {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 1rem auto;
+            max-width: 1200px;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+            overflow: visible;
+        }
+
+        .hero-text {
+            flex: 1;
+            margin-right: 0.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 10.2rem;
+            font-weight: bold;
+            white-space: nowrap;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            /* Mantenha todas as propriedades existentes */
+            text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3); /* Nova propriedade */
+        }
+
+        .hero-subtitle {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary-red);
+            margin-top: -4.2rem;
+            margin-left: 0.5rem;
+            position: relative;
+            z-index: 2;
+            /* Mantenha todas as propriedades existentes */
+            /*text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3); /* Nova propriedade */
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin: 1.3rem 0 1.5rem;
+            max-width: 60%;
+            /* quebra texto para não invadir imagem */
+        }
+
+        .hero-features {
+            list-style: none;
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-features li {
+            font-size: 1.2rem; /* Tamanho aumentado */
+            margin-bottom: 0.2rem; /* Espaçamento melhorado */
+            padding-left: 2rem; /* Ajuste para o marcador */
+        }
+
+        .hero-features li::before {
+            left: 0.5rem; /* Posicionamento do traço */
+            font-size: 1.2rem; /* Tamanho do marcador */
+            top: -0.1rem; /* Alinhamento vertical */
+        }
+
+        .hero-features li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.2rem;
+            font-size: 1.1rem;
+        }
+
+        .hero-features li::before {
+            content: '-';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--dark-gray);
+            font-size: 1.2rem;
+            top: -0.1rem;
+        }
+
+        .accent-text {
+            color: var(--primary-red);
+            padding: 1rem;
+            max-width: 45%;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--primary-red);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            font-size: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+
+        .btn-primary:hover {
+            background: #c10d0f;
+        }
+
+        .thumbs-text {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--dark-gray);
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0);
+            animation: popIn 0.5s ease-out forwards;
+            /* Novas propriedades adicionadas */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 1.4); /* Curva de animação mais suave */
+        }
+
+        .thumbnail:nth-child(1) {
+            animation-delay: 0.4s;
+        }
+
+        .thumbnail:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .thumbnail:nth-child(3) {
+            animation-delay: 0.8s;
+        }
+
+        .thumbnail.active,
+        .thumbnail:hover {
+            border-color: var(--primary-red);
+            transform: scale(1.15); /* Aumente o scale para dar mais ênfase */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra mais intensa no hover */
+            z-index: 10; /* Garante que a miniatura expandida fique sobreposta */
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-images {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
+
+        .main-image {
+                width: 470%; /* ajustar o percentual conforme o efeito desejado */
+                max-width: none; /* garante que o width seja respeitado */
+                border-radius: 8px;
+                opacity: 1;
+                cursor: zoom-in;
+                transition: all 0.4s ease;
+                position: absolute;
+                top: 27px; /* mover para cima e sobrepor */
+                right: -80%; /* deslocar sobre o título */
+                z-index: 3;
+            }
+
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .lightbox-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 1.5rem;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra menor */
+            }
+            
+            .hero-subtitle {
+                font-size: 3.5rem;
+                margin-top: -3rem;
+            }
+            
+            .main-image {
+                right: 450%;
+                width: -90%;
+            }
+        }
+
+    @media (max-width: 992px) {
+        .hero-title {
+            font-size: 4.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 3rem;
+        }
+        
+        .main-image {
+            right: -400%;
+            width: -80%;
+        }
+        
+        .thumbnail {
+            width: 70px;
+            height: 70px;
+        }
+        .hero-features li {
+            font-size: 1.4rem;
+            padding-left: 1.8rem;
+        }
+
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 3.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra mínima */
+            white-space: normal; /* Quebra de linha */
+        }
+        
+        .hero-subtitle {
+            font-size: 2.2rem;
+            margin-top: -1.5rem;
+        }
+        
+        .hero-description {
+            font-size: 1.4rem;
+        }
+        
+        .accent-text {
+            max-width: 100%;
+            font-size: 1.6rem;
+        }
+        
+        .main-image {
+            position: relative;
+            width: 100%;
+            right: 0;
+            transform: none !important; /* Desativa zoom em mobile */
+        }
+        
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .thumbs-text {
+            flex-wrap: wrap;
+        }
+        .hero-features li {
+            font-size: 1.3rem;
+            padding-left: 1.6rem;
+        }
+        .hero-features li::before {
+            font-size: 1.6rem;
+        }
+            .hero-section {
+                flex-direction: column;
+            }
+
+            .hero-text {
+                margin-right: 0;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 2.2rem;
+                margin-top: -2.5rem;
+            }
+
+            .hero-description {
+                max-width: 100%;
+            }
+
+            .hero-images {
+                margin-top: 2rem;
+            }
+
+            .main-image {
+                position: relative;
+                width: 100%;
+                right: 0;
+                top: 0;
+            }
+
+            .thumbs-text {
+                justify-content: center;
+            }
+        }       
+
+    @media (max-width: 576px) {
+        .hero-title {
+            font-size: 2.8rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.8rem;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .thumbnail {
+            width: 50px;
+            height: 50px;
+        }
+        
+        /* Ajuste fino na animação para mobile */
+        .thumbnail:hover {
+            transform: scale(1.05) !important;
+        }
+
+        .hero-features li {
+            font-size: 1.2rem;
+            padding-left: 1.4rem;
+        }
+        
+        .hero-features li::before {
+            font-size: 1.4rem;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <!-- Logo miniatura (sempre visível quando menu recolhido) -->
+            <a href="../../index.html" class="logo-icon default-logo">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+    
+            <!-- Logo completa (visível apenas quando menu expandido) -->
+            <h2 class="expanded-logo">
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+        </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link active" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                        <a href="#" class="nav-link">Reposição</a>
+                        -->
+                    <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nós">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Sobre nós</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item">
+                <a href="../../login.html" class="nav-link" title="Login">
+                    <span class="nav-icon"><i class="fas fa-user"></i></span>
+                    <span class="nav-text">Login</span>
+                </a>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="contatos-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="contatos-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="contatos.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+    <section class="hero-section">
+        <div class="hero-text">
+            <h1 class="hero-title">EVANH1000e</h1>
+            <h2 class="hero-subtitle">Empacotadeira Elétrica</h2>
+            <p class="hero-description"></p>
+            <ul class="hero-features">
+                <li>Ecológicas</li>
+                <li>Livres de contaminantes</li>
+                <li>Mais eficientes</li>
+            </ul>
+            <div class="accent-text">
+                A NH desenvolveu uma tecnologia exclusiva para máquinas de empacotamento que elimina o uso do ar
+                comprimido por completo.
+            </div>
+            <a href="https://www.nh.ind.br/catalogo/EVAeNH1000.pdf" class="btn-primary" target="_blank">Ver Catálogo</a>
+            <div class="thumbs-text">
+                <div class="thumbnail active"><img src="/Imgs/maquinas-produtos/Empacotadeira/EMA12001.png"
+                        alt="Vista frontal"></div>
+                <div class="thumbnail"><img src="/Imgs/maquinas-produtos/Empacotadeira/EMA12002.png"
+                        alt="Detalhe painel"></div>
+                <div class="thumbnail"><img src="/Imgs/maquinas-produtos/Empacotadeira/EMA12004.png"
+                        alt="Visão lateral"></div>
+            </div>
+        </div>
+        <div class="hero-images">
+            <img src="/Imgs/maquinas-produtos/Empacotadeira/EMA12001.png" class="main-image"
+                alt="Empacotadeira Elétrica EVAeNH1000">
+        </div>
+    </section>
+    <div class="lightbox-overlay" id="lightbox">
+        <img id="lightbox-img" src="" alt="Ampliação">
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="site-footer">
+        <!-- Conteúdo principal do rodapé -->
+        <div class="footer-main-content">
+            <div class="container">
+                <div class="footer-content">
+                    <!-- Coluna 1: Logo e descrição -->
+                    <div class="footer-column">
+                        <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                        <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                        <div class="social-icons">
+                            <a href="#" target="_blank" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" target="_blank" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                                target="_blank" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a href="../../politica-privacidade.html"
+                                style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                                Política de Privacidade
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Coluna 2: Contato -->
+                    <div class="footer-column">
+                        <h5>Contato</h5>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                                target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                                Rua Dorival Faveri, 214<br>
+                                Jd. do Lago, Limeira-SP<br>
+                                CEP: 13481-604
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                                +55 (19) 3451-2822
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                                vendas@nh.ind.br
+                            </a>
+                        </p>
+                    </div>
+    
+                    <!-- Coluna 3: Links úteis -->
+                    <div class="footer-column">
+                        <h5>Links Úteis</h5>
+                        <ul class="footer-links">
+                            <li><a href="../../index.html">Início</a></li>
+                            <li><a href="../../sobre.html">Sobre Nós</a></li>
+                            <li><a href="../../produtos.html">Produtos</a></li>
+                            <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                            <li><a href="../../contatos.html">Contato</a></li>
+                            <li><a href="../../login.html">Login/ERP</a></li>
+                        </ul>
+                    </div>
+    
+                    <!-- Coluna 4: Vazia ou pode ser removida -->
+                    <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- Seção de financiadores -->
+        <div class="financiadores-section">
+            <div class="container">
+                <div class="financiadores-logos">
+                    <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                    <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                    <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                    <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <div class="footer-copyright-section">
+            <div class="container">
+                <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                    direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Atualizar ano automaticamente
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    
+    <script>
+        const thumbs = document.querySelectorAll('.thumbnail');
+        const mainImg = document.querySelector('.main-image');
+        const lightbox = document.getElementById('lightbox');
+        const lightImg = document.getElementById('lightbox-img');
+        thumbs.forEach(th => {
+            th.addEventListener('click', () => {
+                thumbs.forEach(t => t.classList.remove('active'));
+                th.classList.add('active');
+                const src = th.querySelector('img').src;
+                mainImg.style.opacity = 0;
+                setTimeout(() => { mainImg.src = src; mainImg.style.opacity = 1; }, 300);
+            });
+        });
+        mainImg.addEventListener('click', () => { lightImg.src = mainImg.src; lightbox.style.display = 'flex'; });
+        lightbox.addEventListener('click', () => lightbox.style.display = 'none');
+    </script>
+</body>
+
+</html>

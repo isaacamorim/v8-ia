@@ -1,0 +1,554 @@
+<!--testar Responsividade -->
+<!--deixar em baixo o cadastro -->
+<!--colocar o link certo no Cadastro -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Produtos</title>
+
+    <link href="css/products.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" async></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" async></script>
+    <script src="scripts/jScript-header.js" async></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js" async></script>
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js" async></script>
+    <link rel="stylesheet" href="/css/whatsapp-flutuante.css">
+    <script defer src="/scripts/whatsapp-flutuante.js"></script>
+    <!--CSS do menu lateral-->
+    <link rel="stylesheet" href="../../menu/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS do seu rodapé -->
+    <link rel="stylesheet" href="../../footer-rodape/footer.css">
+    
+    <!-- CDNs necessários -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #d52029;
+            --secondary-color: #B4252C;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f5f5f7;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-color: #e0e0e0;
+            --primary-light: #ffe0e0;
+            /* Indigo-100 */
+            --text-default: #513737;
+            /* Gray-700 */
+            --text-inverse: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+
+
+        /* Cabeçalho fixo e responsivo */
+        .header {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            padding: 10px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            max-height: 40px;
+            width: auto;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon img {
+            height: 30px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: yellow;
+            color: var(--primary-color);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Área de status do cliente (abaixo do cabeçalho) */
+        .client-status {
+            text-align: center;
+            background-color: var(--bg-white);
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .client-status a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Conteúdo principal */
+        .content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filters {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            background-color: var(--bg-white);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .product-card {
+            background-color: var(--bg-white);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            object-fit: contain;
+            margin: 0 auto 10px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-code {
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .view-details {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: auto;
+        }
+
+        .view-details:hover {
+            background-color: #a70000;
+        }
+
+        #noProductsMessage {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-primary);
+            display: none;
+        }
+
+        /* Ajustes para dispositivos menores */
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo-container,
+            .cart-icon {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Menu Lateral -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+    </button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <aside id="sidebar" class="sidebar-container">
+        <div class="sidebar-header">
+            <!-- Logo miniatura (sempre visível quando menu recolhido) -->
+            <a href="../../index.html" class="logo-icon default-logo">
+                <img src="../../Imgs/favicon-32x32.png" alt="Logo Min">
+            </a>
+    
+            <!-- Logo completa (visível apenas quando menu expandido) -->
+            <h2 class="expanded-logo">
+                <a href="../../index.html">
+                    <img src="../../Imgs/logo-normal.png" alt="Logo Completa">
+                </a>
+            </h2>
+        </div>
+    
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="../../index.html" class="nav-link active" title="Início">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Início</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-box-open"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <!--
+                        <a href="#" class="nav-link">Reposição</a>
+                        -->
+                    <a href="../../beneficiamento.html" class="nav-link">Beneficiamento</a>
+                    <a href="../../empacotamento.html" class="nav-link">Empacotamento</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nós">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Sobre nós</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Sobre nós</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Trabalhe conosco</a>
+                </div>
+            </div>
+    
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Reposição">
+                    <span class="nav-icon"><i class="fas fa-info-circle menu-icon"></i></span>
+                    <span class="nav-text">Repocição</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="../../sobre.html" class="nav-link">Catalogo</a>
+                    <a href="../../trabalhe_conosco.html" class="nav-link">Carrinho</a>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="contatos-en.html" hreflang="en-us">
+                    <img src="../../Imgs/bandeiras/ingles.png" alt="English" title="English" />
+                </a>
+                <a href="contatos-es.html" hreflang="es">
+                    <img src="../../Imgs/bandeiras/espanhol.png" alt="Español" title="Español" />
+                </a>
+                <a href="contatos.html" hreflang="pt-br">
+                    <img src="../../Imgs/bandeiras/portugues.png" alt="Português" title="Português" />
+                </a>
+            </div>
+        </div>
+    
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+
+    <!-- Área de status do cliente -->
+    <div class="client-status" id="clientStatus">
+        <!-- Conteúdo será definido via JavaScript -->
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <h1>Catálogo de Produtos</h1>
+
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">Todos</button>
+            <button class="filter-btn" data-category="EVA">EVA</button>
+            <button class="filter-btn" data-category="ENF">ENF</button>
+            <button class="filter-btn" data-category="Sensores">Sensores</button>
+            <button class="filter-btn" data-category="Fita">Fita</button>
+            <button class="filter-btn" data-category="Disjuntores">Disjuntores</button>
+            <button class="filter-btn" data-category="Datador">Datador</button>
+            <button class="filter-btn" data-category="Solda Vertical/Horizontal">Solda Vertical/Horizontal</button>
+            <button class="filter-btn" data-category="Polidor">Polidor</button>
+            <button class="filter-btn" data-category="Correia">Correia</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <!-- Cards serão inseridos via JavaScript -->
+        </div>
+
+        <p id="noProductsMessage">Nenhum produto encontrado para esta categoria.</p>
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="site-footer">
+        <!-- Conteúdo principal do rodapé -->
+        <div class="footer-main-content">
+            <div class="container">
+                <div class="footer-content">
+                    <!-- Coluna 1: Logo e descrição -->
+                    <div class="footer-column">
+                        <img src="../../imgs/logo-white.png" alt="Logo Novo Horizonte" class="footer-logo">
+                        <p>Desde 1981, transformando o agronegócio com tecnologia 100% nacional.</p>
+                        <div class="social-icons">
+                            <a href="#" target="_blank" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" target="_blank" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@maquinasnh" target="_blank" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://br.linkedin.com/company/industria-de-maquinas-agricolas-novo-horizonte"
+                                target="_blank" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a href="../../politica-privacidade.html"
+                                style="color: #f0f0f0; text-decoration: none; font-size: 0.9em;">
+                                Política de Privacidade
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Coluna 2: Contato -->
+                    <div class="footer-column">
+                        <h5>Contato</h5>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <a href="https://maps.google.com/?q=Rua+Dorival+Faveri,+214,+Jd.+do+Lago,+Limeira-SP,+CEP:+13481-604"
+                                target="_blank" style="color: #f0f0f0; text-decoration: none;">
+                                Rua Dorival Faveri, 214<br>
+                                Jd. do Lago, Limeira-SP<br>
+                                CEP: 13481-604
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+551934512822" style="color: #f0f0f0; text-decoration: none;">
+                                +55 (19) 3451-2822
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:vendas@nh.ind.br" style="color: #f0f0f0; text-decoration: none;">
+                                vendas@nh.ind.br
+                            </a>
+                        </p>
+                    </div>
+    
+                    <!-- Coluna 3: Links úteis -->
+                    <div class="footer-column">
+                        <h5>Links Úteis</h5>
+                        <ul class="footer-links">
+                            <li><a href="../../index.html">Início</a></li>
+                            <li><a href="../../sobre.html">Sobre Nós</a></li>
+                            <li><a href="../../produtos.html">Produtos</a></li>
+                            <li><a href="../../catalogo.html">Catálogo de Peças</a></li>
+                            <li><a href="../../contatos.html">Contato</a></li>
+                            <li><a href="../../login.html">Login/ERP</a></li>
+                        </ul>
+                    </div>
+    
+                    <!-- Coluna 4: Vazia ou pode ser removida -->
+                    <!-- Esta coluna pode ser usada para conteúdo adicional futuro -->
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <!-- Seção de financiadores -->
+        <div class="financiadores-section">
+            <div class="container">
+                <div class="financiadores-logos">
+                    <img src="../../Imgs/creds/pagamento-1.png" alt="Caixa">
+                    <img src="../../Imgs/creds/pagamento-2.png" alt="BNDES">
+                    <img src="../../Imgs/creds/pagamento-3.png" alt="Cartão BNDES">
+                    <img src="../../Imgs/creds/pagamento-4.png" alt="Pronager">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <div class="footer-copyright-section">
+            <div class="container">
+                <p>&copy; <span id="currentYear">2025</span> Indústria de Máquinas Agrícolas Novo Horizonte Ltda. Todos os
+                    direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Atualizar ano automaticamente
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+
+    <script>
+        // Dados dos Produtos
+        const products = [
+            {
+                code: "069.0001",
+                name: "FITA PARA DATADOR 34 MM (PRETA)",
+                category: "Datador",
+                image: "Logo NH.JPG",
+                rating: 4,
+                description: "Virabrequim forjado em aço liga 4340 com alta durabilidade e performance."
+            },
+            {
+                code: "055.0055",
+                name: "TEFLON TAC-TAPE 0,13 C/A PR (35MM X 15MTS) STANDARD",
+                category: "Solda Vertical/Horizontal",
+                image: "peca-002.jpg",
+                rating: 5,
+                description: "Bomba de óleo de alta pressão para aplicações industriais."
+            }
+        ];
+
+        // Função para renderizar os produtos
+        function renderProducts(filter = "all") {
+            const grid = document.getElementById("productGrid");
+            grid.innerHTML = "";
+            let found = false;
+
+            products.forEach(product => {
+                if (filter === "all" || product.category === filter) {
+                    found = true;
+                    const card = document.createElement("div");
+                    card.className = "product-card";
+
+                    const img = document.createElement("img");
+                    img.src = product.image;
+                    img.alt = product.name;
+                    img.className = "product-image";
+                    card.appendChild(img);
+
+                    const name = document.createElement("div");
+                    name.className = "product-name";
+                    name.textContent = product.name;
+                    card.appendChild(name);
+
+                    const code = document.createElement("div");
+                    code.className = "product-code";
+                    code.textContent = `Código: ${product.code}`;
+                    card.appendChild(code);
+
+                    const btn = document.createElement("button");
+                    btn.className = "view-details";
+                    btn.textContent = "Ver Detalhes";
+                    btn.onclick = () => window.location.href = `detalhes.html?id=${encodeURIComponent(product.code)}`;
+                    card.appendChild(btn);
+
+                    grid.appendChild(card);
+                }
+            });
+
+            // Exibe mensagem se nenhum produto for encontrado
+            document.getElementById("noProductsMessage").style.display = found ? "none" : "block";
+        }
+
+        // Função para configurar os filtros
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll(".filter-btn");
+            filterButtons.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    filterButtons.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    renderProducts(btn.getAttribute("data-category"));
+                });
+            });
+        }
+
+        // Função para configurar a área de status do cliente
+        function configureClientStatus() {
+            // Simulação: obtém dados do cliente do localStorage, se existir.
+            const cliente = JSON.parse(localStorage.getItem("clienteLogado"));
+            const statusDiv = document.getElementById("clientStatus");
+            if (cliente && cliente.nome) {
+                statusDiv.textContent = "Olá, " + cliente.nome;
+            } else {
+                statusDiv.innerHTML = 'Olá, Visitante - <a href="cadastro.html">Entrar / Cadastrar</a>';
+            }
+        }
+
+        window.onload = () => {
+            configureClientStatus();
+            setupFilters();
+            renderProducts();
+        }
+    </script>
+    <!-- Carregar script do menu CORRETAMENTE -->
+    <script src="../../menu/sidebar.js"></script>
+</body>
+
+</html>

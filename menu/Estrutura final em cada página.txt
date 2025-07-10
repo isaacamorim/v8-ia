@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+Para implementar:
+Substitua os arquivos com os códigos corrigidos acima
+
+Adicione esta classe ao seu conteúdo principal:
+
+html
+<div class="main-content-wrapper">
+  <!-- Seu conteúdo aqui -->
+</div>
+
+
+Como funciona:
+
+Desktop
+
+Clica-se na logo (que agora tem cursor pointer)
+
+Alterna a classe .collapsed em .lateral-menu-desktop (mesma lógica do botão collapse)
+
+Isso expande/recolhe o menu e permite ver/esconder submenus naturalmente.
+
+Mobile
+
+Clica-se na logo dentro de .mobile-header
+
+Alterna a classe open em .mobile-menu-overlay, trazendo o painel mobile para dentro da tela
+
+Também bloqueia o scroll do body com .no-scroll

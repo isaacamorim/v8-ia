@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Lateral Responsivo</title>
+    <link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Botão mobile -->
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Abrir menu lateral">
+        ☰
+    </button>
+
+    <!-- Overlay -->
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon"> <a href="../index.html"><img src="../Imgs/favicon-32x32.png" alt="Novo Horizonte Logo"></span>
+            <h2><span class="logo-icon"> <a href="../index.html"><img src="../Imgs/logo-normal.png" alt="Novo Horizonte Logo"></span></h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#" class="nav-link active" onclick="setActive(this)" title="Inicio">
+                    <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Inicio</span>
+                </a>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Sobre nos">
+                    <span class="nav-icon"><i class="fas fa-building"></i></span>
+                    <span class="nav-text">Sobre nós</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="#" class="nav-link" onclick="setActive(this)">Sobre nós</a>
+                    <a href="#" class="nav-link" onclick="setActive(this)">Trabalhe conosco</a>
+                </div>
+            </div>
+            <div class="nav-item has-submenu">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleSubmenu(this)" title="Produtos">
+                    <span class="nav-icon"><i class="fas fa-boxes"></i></span>
+                    <span class="nav-text">Produtos</span>
+                    <span class="nav-arrow">▼</span>
+                </a>
+                <div class="submenu">
+                    <a href="#" class="nav-link" onclick="setActive(this)">Beneficiamento</a>
+                    <a href="#" class="nav-link" onclick="setActive(this)">Empacotamento</a>
+                    <a href="#" class="nav-link" onclick="setActive(this)">Reposição</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="setActive(this)" title="Contato">
+                    <span class="nav-icon"><i class="fas fa-envelope"></i></span>
+                    <span class="nav-text">Contato</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="setActive(this)" title="Login/ERP">
+                    <span class="nav-icon"><i class="fas fa-lock"></i></span>
+                    <span class="nav-text">Login/ERP</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="language-switcher">
+                <a href="#" hreflang="en-us" target="_self"><img src="../Imgs/bandeiras/ingles.png" alt="English"
+                        title="English"></a>
+                <a href="#" hreflang="es" target="_self"><img src="../Imgs/bandeiras/espanhol.png" alt="Español"
+                        title="Español"></a>
+                <a href="#" hreflang="x-default" target="_self"><img src="../Imgs/bandeiras/portugues.png" alt="Português"
+                        title="Português"></a>
+            </div>
+        </div>
+        <button class="close-btn" onclick="closeSidebar()" aria-label="Fechar menu">✕</button>
+    </aside>
+
+
+
+    <script src="sidebar.js"></script>
+</body>
+
+</html>
