@@ -1,57 +1,43 @@
-@ -1, 56 + 0, 0 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const cnpjInput = document.getElementById('cnpjInput');
-    const checkCnpjBtn = document.getElementById('checkCnpjBtn');
-    const clientStatus = document.getElementById('clientStatus');
-
-    checkCnpjBtn.addEventListener('click', async () => {
-        const documento = cnpjInput.value.trim();
-
-        if (!documento) {
-            alert('Por favor, digite seu CNPJ/CPF');
-            return;
-        }
-
-        try {
-            const response = await fetch('/api/auth/check-cnpj', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ documento })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                if (data.existe) {
-                    if (data.tem_senha) {
-                        // Redirecionar para login
-                        window.location.href = `login.html?cnpj=${documento}`;
-                    } else {
-                        // Primeiro acesso - definir senha
-                        window.location.href = `definir-senha.html?cnpj=${documento}`;
-                    }
-                } else {
-                    clientStatus.innerHTML = `
-                        CNPJ não encontrado. 
-                        <button id="requestAccessBtn">Solicitar Acesso</button>
-                    `;
-
-                    document.getElementById('requestAccessBtn').addEventListener('click', () => {
-                        // Enviar solicitação via WhatsApp
-                        const mensagem = encodeURIComponent(
-                            `Solicitação de acesso para CNPJ: ${documento}`
-                        );
-                        window.open(`https://wa.me/5511999999999?text=${mensagem}`, '_blank');
-                    });
-                }
-            } else {
-                alert('Erro ao verificar CNPJ: ' + data.error);
-            }
-        } catch (error) {
-            console.error('Erro:', error);
-            alert('Erro ao conectar com o servidor');
+/* js/auth.js */
+function verificarCNPJ() {
+    const cnpj = document.getElementById('cnpj').value;
+    fetch('/api/auth/check-cnpj', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cnpj })
+    }).then(r => r.json()).then(res => {
+        if (res.exists) {
+            window.location.href = 'login.html';
+        } else {
+            alert('CNPJ não encontrado. Envie uma mensagem para cadastro.');
         }
     });
-});
+}
+
+function fazerLogin() {
+    const cnpj = document.getElementById('cnpj_login').value;
+    const senha = document.getElementById('senha').value;
+    fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cnpj, senha })
+    }).then(r => {
+        if (r.ok) {
+            window.location.href = 'index.html';
+        } else {
+            alert('Login incorreto');
+        }
+    });
+}
+
+function definirSenha() {
+    const cnpj = document.getElementById('cnpj_definir').value;
+    const nova = document.getElementById('nova_senha').value;
+    fetch('/api/auth/definir-senha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cnpj, senha: nova })
+    }).then(r => {
+        if (r.ok) alert('Senha definida');
+    });
+  }

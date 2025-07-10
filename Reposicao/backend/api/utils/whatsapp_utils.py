@@ -1,46 +1,20 @@
-import requests
-from backend.api.config import Config
+import pywhatkit
+from datetime import datetime
 
 
-def enviar_pedido_whatsapp(pedido):
-    try:
-        mensagem = formatar_mensagem_pedido(pedido)
-
-        # Usando API do Twilio (exemplo)
-        from twilio.rest import Client
-
-        client = Client(Config.TWILIO_ACCOUNT_SID, Config.TWILIO_AUTH_TOKEN)
-
-        message = client.messages.create(
-            body=mensagem,
-            from_="whatsapp:" + Config.TWILIO_WHATSAPP_NUMBER,
-            to="whatsapp:" + Config.EMPRESA_WHATSAPP_NUMBER,
+def enviar_pedido(data: dict) -> bool:
+    cnpj = data.get("cnpj")
+    itens = data.get("itens", [])
+    mensagem = ["🛠️ PEDIDO DE REPOSIÇÃO DE PEÇAS", f"CNPJ: {cnpj}", "�Produtos:"]
+    for i in itens:
+        mensagem.append(
+            f"• Código: {i['codigo']} - {i['descricao']} | Qtd: {i['quantidade']}"
         )
-
-        return True, message.sid
-    except Exception as e:
-        return False, str(e)
-
-
-def formatar_mensagem_pedido(pedido):
-    return f"""
-🛠️ PEDIDO DE REPOSIÇÃO DE PEÇAS
-
-👤 CLIENTE
-CNPJ: {pedido['cliente']['cnpj']}
-Nome: {pedido['cliente']['nome']}
-
-📦 PRODUTOS SOLICITADOS
-{formatar_itens_pedido(pedido['itens'])}
-
-⏰ Data/Hora: {pedido['data']}
-""".strip()
-
-
-def formatar_itens_pedido(itens):
-    return "\n".join(
-        [
-            f"• {item['codigo']} - {item['nome']}\n  Quantidade: {item['quantidade']} unidades"
-            for item in itens
-        ]
-    )
+    mensagem.append(f"⏰ {datetime.now().strftime('%d/%m/%Y %H:%M')}")
+    texto = "\n".join(mensagem)
+    try:
+        # numero configurado na empresa
+        pywhatkit.sendwhatmsg_instantly("+551900000000")
+        return True
+    except Exception:
+        return False

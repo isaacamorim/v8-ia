@@ -1,4 +1,4 @@
-from backend.api.app import db
+from app import db
 
 
 class CarrinhoTemp(db.Model):

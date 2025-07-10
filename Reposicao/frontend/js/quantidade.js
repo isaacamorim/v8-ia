@@ -1,4 +1,3 @@
-@ -1, 25 + 0, 0 @@
 function criarSeletorQuantidade(produto) {
     const container = document.createElement('div');
     container.className = 'quantity-selector';
@@ -10,7 +9,7 @@ function criarSeletorQuantidade(produto) {
     const select = document.createElement('select');
     select.className = 'quantity-select';
 
-    const opcoes = produto.calcularQuantidadesDisponiveis();
+    const opcoes = calcularQuantidadesDisponiveis(produto);
     opcoes.forEach(qtd => {
         const option = document.createElement('option');
         option.value = qtd;
@@ -20,7 +19,4 @@ function criarSeletorQuantidade(produto) {
 
     container.appendChild(select);
     return container;
-}
-
-// Uso na renderização de produtos
-productCard.appendChild(criarSeletorQuantidade(produto));
+}  

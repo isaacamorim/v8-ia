@@ -1,116 +1,36 @@
-from flask import Blueprint, request, jsonify
-from utils.validators import validar_documento, gerar_senha_padrao
-from utils.auth_utils import hash_senha, verificar_senha
-import cx_Oracle
-from datetime import datetime
+from flask import Blueprint, request, jsonify, session
+from app import db, bcrypt
+from models.cliente import Cliente
+from utils.auth_utils import validar_documento, gerar_senha_padrao
 
 auth_bp = Blueprint("auth", __name__)
 
 
 @auth_bp.route("/check-cnpj", methods=["POST"])
 def check_cnpj():
-    documento = request.json.get("documento")
+    data = request.json
+    doc = data.get("cnpj")
+    if not validar_documento(doc):
+        return jsonify({"error": "Documento inválido."}), 400
+    cliente = Cliente.query.filter_by(JND_CODERP=doc).first()
+    if not cliente:
+        # TODO: enviar notificação via WhatsApp sobre novo CNPJ
+        return jsonify({"exists": False}), 200
 
-    valido, tipo = validar_documento(documento)
-    if not valido:
-        return jsonify({"success": False, "error": "Documento inválido"}), 400
-
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            "SELECT END_CODEND, END_RAZAO, JND_ATIVO_PORTAL, JND_SENHA_HASH FROM J_ENDERE WHERE END_CGC = :cgc",
-            [documento],
-        )
-        result = cursor.fetchone()
-
-        if result:
-            cliente_id, razao_social, ativo_portal, senha_hash = result
-            return jsonify(
-                {
-                    "success": True,
-                    "existe": True,
-                    "tem_senha": senha_hash is not None,
-                    "cliente": {
-                        "id": cliente_id,
-                        "nome": razao_social,
-                        "ativo": ativo_portal == "S",
-                    },
-                }
-            )
-        else:
-            return jsonify({"success": True, "existe": False})
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+    if not cliente.JND_SENHA_HASH:
+        padrao = gerar_senha_padrao(doc)
+        cliente.JND_SENHA_HASH = bcrypt.generate_password_hash(padrao).decode()
+        db.session.commit()
+    return jsonify({"exists": True}), 200
 
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    documento = request.json.get("documento")
-    senha = request.json.get("senha")
-
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            "SELECT END_CODEND, END_RAZAO, JND_SENHA_HASH FROM J_ENDERE WHERE END_CGC = :cgc",
-            [documento],
-        )
-        result = cursor.fetchone()
-
-        if result:
-            cliente_id, razao_social, senha_hash = result
-            if verificar_senha(senha, senha_hash):
-                return jsonify(
-                    {
-                        "success": True,
-                        "cliente": {"id": cliente_id, "nome": razao_social},
-                    }
-                )
-            else:
-                return jsonify({"success": False, "error": "Senha incorreta"}), 401
-        else:
-            return jsonify({"success": False, "error": "Documento não encontrado"}), 404
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
-
-
-@auth_bp.route("/definir-senha", methods=["POST"])
-def definir_senha():
-    documento = request.json.get("documento")
-    senha = request.json.get("senha")
-
-    if len(senha) < 4:
-        return (
-            jsonify(
-                {"success": False, "error": "A senha deve ter pelo menos 4 caracteres"}
-            ),
-            400,
-        )
-
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-
-        senha_hash = hash_senha(senha)
-
-        cursor.execute(
-            """
-            UPDATE J_ENDERE 
-            SET JND_SENHA_HASH = :senha_hash,
-                JND_ATIVO_PORTAL = 'S',
-                JND_DATA_CADASTRO_PORTAL = SYSDATE
-            WHERE END_CGC = :cgc
-            """,
-            [senha_hash, documento],
-        )
-
-        if cursor.rowcount == 0:
-            return jsonify({"success": False, "error": "Documento não encontrado"}), 404
-
-        conn.commit()
-        return jsonify({"success": True})
-
-    except Exception as e:
-        conn.rollback()
-        return jsonify({"success": False, "error": str(e)}), 500
+    data = request.json
+    doc = data.get("cnpj")
+    senha = data.get("senha")
+    cliente = Cliente.query.filter_by(JND_CODERP=doc).first()
+    if not cliente or not cliente.check_password(senha, bcrypt):
+        return jsonify({"error": "Credenciais incorretas."}), 401
+    session["cliente"] = cliente.JND_CODERP
+    return jsonify({"message": "Login bem-sucedido."}), 200

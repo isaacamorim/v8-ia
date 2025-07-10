@@ -1,63 +1,22 @@
-@ -1, 62 + 0, 0 @@
-    class CarrinhoManager {
-        constructor() {
-            this.carrinhoKey = 'carrinho_reposicao';
-            this.carregarCarrinho();
-        }
+/* js/carrinho.js */
+function adicionarAoCarrinho(id, descricao, quantidade) {
+    const carrinho = JSON.parse(localStorage.getItem('carrinho_reposicao') || '[]');
+    const existente = carrinho.find(item => item.id === id);
+    if (existente) existente.quantidade += quantidade;
+    else carrinho.push({ id, descricao, quantidade });
+    localStorage.setItem('carrinho_reposicao', JSON.stringify(carrinho));
+    renderizarCarrinho();
+}
 
-        carregarCarrinho() {
-            const carrinhoSalvo = localStorage.getItem(this.carrinhoKey);
-            this.carrinho = carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
-            this.atualizarContador();
-        }
-
-        salvarCarrinho() {
-            localStorage.setItem(this.carrinhoKey, JSON.stringify(this.carrinho));
-            this.atualizarContador();
-        }
-
-        adicionarItem(produto, quantidade) {
-            const itemExistente = this.carrinho.find(item => item.id === produto.id);
-
-            if (itemExistente) {
-                itemExistente.quantidade += quantidade;
-            } else {
-                this.carrinho.push({
-                    id: produto.id,
-                    codigo: produto.codigo,
-                    nome: produto.nome,
-                    quantidade: quantidade,
-                    preco: produto.preco,
-                    imagem: produto.imagem
-                });
-            }
-
-            this.salvarCarrinho();
-        }
-
-        removerItem(id) {
-            this.carrinho = this.carrinho.filter(item => item.id !== id);
-            this.salvarCarrinho();
-        }
-
-        atualizarQuantidade(id, novaQuantidade) {
-            const item = this.carrinho.find(item => item.id === id);
-            if (item) {
-                item.quantidade = novaQuantidade;
-                this.salvarCarrinho();
-            }
-        }
-
-        limparCarrinho() {
-            this.carrinho = [];
-            localStorage.removeItem(this.carrinhoKey);
-            this.atualizarContador();
-        }
-
-        atualizarContador() {
-            const totalItens = this.carrinho.reduce((total, item) => total + item.quantidade, 0);
-            document.getElementById('cartCount').textContent = totalItens;
-        }
-    }
-
-const carrinho = new CarrinhoManager();
+function renderizarCarrinho() {
+    const lista = document.getElementById('lista-carrinho');
+    if (!lista) return;
+    lista.innerHTML = '';
+    const carrinho = JSON.parse(localStorage.getItem('carrinho_reposicao') || '[]');
+    carrinho.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.descricao} - ${item.quantidade}`;
+        lista.appendChild(li);
+    });
+}
+window.onload = renderizarCarrinho;
