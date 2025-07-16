@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify
-from ..services.whatsapp_service import enviar_pedido_whatsapp
-from ..utils.auth_utils import get_cliente_por_id
-from ..models.produto import get_produto_por_id
-import cx_Oracle
+#from ..utils.auth_utils import get_cliente_por_id
+#from ..models.produto import get_produto_por_id
+#import cx_Oracle
 from datetime import datetime
 
 whatsapp_bp = Blueprint("whatsapp", __name__)

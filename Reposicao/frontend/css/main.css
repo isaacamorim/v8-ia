@@ -1,42 +1,235 @@
-< !-- css/main.css -->* {
-    box-sizing: border-box;
+/* Reset básico */
+* {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    box-sizing: border-box;
 }
 
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    padding-bottom: 100px;
+}
+
+/* Cabeçalho */
+header {
+    background-color: #740000;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .client-status {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+header .cnpj-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+header .cnpj-form input {
+    padding: 0.4rem 0.6rem;
+    border: none;
+    border-radius: 4px;
+    width: 200px;
+}
+
+header .cnpj-form button {
+    background-color: rgb(204, 0, 0);
+    color: white;
+    border: none;
+    padding: 0.45rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Container principal */
+.main-container {
+    display: flex;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+/* Filtros */
+.filters {
+    flex: 1;
+    max-width: 200px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.category-filters {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    gap: 0.5rem;
 }
 
-header,
-.filtros {
-    margin-bottom: 1rem;
+.filter-tag {
+    background-color: #eee;
+    padding: 0.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.grid-produtos {
+.filter-tag.active,
+.filter-tag:hover {
+    background-color: #740000;
+    color: white;
+}
+
+/* Grid de produtos */
+.products-section {
+    flex: 3;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1rem;
 }
 
-.produto {
-    border: 1px solid #ccc;
+.product-card {
+    background-color: white;
     padding: 1rem;
+    border: 1px solid #ddd;
     border-radius: 6px;
-    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
 }
 
-#carrinho {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 300px;
-    height: 100vh;
-    background: #fff;
-    border-left: 1px solid #ddd;
+.product-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.product-card .quantidade-input {
+    width: 100%;
+    padding: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.product-card button {
+    background-color: #28a745;
+    color: white;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Sidebar carrinho */
+.cart-sidebar {
+    flex: 1;
+    background-color: #ffffff;
     padding: 1rem;
-    overflow-y: auto;
+    border-left: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 250px;
+}
+
+.cart-sidebar h3 {
+    margin-bottom: 1rem;
+}
+
+.cart-item {
+    background-color: #f1f1f1;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    position: relative;
+}
+
+.cart-item .remove-item {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    border: none;
+    background: transparent;
+    color: #c00;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.finalize-order {
+    width: 100%;
+    background-color: #ff0000;
+    color: white;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.finalize-order:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Notificação */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #740000;
+    color: white;
+    padding: 1rem;
+    border-radius: 6px;
+    display: none;
+    z-index: 1000;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #fff;
+    text-align: center;
+    max-width: 250px;
+    margin: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+.product-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.product-code {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.product-actions button {
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: #008c44;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.product-actions button:hover {
+    background: #6e0000;
 }

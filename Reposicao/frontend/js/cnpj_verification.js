@@ -1,68 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const cnpjForm = document.getElementById('cnpjForm');
-    const cnpjInput = document.getElementById('cnpjInput');
-    const clientStatus = document.getElementById('clientStatus');
-    const clientStatusText = document.getElementById('clientStatusText');
+// frontend/js/cnpj_verification.js
 
-    cnpjForm.addEventListener('submit', async (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('verifyOverlay');
+    const header = document.getElementById('appHeader');
+    const conteudo = document.getElementById('conteudoPrincipal');
+    const statusText = document.getElementById('clientStatusText');
+    const form = document.getElementById('verificacaoRapida');
+
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const cnpj = cnpjInput.value.trim();
-        if (!cnpj) return;
+        const documento = document.getElementById('docQuick').value.trim();
+        if (!documento) return;
 
         try {
-            const response = await fetch('/api/cnpj/verificar', {
+            const res = await fetch('http://127.0.0.1:5000/api/cnpj/verificar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ documento: cnpj })
+                body: JSON.stringify({ documento }),
+                credentials: 'include'
             });
 
-            const data = await response.json();
+            const data = await res.json();
 
-            if (response.ok) {
-                handleCnpjResponse(data);
+            if (data.status === 'existente' && data.requires_password) {
+                sessionStorage.setItem('cliente_cnpj', documento);
+                window.location.href = 'login.html';
+            } else if (data.status === 'existente') {
+                sessionStorage.setItem('cliente_nome', data.nome);
+                statusText.textContent = `Olá, ${data.social}`;
+                header.style.display = 'flex';
+                overlay.style.display = 'none';
+                conteudo.style.display = 'flex';
+                carregarProdutos();  // <-- Aqui está certo!
             } else {
-                showStatus(data.error || 'Erro na verificação', 'error');
+                alert(data.mensagem);
             }
-        } catch (error) {
-            showStatus('Falha na comunicação com o servidor', 'error');
+        } catch (err) {
+            console.error(err);
+            alert('Falha na verificação. Tente novamente.');
         }
     });
-
-    function handleCnpjResponse(response) {
-        switch (response.status) {
-            case 'existente':
-                if (response.requires_password) {
-                    showStatus('CNPJ encontrado. Faça login', 'success');
-                    showPasswordForm();
-                } else {
-                    showStatus('Defina sua senha para continuar', 'warning');
-                    showSetPasswordForm();
-                }
-                break;
-
-            case 'nao_encontrado':
-                showStatus(response.mensagem, 'warning');
-                showAccessRequestForm();
-                break;
-        }
-    }
-
-    function showStatus(message, type = 'info') {
-        clientStatusText.textContent = message;
-        clientStatus.className = 'client-status';
-        clientStatus.classList.add(type === 'error' ? 'error' :
-            type === 'warning' ? 'warning' : 'info');
-    }
-
-    function showPasswordForm() {
-        // Implementar formulário de login
-    }
-
-    function showSetPasswordForm() {
-        // Implementar formulário de definição de senha
-    }
-
-    function showAccessRequestForm() {
-        // Implementar formulário de solicitação de acesso
-    }
 });

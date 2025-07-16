@@ -1,6 +1,7 @@
+# routes/carrinho.py
 from flask import Blueprint, request, jsonify, session
+from ..extensions import db
 from ..models.carrinho import CarrinhoTemp
-from backend.api.app import db
 
 carrinho_bp = Blueprint("carrinho", __name__)
 

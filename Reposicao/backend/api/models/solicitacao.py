@@ -1,5 +1,5 @@
 # pode ser usado futuramente para gravar solicitações enviadas
-from backend.api.app import db
+from api.app import db
 
 
 class Solicitacao(db.Model):

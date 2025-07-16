@@ -1,21 +1,112 @@
+# ========== 1. utils/cnpj_utils.py ==========
 import re
-
-def limpar_cnpj(cnpj):
-    """Remove caracteres não numéricos do CNPJ/CPF"""
-    return re.sub(r"[^\d]", "", cnpj)
+from typing import Tuple, Optional
 
 
-def validar_documento(documento):
-    """Validação básica de formato de CNPJ/CPF"""
+def limpar_cnpj(documento: str) -> str:
+    """Remove caracteres especiais do CNPJ/CPF"""
+    return re.sub(r"[^\d]", "", documento)
+
+
+def validar_cnpj(cnpj: str) -> bool:
+    """Valida CNPJ usando algoritmo oficial"""
+    cnpj = limpar_cnpj(cnpj)
+
+    if len(cnpj) != 14:
+        return False
+
+    # Verifica se todos os dígitos são iguais
+    if cnpj == cnpj[0] * 14:
+        return False
+
+    # Calcula primeiro dígito verificador
+    soma = 0
+    peso = 5
+    for i in range(12):
+        soma += int(cnpj[i]) * peso
+        peso -= 1
+        if peso < 2:
+            peso = 9
+
+    resto = soma % 11
+    digito1 = 0 if resto < 2 else 11 - resto
+
+    if int(cnpj[12]) != digito1:
+        return False
+
+    # Calcula segundo dígito verificador
+    soma = 0
+    peso = 6
+    for i in range(13):
+        soma += int(cnpj[i]) * peso
+        peso -= 1
+        if peso < 2:
+            peso = 9
+
+    resto = soma % 11
+    digito2 = 0 if resto < 2 else 11 - resto
+
+    return int(cnpj[13]) == digito2
+
+
+def validar_cpf(cpf: str) -> bool:
+    """Valida CPF usando algoritmo oficial"""
+    cpf = limpar_cnpj(cpf)
+
+    if len(cpf) != 11:
+        return False
+
+    # Verifica se todos os dígitos são iguais
+    if cpf == cpf[0] * 11:
+        return False
+
+    # Calcula primeiro dígito verificador
+    soma = 0
+    for i in range(9):
+        soma += int(cpf[i]) * (10 - i)
+
+    resto = soma % 11
+    digito1 = 0 if resto < 2 else 11 - resto
+
+    if int(cpf[9]) != digito1:
+        return False
+
+    # Calcula segundo dígito verificador
+    soma = 0
+    for i in range(10):
+        soma += int(cpf[i]) * (11 - i)
+
+    resto = soma % 11
+    digito2 = 0 if resto < 2 else 11 - resto
+
+    return int(cpf[10]) == digito2
+
+
+def validar_documento(documento: str) -> bool:
+    """Valida CNPJ ou CPF automaticamente"""
     numeros = limpar_cnpj(documento)
-    return len(numeros) in (11, 14)  # CPF (11) ou CNPJ (14)
+
+    if len(numeros) == 14:
+        return validar_cnpj(numeros)
+    elif len(numeros) == 11:
+        return validar_cpf(numeros)
+    else:
+        return False
 
 
-def formatar_cnpj(cnpj):
-    """Formata CNPJ para exibição"""
-    numeros = limpar_cnpj(cnpj)
-    if len(numeros) == 11:
-        return f"{numeros[:3]}.{numeros[3:6]}.{numeros[6:9]}-{numeros[9:]}"
-    elif len(numeros) == 14:
+def gerar_senha_padrao(documento: str) -> str:
+    """Gera senha padrão com os últimos 4 dígitos"""
+    numeros = limpar_cnpj(documento)
+    return numeros[-4:]
+
+
+def formatar_documento(documento: str) -> str:
+    """Formata CNPJ/CPF para exibição"""
+    numeros = limpar_cnpj(documento)
+
+    if len(numeros) == 14:
         return f"{numeros[:2]}.{numeros[2:5]}.{numeros[5:8]}/{numeros[8:12]}-{numeros[12:]}"
-    return cnpj
+    elif len(numeros) == 11:
+        return f"{numeros[:3]}.{numeros[3:6]}.{numeros[6:9]}-{numeros[9:]}"
+    else:
+        return documento
