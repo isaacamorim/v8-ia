@@ -1,4 +1,4 @@
-# models/produto.py
+# produto.py
 from ..extensions import db
 import base64
 
@@ -13,13 +13,15 @@ class Produto(db.Model):
     JPC_PALAVRAS_CHAVE = db.Column(db.String(4000))
     JPC_QTD_MINIMA = db.Column(db.String)
     JPC_PASSO_QTD = db.Column(db.String)
-    JRO_CODIMG = db.Column(db.LargeBinary)  # <-- AQUI É IMPORTANTE!
+    IMG_IMAGEM = db.Column(db.LargeBinary)  # importante!
 
     def to_dict(self):
         imagem_base64 = ""
-        if self.JRO_CODIMG and isinstance(self.JRO_CODIMG, (bytes, bytearray)):
-            imagem_base64 = f"data:image/jpeg;base64,{base64.b64encode(self.JRO_CODIMG).decode('utf-8')}"
-
+        if self.IMG_IMAGEM:
+            try:
+                imagem_base64 = base64.b64encode(self.IMG_IMAGEM).decode("utf-8")
+            except Exception:
+                imagem_base64 = ""
         return {
             "id": self.JRO_PROID,
             "cod": self.JRO_PROERP,

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial - Como Usar o Sistema</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #d52029;
+            --secondary-color: #B4252C;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f5f5f7;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-color: #e0e0e0;
+            --primary-light: #ffe0e0;
+            --text-default: #513737;
+            --text-inverse: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--light-bg) 0%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .tutorial-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tutorial-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-inverse);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .tutorial-header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .tutorial-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tutorial-content {
+            padding: 40px;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-inverse);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-right: 20px;
+            box-shadow: 0 8px 20px rgba(213, 32, 41, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.8em;
+            color: var(--text-default);
+            font-weight: 600;
+        }
+
+        .demo-box {
+            background: var(--light-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .input-demo {
+            margin: 20px 0;
+        }
+
+        .input-demo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .input-demo input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .input-demo input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(213, 32, 41, 0.1);
+        }
+
+        .button-demo {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-inverse);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(213, 32, 41, 0.3);
+        }
+
+        .button-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(213, 32, 41, 0.4);
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 500;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .warning {
+            background: var(--primary-light);
+            color: var(--text-default);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .flow-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--text-inverse);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .flow-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .flow-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2em;
+            color: var(--text-inverse);
+        }
+
+        .icon-user {
+            background: var(--primary-color);
+        }
+
+        .icon-search {
+            background: #f39c12;
+        }
+
+        .icon-check {
+            background: #27ae60;
+        }
+
+        .icon-lock {
+            background: var(--secondary-color);
+        }
+
+        .icon-cart {
+            background: #9b59b6;
+        }
+
+        .icon-whatsapp {
+            background: #25d366;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .nav-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .nav-button.next {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .nav-button.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(213, 32, 41, 0.3);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.5s ease;
+            border-radius: 2px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary-light) 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .highlight h3 {
+            color: var(--text-default);
+            margin-bottom: 10px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tutorial-container">
+        <div class="tutorial-header">
+            <h1>🚀 Como Usar o Sistema de Vendas</h1>
+            <p>Tutorial interativo passo a passo</p>
+        </div>
+
+        <div class="tutorial-content">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 16.67%;"></div>
+            </div>
+
+            <!-- Passo 1 -->
+            <div class="step active" id="step1">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Acesso Inicial</div>
+                </div>
+
+                <p style="font-size: 1.1em; color: #6c757d; margin-bottom: 25px;">
+                    Quando você acessa o sistema pela primeira vez, os produtos ficam protegidos até que você se
+                    identifique.
+                </p>
+
+                <div class="demo-box">
+                    <div class="highlight">
+                        <h3>🔒 Área Protegida</h3>
+                        <p>Para ver nossos produtos e preços, você precisa fazer login com seu CNPJ/CPF primeiro.</p>
+                    </div>
+
+                    <div class="input-demo">
+                        <label>Digite seu CNPJ ou CPF:</label>
+                        <input type="text" placeholder="00.000.000/0001-00" id="cnpjInput" maxlength="18">
+                    </div>
+
+                    <button class="button-demo" onclick="simulateSearch()">
+                        <span class="emoji">🔍</span> Verificar CNPJ/CPF
+                    </button>
+
+                    <div id="searchResult"></div>
+                </div>
+            </div>
+
+            <!-- Passo 2 -->
+            <div class="step" id="step2">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Cliente Cadastrado</div>
+                </div>
+
+                <p style="font-size: 1.1em; color: #6c757d; margin-bottom: 25px;">
+                    Se seu CNPJ/CPF já está cadastrado, você pode fazer login diretamente.
+                </p>
+
+                <div class="demo-box">
+                    <div class="status-message success">
+                        <span class="emoji">✅</span> CNPJ encontrado! Você já é nosso cliente.
+                    </div>
+
+                    <div class="input-demo">
+                        <label>Digite sua senha:</label>
+                        <input type="password" placeholder="********">
+                    </div>
+
+                    <button class="button-demo">
+                        <span class="emoji">🔓</span> Fazer Login
+                    </button>
+
+                    <div class="highlight">
+                        <h3>🎯 Primeira vez?</h3>
+                        <p>Se é seu primeiro acesso, use os <strong>últimos 4 dígitos do seu CNPJ</strong> como senha
+                            inicial. O sistema pedirá para você criar uma nova senha mais segura.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 3 -->
+            <div class="step" id="step3">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Cliente Não Cadastrado</div>
+                </div>
+
+                <p style="font-size: 1.1em; color: #6c757d; margin-bottom: 25px;">
+                    Se seu CNPJ/CPF não está em nosso sistema, você precisa solicitar acesso.
+                </p>
+
+                <div class="demo-box">
+                    <div class="status-message error">
+                        <span class="emoji">❌</span> CNPJ não encontrado em nossa base de dados.
+                    </div>
+
+                    <div class="highlight">
+                        <h3>📞 Entre em Contato</h3>
+                        <p>Enviaremos uma notificação para nossa equipe comercial entrar em contato com você. Aguarde
+                            nosso retorno!</p>
+                    </div>
+
+                    <div class="status-message warning">
+                        <span class="emoji">⏳</span> Sua solicitação foi enviada! Em breve nossa equipe entrará em
+                        contato.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 4 -->
+            <div class="step" id="step4">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Explorando Nossos Produtos</div>
+                </div>
+
+                <p style="font-size: 1.1em; color: #6c757d; margin-bottom: 25px;">
+                    Temos milhares de peças de reposição! Use nossos filtros para encontrar exatamente o que precisa.
+                </p>
+
+                <div class="demo-box">
+                    <div class="status-message success">
+                        <span class="emoji">🎉</span> Login realizado com sucesso! Bem-vindo ao sistema.
+                    </div>
+
+                    <div class="highlight">
+                        <h3>🔍 Sistema de Busca Inteligente</h3>
+                        <p>Temos <strong>milhares de produtos</strong> organizados para você encontrar rapidamente:</p>
+                    </div>
+
+                    <div class="input-demo" style="margin-top: 25px;">
+                        <label>🏷️ Filtro por Palavra-Chave:</label>
+                        <select
+                            style="width: 100%; padding: 15px; border: 2px solid #dee2e6; border-radius: 10px; font-size: 1.1em;">
+                            <option>Selecione uma categoria...</option>
+                            <option>Motor</option>
+                            <option>Freios</option>
+                            <option>Suspensão</option>
+                            <option>Elétrica</option>
+                            <option>Transmissão</option>
+                        </select>
+                        <small style="color: #6c757d; display: block; margin-top: 8px;">
+                            Filtre por categoria para ver produtos específicos
+                        </small>
+                    </div>
+
+                    <div class="input-demo">
+                        <label>✏️ Busca Livre:</label>
+                        <input type="text" placeholder="Digite código, descrição ou palavra-chave..."
+                            style="margin-bottom: 8px;">
+                        <small style="color: #6c757d; display: block;">
+                            Busca completa em: código, descrição, palavra-chave e detalhes do produto
+                        </small>
+                    </div>
+
+                    <button class="nav-button next" style="margin-top: 15px;">
+                        <span class="emoji">🔍</span> Buscar Produtos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Passo 5 -->
+            <div class="step" id="step5">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Montando Seu Pedido</div>
+                </div>
+
+                <p style="font-size: 1.1em; color: #6c757d; margin-bottom: 25px;">
+                    Encontrou as peças? Adicione ao carrinho e monte seu pedido personalizado.
+                </p>
+
+                <div class="demo-box">
+                    <div class="highlight">
+                        <h3>🛒 Carrinho Inteligente</h3>
+                        <p>Seus produtos ficam salvos automaticamente durante toda sua sessão. Pode sair e voltar que
+                            eles estarão lá!</p>
+                    </div>
+
+                    <div class="flow-diagram">
+                        <div class="flow-item">
+                            <div class="flow-icon icon-cart">🛒</div>
+                            <div>
+                                <strong>Adicionar Produtos</strong><br>
+                                <small>Selecione quantidades e adicione ao carrinho</small>
+                            </div>
+                        </div>
+
+                        <div class="flow-item">
+                            <div class="flow-icon icon-check">✓</div>
+                            <div>
+                                <strong>Revisar Lista</strong><br>
+                                <small>Confira todos os itens antes de enviar</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-message warning">
+                        <span class="emoji">💡</span> <strong>Dica:</strong> Adicione observações ou dúvidas sobre as
+                        peças. Isso nos ajuda a fazer um orçamento mais preciso!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 6 -->
+            <div class="step" id="step6">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <div class="step-title">Enviando via WhatsApp</div>
+                </div>
+
+                <p style="font-size: 1.1em; color: #6c757d; margin-bottom: 25px;">
+                    Finalize enviando seu pedido diretamente para nossa equipe via WhatsApp.
+                </p>
+
+                <div class="demo-box">
+                    <div class="flow-diagram">
+                        <div class="flow-item">
+                            <div class="flow-icon icon-whatsapp">📱</div>
+                            <div>
+                                <strong>Envio Automático</strong><br>
+                                <small>Seu pedido é enviado formatado para nossa equipe</small>
+                            </div>
+                        </div>
+
+                        <div class="flow-item">
+                            <div class="flow-icon icon-user">👨‍💼</div>
+                            <div>
+                                <strong>Análise Comercial</strong><br>
+                                <small>Nossa equipe prepara seu orçamento personalizado</small>
+                            </div>
+                        </div>
+
+                        <div class="flow-item">
+                            <div class="flow-icon icon-check">💰</div>
+                            <div>
+                                <strong>Retorno Rápido</strong><br>
+                                <small>Valores, prazos e esclarecimento de dúvidas</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        <h3>💬 Como Funciona o Orçamento</h3>
+                        <p><strong>1.</strong> Você envia o pedido pelo site<br>
+                            <strong>2.</strong> Nossa equipe prepara preços e disponibilidade<br>
+                            <strong>3.</strong> Retornamos via WhatsApp com orçamento completo<br>
+                            <strong>4.</strong> Esclarecemos dúvidas e fechamos o pedido
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 7 -->
+            <div class="step" id="step7">
+                <div class="step-header">
+                    <div class="step-number">7</div>
+                    <div class="step-title">Suporte Sempre Disponível</div>
+                </div>
+
+                <p style="font-size: 1.1em; color: #6c757d; margin-bottom: 25px;">
+                    O site facilita sua vida, mas nossa equipe está sempre pronta para ajudar!
+                </p>
+
+                <div class="demo-box">
+                    <div class="highlight" style="background: linear-gradient(120deg, #d520295e 15%, #B4252C 100%);">
+                        <h3>🤝 Nosso Compromisso</h3>
+                        <p><strong>Este site foi criado para:</strong></p>
+                        <p>
+                            ✅ <strong>Facilitar sua vida</strong> - Busca rápida e organizada<br>
+                            ✅ <strong>Dar agilidade</strong> - Menos tempo perdido procurando peças<br>
+                            ✅ <strong>Mais conforto</strong> - Veja nossas opções no seu tempo</p>
+                    </div>
+
+                    <div class="highlight">
+                        <h3>📞 Sempre à Disposição</h3>
+                        <p>Mesmo com toda tecnologia, <strong>nossa equipe humana está sempre aqui</strong> para:</p>
+                        <div class="flow-diagram" style="margin-top: 15px;">
+                            <div class="flow-item">
+                                <div class="flow-icon" style="background: #25d366;">❓</div>
+                                <div>
+                                    <strong>Tirar Dúvidas</strong><br>
+                                    <small>Sobre qualquer produto ou processo</small>
+                                </div>
+                            </div>
+                            <div class="flow-item">
+                                <div class="flow-icon" style="background: #ff6b6b;">💡</div>
+                                <div>
+                                    <strong>Sugerir Alternativas</strong><br>
+                                    <small>Peças compatíveis ou similares</small>
+                                </div>
+                            </div>
+                            <div class="flow-item">
+                                <div class="flow-icon" style="background: #4facfe;">🔧</div>
+                                <div>
+                                    <strong>Apoio Técnico</strong><br>
+                                    <small>Informações técnicas detalhadas</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-message success">
+                        <span class="emoji">🎯</span> <strong>Resumo:</strong> Use o site para agilidade e conforto, mas
+                        conte sempre conosco para qualquer necessidade!
+                    </div>
+
+                    <button class="button-demo" onclick="window.close()"
+                        style="width: 100%; margin-top: 20px; font-size: 1.2em;">
+                        <span class="emoji">🚀</span> Começar a Usar o Sistema
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navegação -->
+            <div class="navigation">
+                <button class="nav-button" id="prevBtn" onclick="changeStep(-1)">
+                    ← Anterior
+                </button>
+
+                <div style="display: flex; gap: 8px;">
+                    <span id="stepIndicator" style="color: #6c757d; font-weight: 500;">Passo 1 de 6</span>
+                </div>
+
+                <button class="nav-button next" id="nextBtn" onclick="changeStep(1)">
+                    Próximo →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 7;
+
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const percentage = (currentStep / totalSteps) * 100;
+            progressFill.style.width = percentage + '%';
+        }
+
+        function updateStepIndicator() {
+            const indicator = document.getElementById('stepIndicator');
+            indicator.textContent = `Passo ${currentStep} de ${totalSteps}`;
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.style.opacity = currentStep === 1 ? '0.5' : '1';
+            prevBtn.disabled = currentStep === 1;
+
+            if (currentStep === totalSteps) {
+                nextBtn.textContent = 'Começar! 🚀';
+                nextBtn.onclick = () => {
+                    alert('Tutorial concluído! Agora você pode usar o sistema.');
+                };
+            } else {
+                nextBtn.textContent = 'Próximo →';
+                nextBtn.onclick = () => changeStep(1);
+            }
+        }
+
+        function changeStep(direction) {
+            const newStep = currentStep + direction;
+
+            if (newStep < 1 || newStep > totalSteps) return;
+
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+
+            // Show new step
+            currentStep = newStep;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+
+            updateProgress();
+            updateStepIndicator();
+            updateNavigation();
+        }
+
+        function simulateSearch() {
+            const cnpj = document.getElementById('cnpjInput').value;
+            const resultDiv = document.getElementById('searchResult');
+
+            if (!cnpj.trim()) {
+                resultDiv.innerHTML = `
+                    <div class="status-message error">
+                        <span class="emoji">⚠️</span> Por favor, digite um CNPJ ou CPF válido.
+                    </div>
+                `;
+                return;
+            }
+
+            // Simula busca
+            resultDiv.innerHTML = `
+                <div class="status-message warning">
+                    <span class="emoji">⏳</span> Verificando CNPJ/CPF...
+                </div>
+            `;
+
+            setTimeout(() => {
+                // Simula resultado aleatório
+                const isRegistered = Math.random() > 0.5;
+
+                if (isRegistered) {
+                    resultDiv.innerHTML = `
+                        <div class="status-message success">
+                            <span class="emoji">✅</span> CNPJ encontrado! Você pode prosseguir para o login.
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="status-message error">
+                            <span class="emoji">❌</span> CNPJ não encontrado. Nossa equipe será notificada para entrar em contato.
+                        </div>
+                    `;
+                }
+            }, 1500);
+        }
+
+        // Formatação automática do CNPJ
+        document.getElementById('cnpjInput').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+
+            if (value.length <= 11) {
+                // CPF
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})/, '$1-$2');
+            } else {
+                // CNPJ
+                value = value.replace(/(\d{2})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1/$2');
+                value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            }
+
+            e.target.value = value;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft' && currentStep > 1) {
+                changeStep(-1);
+            } else if (e.key === 'ArrowRight' && currentStep < totalSteps) {
+                changeStep(1);
+            }
+        });
+
+        // Initialize
+        updateProgress();
+        updateStepIndicator();
+        updateNavigation();
+    </script>
+</body>
+
+</html>

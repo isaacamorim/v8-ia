@@ -7,8 +7,6 @@
     <title>Reposição de Peças - Novo Horizonte</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-    <script type="module" src="js/cnpj_verification.js"></script>
-    <script type="module" src="js/produtos.js"></script>
 </head>
 
 <body>
@@ -16,9 +14,18 @@
     <section class="verify-overlay" id="verifyOverlay">
         <div class="verify-box">
             <h2>Verificação de Acesso</h2>
+            <p>Coloque o seu CNPJ/CPF se tiver cadastro</p>
             <form id="verificacaoRapida">
                 <input type="text" id="docQuick" placeholder="Digite seu CNPJ/CPF" required>
                 <button type="submit">Verificar</button>
+            </form>
+        </div>
+
+        <div class="verify-box">
+            <h2>Tutorial</h2>
+            <p>Apreenda como funciona a nossa sessao de repocisao</p>
+            <form id="verificacaoRapida">
+                <button type="tutorial" link href="../tutorial.html">Tutorial</button>
             </form>
         </div>
     </section>
@@ -28,39 +35,55 @@
         <div class="client-status" id="clientStatus">
             <span id="clientStatusText"></span>
         </div>
+        <div class="cart-icon" id="cartIcon">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount">0</span>
+        </div>
     </header>
 
-    <main class="main-container" id="conteudoPrincipal" style="display:none;">
-        <!-- Filtros e busca -->
-        <section class="filters">
-            <h3><i class="fas fa-filter"></i> Filtros</h3>
-            <input type="text" class="search-input" id="searchInput" placeholder="Buscar por código ou descrição...">
-            <div class="category-filters" id="categoryFilters">
-                <div class="filter-tag active" data-category="todos">Todos</div>
-                <div class="filter-tag" data-category="rolamento">Rolamentos</div>
-                <div class="filter-tag" data-category="empacotadeira">Empacotadeira</div>
-                <div class="filter-tag" data-category="eva">EVA</div>
-                <div class="filter-tag" data-category="sobe e desce">Sobe e Desce</div>
+    <main class="main-container" id="conteudoPrincipal" style="display: none;">
+    
+        <!-- Botões de filtro e busca -->
+        <!-- Botão de busca no topo -->
+        <section class="filters-header">
+            <div id="searchToggleArea">
+                <button id="btnBuscar"><i class="fas fa-search"></i> Buscar</button>
             </div>
+            <button id="btnFiltrar"><i class="fas fa-sliders-h"></i> Filtros</button>
         </section>
 
-        <!-- Grid de Produtos -->
+        
+        <!-- Campo de busca oculto por padrão -->
+        <div id="searchBarContainer" style="display: none; width: 100%;">
+            <div class="search-bar">
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Buscar por código, descrição ou palavras-chave...">
+                <button id="btnCloseSearch" class="close-search">&times;</button>
+            </div>
+        </div>
+
+        </main>
+
+        <!-- Grid de produtos -->
         <section class="products-section" id="productsGrid">
             <div class="loading"><i class="fas fa-spinner fa-pulse"></i> Carregando produtos...</div>
         </section>
-
-        <!-- Sidebar do Carrinho -->
+    
+        <!-- Carrinho lateral -->
         <aside class="cart-sidebar">
-            <h3><i class="fas fa-shopping-cart"></i> Carrinho</h3>
-            <div class="cart-items" id="cartItems">
-                <div class="empty-cart"><i class="fas fa-shopping-cart"></i>
-                    <p>Seu carrinho está vazio</p>
-                </div>
-            </div>
-            <div class="cart-total" id="cartTotal" style="display:none;">
-                <div>Total de itens: <span id="cartTotalValue">0</span></div>
-            </div>
-            <button class="finalize-order" id="finalizeOrder" disabled>Finalizar Pedido</button>
+            <h3>Carrinho</h3>
+            <div class="cart-items"></div>
+            <button class="finalize-order">Enviar Pedido</button>
+        </aside>
+        
+        <!-- Notificação -->
+        <div class="notification"></div>
+
+        <!-- Sidebar do Filtro -->
+        <aside class="filter-sidebar" id="filterSidebar">
+            <h3>Filtrar por Palavras-chave</h3>
+            <div class="filter-options" id="filterOptions"></div>
+            <button class="apply-filter" id="applyFilterBtn">Aplicar Filtros</button>
         </aside>
     </main>
 
@@ -71,6 +94,37 @@
     <script src="js/cnpj_verification.js"></script>
     <script src="js/produtos.js"></script>
     <script src="js/cart.js"></script>
+    <script src="js/filtros.js"></script>
+    <script src="js/carrinho.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof inicializarFiltroLateral === 'function') {
+                inicializarFiltroLateral(filtros => {
+                    console.log("Filtros aplicados:", filtros);
+                    // aqui você pode recarregar os produtos com os filtros, por ex:
+                    carregarProdutos(filtros);
+                });
+            }
+        });
+
+        // Adicionar ao botão de busca
+        document.getElementById('btnBuscar').addEventListener('click', () => {
+                const termo = document.getElementById('searchInput').value.trim();
+                if (termo) {
+                    buscarProdutosPorTexto(termo);
+                }
+            });
+
+        // disparar a busca ao pressionar
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const termo = e.target.value.trim();
+                    if (termo) buscarProdutosPorTexto(termo);
+                }
+            });
+
+    </script>
+
 </body>
 
 </html>
