@@ -204,3 +204,58 @@ function obterSessionId() {
     }
     return sessionId;
 }
+
+async function carregarCarrinhoDoServidor() {
+    const sessionId = obterSessionId();
+    try {
+        const res = await fetch(`http://127.0.0.1:5000/api/carrinho/${sessionId}`);
+        const dados = await res.json();
+
+        carrinho = dados
+            .filter(item => item.status === 'ATIVO') // só carrega os ativos
+            .map(item => ({
+                id: item.produto_id,
+                descricao: item.descricao,
+                qtd: item.quantidade,
+                cod: item.codigo,
+                imagem: item.imagem
+            }));
+
+        salvarCarrinho(); // salva no localStorage
+        atualizarBadgeCarrinho();
+        atualizarCarrinhoSidebar();
+    } catch (err) {
+        console.warn("Erro ao carregar carrinho do servidor:", err);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    carregarCarrinhoDoServidor(); // carrega do banco
+});
+
+function removerDoCarrinho(id) {
+    const index = carrinho.findIndex(p => p.id === id);
+    if (index !== -1) {
+        const produto = carrinho[index];
+        carrinho.splice(index, 1);
+        mostrarNotificacao(`Removido: ${produto.descricao}`, "red");
+        salvarCarrinho();
+        atualizarCarrinhoSidebar();
+        atualizarBadgeCarrinho();
+        marcarComoExcluidoNoServidor(id);
+    }
+}
+
+function marcarComoExcluidoNoServidor(id) {
+    fetch("http://127.0.0.1:5000/api/carrinho/status", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            session_id: obterSessionId(),
+            produto_id: id,
+            status: "EXCLUIDO"
+        })
+    }).then(res => {
+        if (!res.ok) console.warn("Erro ao marcar como excluído.");
+    });
+}

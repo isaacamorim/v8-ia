@@ -1,7 +1,10 @@
 /* main.css */
 
+/* ===== VARIÁVEIS ===== */
 :root {
     --primary-color: #d52029;
+    --primary-hover: #a51c23;
+    /* Nova cor para estados hover */
     --secondary-color: #B4252C;
     --dark-bg: #1a1a1a;
     --light-bg: #f5f5f7;
@@ -9,17 +12,124 @@
     --light-text: #fff;
     --border-color: #e0e0e0;
     --primary-light: #ffe0e0;
-    /* Indigo-100 */
     --text-default: #513737;
-    /* Gray-700 */
     --text-inverse: #FFFFFF;
+    --radius-sm: 4px;
+    /* Novo: sistema de bordas */
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition: all 0.3s ease;
+    /* Transição padrão */
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+    /* Sistema de sombras */
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== RESET & BASE ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    /* Fontes mais modernas */
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    /* Melhora renderização de fontes */
 }
+
+/* ===== COMPONENTES REUTILIZÁVEIS ===== */
+.btn {
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+}
+
+.card {
+    background-color: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* ===== HEADER ===== */
+header {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===== MAIN LAYOUT ===== */
+.main-container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== PRODUCTS GRID ===== */
+.products-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+/* ===== SIDEBARS ===== */
+.cart-sidebar,
+.filter-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 380px;
+    /* Largura máxima */
+    height: 100%;
+    background-color: #fff;
+    box-shadow: var(--shadow-lg);
+    padding: 1.5rem;
+    z-index: 999;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ... (demais estilos) ... */
 
 .verify-overlay {
     position: fixed;
@@ -281,4 +391,101 @@ header {
     border-radius: 6px;
     cursor: pointer;
     font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .products-section {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+
+    .filters-header button {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+
+    .cart-sidebar,
+    .filter-sidebar {
+        max-width: 100%;
+    }
+}
+
+/* Adicionar estados hover em todos os elementos interativos */
+button,
+.cart-icon,
+.add-to-cart {
+    transition: var(--transition);
+}
+
+button:hover,
+.add-to-cart:hover {
+    transform: translateY(-2px);
+}
+
+/* Melhor feedback visual para inputs */
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(213, 32, 41, 0.2);
+}
+
+/* Overlay mais escuro para melhor contraste */
+.verify-overlay {
+    background-color: rgba(0, 0, 0, 0.048);
+}
+
+/* Garantir que imagens não causem layout shift */
+.product-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    /* Manter proporção quadrada */
+    object-fit: contain;
+    background: #f9f9f9;
+}
+
+/* Botões com ícones */
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.remove-btn {
+        background-color: var(--primary-color);
+            color: #fff;
+            font-size: x-large;
+            border: none;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+}
+
+/* Badge de contador reutilizável */
+.badge {
+    background: var(--light-text);
+    color: var(--primary-color);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    min-width: 24px;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.qtd-input {
+    width: 70px;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.qtd-input:focus {
+    border-color: #d90000;
+    box-shadow: 0 0 0 2px rgba(217, 0, 0, 0.2);
 }

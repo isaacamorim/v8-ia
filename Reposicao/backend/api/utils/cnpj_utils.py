@@ -82,23 +82,25 @@ def validar_cpf(cpf: str) -> bool:
     return int(cpf[10]) == digito2
 
 
+def limpar_documento(documento: str) -> str:
+    """Remove formatação de CPF/CNPJ"""
+    return re.sub(r"\D", "", documento)  # Remove tudo que não é dígito
+
+
 def validar_documento(documento: str) -> bool:
-    """Valida CNPJ ou CPF automaticamente"""
-    numeros = limpar_cnpj(documento)
+    """Valida CNPJ ou CPF incluindo dígitos verificadores"""
+    numeros = limpar_documento(documento)
 
-    if len(numeros) == 14:
-        return validar_cnpj(numeros)
-    elif len(numeros) == 11:
+    if len(numeros) == 11:
         return validar_cpf(numeros)
-    else:
-        return False
-
+    elif len(numeros) == 14:
+        return validar_cnpj(numeros)
+    return False  # 
 
 def gerar_senha_padrao(documento: str) -> str:
     """Gera senha padrão com os últimos 4 dígitos"""
     numeros = limpar_cnpj(documento)
     return numeros[-4:]
-
 
 def formatar_documento(documento: str) -> str:
     """Formata CNPJ/CPF para exibição"""
@@ -109,4 +111,4 @@ def formatar_documento(documento: str) -> str:
     elif len(numeros) == 11:
         return f"{numeros[:3]}.{numeros[3:6]}.{numeros[6:9]}-{numeros[9:]}"
     else:
-        return documento
+        return documento  # Retorna original se não for CNPJ/CPF válido

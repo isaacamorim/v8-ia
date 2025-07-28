@@ -1,42 +1,41 @@
 <!-- frontend/login.html -->
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Login - Reposição</title>
-    <link rel="stylesheet" href="css/main.css" />
+    <meta charset="UTF-8">
+    <title>Login</title>
 </head>
 
 <body>
-    <div class="login-box">
-        <h2>Digite sua senha</h2>
-        <form id="loginForm">
-            <input type="password" id="senhaInput" placeholder="Senha" required />
-            <button type="submit">Entrar</button>
-        </form>
-        <p id="loginMensagem"></p>
-    </div>
-
+    <h2>Informe sua senha</h2>
+    <form id="formLogin">
+        <input type="password" id="inpLogin" placeholder="Senha" required>
+        <button>Entrar</button>
+    </form>
+    <p id="msgLogin"></p>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        document.getElementById("formLogin").addEventListener("submit", async e => {
             e.preventDefault();
-            const documento = sessionStorage.getItem('cliente_cnpj');
-            const senha = document.getElementById('senhaInput').value;
-
-            const res = await fetch('/api/cnpj/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ documento, senha })
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-                sessionStorage.setItem('cliente_nome', data.usuario.nome);
-                window.location.href = 'index.html';
-            } else {
-                document.getElementById('loginMensagem').textContent = data.error || 'Erro no login';
+            const cnpj = sessionStorage.getItem("cnpj");
+            const senha = document.getElementById("inpLogin").value;
+            const msg = document.getElementById("msgLogin");
+            try {
+                const res = await fetch("/api/cnpj/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ documento: cnpj, senha })
+                });
+                const j = await res.json();
+                if (j.success) {
+                    sessionStorage.setItem("usuario_nome", j.usuario.nome);
+                    window.location.href = "index.html";
+                } else {
+                    msg.textContent = j.error || "Credenciais inválidas";
+                }
+            } catch (e) {
+                msg.textContent = "Falha de rede";
             }
         });
     </script>

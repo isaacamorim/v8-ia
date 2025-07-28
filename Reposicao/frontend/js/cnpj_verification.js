@@ -1,43 +1,79 @@
 // frontend/js/cnpj_verification.js
+const formVerificacao = document.getElementById("verificacaoRapida");
+const docQuick = document.getElementById("docQuick");
 
-document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('verifyOverlay');
-    const header = document.getElementById('appHeader');
-    const conteudo = document.getElementById('conteudoPrincipal');
-    const statusText = document.getElementById('clientStatusText');
-    const form = document.getElementById('verificacaoRapida');
+const senhaBox = document.getElementById("senhaBox");
+const senhaInput = document.getElementById("senhaInput");
+const formSenha = document.getElementById("formSenha");
+const senhaTitle = document.getElementById("senhaTitle");
+const senhaDescricao = document.getElementById("senhaDescricao");
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const documento = document.getElementById('docQuick').value.trim();
-        if (!documento) return;
+let cnpjGlobal = "";  // usado entre verificação e senha
 
-        try {
-            const res = await fetch('http://127.0.0.1:5000/api/cnpj/verificar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ documento }),
-                credentials: 'include'
-            });
+formVerificacao.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const documento = docQuick.value.trim();
 
-            const data = await res.json();
+    if (!documento) return alert("Informe seu CNPJ ou CPF");
 
-            if (data.status === 'existente' && data.requires_password) {
-                sessionStorage.setItem('cliente_cnpj', documento);
-                window.location.href = 'login.html';
-            } else if (data.status === 'existente') {
-                sessionStorage.setItem('cliente_nome', data.nome);
-                statusText.textContent = `Olá, ${data.social}`;
-                header.style.display = 'flex';
-                overlay.style.display = 'none';
-                conteudo.style.display = 'flex';
-                carregarProdutos();  // <-- Aqui está certo!
-            } else {
-                alert(data.mensagem);
-            }
-        } catch (err) {
-            console.error(err);
-            alert('Falha na verificação. Tente novamente.');
+    try {
+        const res = await fetch(`/api/cnpj/verificar?documento=${encodeURIComponent(documento)}`);
+        const data = await res.json();
+
+        if (data.status === "existente") {
+            cnpjGlobal = documento;
+
+            senhaBox.style.display = "block";
+            senhaInput.value = "";
+            senhaInput.focus();
+
+            senhaTitle.textContent = data.requires_password ? "Login" : "Definir Senha";
+            senhaDescricao.textContent = data.requires_password
+                ? `Olá ${data.nome || "cliente"}, digite sua senha para acessar.`
+                : `Olá ${data.nome || "cliente"}, defina uma nova senha para continuar.`;
+
+            formVerificacao.style.display = "none";
+
+        } else if (data.status === "nao_encontrado") {
+            alert(data.mensagem || "CNPJ/CPF não cadastrado.");
+        } else {
+            alert(data.mensagem || "Erro ao verificar documento.");
         }
-    });
+    } catch (err) {
+        alert("Erro de conexão com o servidor.");
+        console.error(err);
+    }
+});
+
+formSenha.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const senha = senhaInput.value.trim();
+    if (!senha) return alert("Informe a senha.");
+
+    try {
+        const rota = senhaTitle.textContent === "Login" ? "login" : "definir-senha";
+
+        const res = await fetch(`/api/cnpj/${rota}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ documento: cnpjGlobal, senha }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+            alert("Acesso liberado!");
+            document.getElementById("verifyOverlay").style.display = "none";
+            document.getElementById("appHeader").style.display = "flex";
+            document.getElementById("conteudoPrincipal").style.display = "block";
+
+            document.getElementById("clientStatusText").textContent = `${data.usuario.nome} (${data.usuario.cnpj})`;
+
+        } else {
+            alert(data.error || "Erro ao autenticar.");
+        }
+    } catch (err) {
+        alert("Erro no servidor.");
+        console.error(err);
+    }
 });

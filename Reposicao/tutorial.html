@@ -341,7 +341,38 @@
             font-size: 1.2em;
             margin-right: 8px;
         }
-    </style>
+    .button-demo:active,
+    .nav-button:active {
+        transform: scale(0.97);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .progress-fill {
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .input-demo input:focus {
+        transform: scale(1.02);
+    }
+    .status-message {
+        animation: fadeIn 0.5s ease-in-out;
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    .highlight,
+    .flow-item {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+</style>
 </head>
 
 <body>
@@ -476,10 +507,10 @@
                             style="width: 100%; padding: 15px; border: 2px solid #dee2e6; border-radius: 10px; font-size: 1.1em;">
                             <option>Selecione uma categoria...</option>
                             <option>Motor</option>
-                            <option>Freios</option>
-                            <option>Suspensão</option>
+                            <option>Eixo</option>
                             <option>Elétrica</option>
-                            <option>Transmissão</option>
+                            <option>Empacotadeira</option>
+                            <option>Enfardadeira</option>
                         </select>
                         <small style="color: #6c757d; display: block; margin-top: 8px;">
                             Filtre por categoria para ver produtos específicos
@@ -649,7 +680,7 @@
 
                     <button class="button-demo" onclick="window.close()"
                         style="width: 100%; margin-top: 20px; font-size: 1.2em;">
-                        <span class="emoji">🚀</span> Começar a Usar o Sistema
+                        <span class="emoji" link rel="/frontend/index.html" type="" href="/frontend/index.html">🚀</span> Começar a Usar o Sistema
                     </button>
                 </div>
             </div>
@@ -794,6 +825,25 @@
         updateProgress();
         updateStepIndicator();
         updateNavigation();
+
+        function changeStep(direction) {
+                const current = document.getElementById(`step${currentStep}`);
+                const newStep = currentStep + direction;
+
+                if (newStep < 1 || newStep > totalSteps) return;
+
+                const next = document.getElementById(`step${newStep}`);
+
+                current.classList.remove('active');
+                setTimeout(() => {
+                    currentStep = newStep;
+                    next.classList.add('active');
+                    updateProgress();
+                    updateStepIndicator();
+                    updateNavigation();
+                }, 200); // tempo da transição
+            }
+
     </script>
 </body>
 

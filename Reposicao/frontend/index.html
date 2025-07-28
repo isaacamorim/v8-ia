@@ -1,36 +1,40 @@
+<!--frontend/index.html-->
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reposição de Peças - Novo Horizonte</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
 </head>
 
 <body>
-    <!-- Tela de Verificação/Login -->
+
+    <!-- Overlay de verificação/login -->
     <section class="verify-overlay" id="verifyOverlay">
-        <div class="verify-box">
+        <div class="verify-box" id="boxVerificacao">
             <h2>Verificação de Acesso</h2>
-            <p>Coloque o seu CNPJ/CPF se tiver cadastro</p>
+            <p>Coloque o seu CNPJ/CPF se já tiver cadastro</p>
             <form id="verificacaoRapida">
-                <input type="text" id="docQuick" placeholder="Digite seu CNPJ/CPF" required>
+                <input type="text" id="docQuick" name="documento" placeholder="Digite seu CNPJ" required />
                 <button type="submit">Verificar</button>
             </form>
         </div>
 
-        <div class="verify-box">
-            <h2>Tutorial</h2>
-            <p>Apreenda como funciona a nossa sessao de repocisao</p>
-            <form id="verificacaoRapida">
-                <button type="tutorial" link href="../tutorial.html">Tutorial</button>
+        <div class="verify-box" id="boxSenha" style="display:none;">
+            <h2 id="senhaTitle">Acesso</h2>
+            <p id="senhaDescricao">Digite sua senha para continuar</p>
+            <form id="formSenha">
+                <input type="password" id="senhaInput" placeholder="Senha" required />
+                <button type="submit">Continuar</button>
             </form>
+            <button onclick="voltarParaVerificacao()">Voltar</button>
         </div>
     </section>
 
-    <!-- Conteúdo principal (oculto até login) -->
+    <!-- Cabeçalho -->
     <header id="appHeader" style="display:none;">
         <div class="client-status" id="clientStatus">
             <span id="clientStatusText"></span>
@@ -41,10 +45,8 @@
         </div>
     </header>
 
+    <!-- Conteúdo principal -->
     <main class="main-container" id="conteudoPrincipal" style="display: none;">
-    
-        <!-- Botões de filtro e busca -->
-        <!-- Botão de busca no topo -->
         <section class="filters-header">
             <div id="searchToggleArea">
                 <button id="btnBuscar"><i class="fas fa-search"></i> Buscar</button>
@@ -52,8 +54,6 @@
             <button id="btnFiltrar"><i class="fas fa-sliders-h"></i> Filtros</button>
         </section>
 
-        
-        <!-- Campo de busca oculto por padrão -->
         <div id="searchBarContainer" style="display: none; width: 100%;">
             <div class="search-bar">
                 <input type="text" id="searchInput" class="search-input"
@@ -61,68 +61,134 @@
                 <button id="btnCloseSearch" class="close-search">&times;</button>
             </div>
         </div>
-
-        </main>
-
-        <!-- Grid de produtos -->
-        <section class="products-section" id="productsGrid">
-            <div class="loading"><i class="fas fa-spinner fa-pulse"></i> Carregando produtos...</div>
-        </section>
-    
-        <!-- Carrinho lateral -->
-        <aside class="cart-sidebar">
-            <h3>Carrinho</h3>
-            <div class="cart-items"></div>
-            <button class="finalize-order">Enviar Pedido</button>
-        </aside>
-        
-        <!-- Notificação -->
-        <div class="notification"></div>
-
-        <!-- Sidebar do Filtro -->
-        <aside class="filter-sidebar" id="filterSidebar">
-            <h3>Filtrar por Palavras-chave</h3>
-            <div class="filter-options" id="filterOptions"></div>
-            <button class="apply-filter" id="applyFilterBtn">Aplicar Filtros</button>
-        </aside>
     </main>
 
-    <!-- Notificação -->
+    <section class="products-section" id="productsGrid">
+        <div class="loading"><i class="fas fa-spinner fa-pulse"></i> Carregando produtos...</div>
+    </section>
+
+    <aside class="cart-sidebar">
+        <h3>Carrinho</h3>
+        <div class="cart-items" id="cartItems"></div>
+        <button class="finalize-order">Enviar Pedido</button>
+    </aside>
+
+    <aside class="filter-sidebar" id="filterSidebar">
+        <h3>Filtrar por Palavras-chave</h3>
+        <div class="filter-options" id="filterOptions"></div>
+        <button class="apply-filter" id="applyFilterBtn">Aplicar Filtros</button>
+    </aside>
+
     <div class="notification" id="notification"></div>
 
     <!-- Scripts -->
-    <script src="js/cnpj_verification.js"></script>
     <script src="js/produtos.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/filtros.js"></script>
     <script src="js/carrinho.js"></script>
+
+    <script>
+        const formVerificacao = document.getElementById("verificacaoRapida");
+        const docQuick = document.getElementById("docQuick");
+        const senhaBox = document.getElementById("boxSenha");
+        const formSenha = document.getElementById("formSenha");
+        const senhaInput = document.getElementById("senhaInput");
+        const senhaTitle = document.getElementById("senhaTitle");
+        const senhaDescricao = document.getElementById("senhaDescricao");
+        const boxVerificacao = document.getElementById("boxVerificacao");
+        let cnpjGlobal = "";
+
+        formVerificacao.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const documento = docQuick.value.trim();
+            if (!documento) return alert("Informe o CNPJ/CPF");
+
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/cnpj/verificar?documento=${encodeURIComponent(documento)}`);
+                const data = await res.json();
+
+                if (data.status === "existente") {
+                    cnpjGlobal = documento;
+                    senhaBox.style.display = "block";
+                    boxVerificacao.style.display = "none";
+                    senhaInput.value = "";
+                    senhaInput.focus();
+
+                    senhaTitle.textContent = data.requires_password ? "Login" : "Criar Senha";
+                    senhaDescricao.textContent = data.requires_password
+                        ? `Olá ${data.nome || "cliente"}, digite sua senha para acessar.`
+                        : `Olá ${data.nome || "cliente"}, defina uma nova senha para continuar.`;
+                } else if (data.status === "nao_encontrado") {
+                    alert(data.mensagem || "CNPJ/CPF não cadastrado.");
+                } else {
+                    alert(data.mensagem || "Erro ao verificar documento.");
+                }
+            } catch (err) {
+                alert("Erro de conexão com o servidor.");
+                console.error(err);
+            }
+        });
+
+        formSenha.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const senha = senhaInput.value.trim();
+            if (!senha) return alert("Informe a senha.");
+
+            const rota = senhaTitle.textContent === "Login" ? "login" : "definir-senha";
+
+            try {
+                const res = await fetch(`/api/cnpj/${rota}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ documento: cnpjGlobal, senha })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    document.getElementById("verifyOverlay").style.display = "none";
+                    document.getElementById("appHeader").style.display = "flex";
+                    document.getElementById("conteudoPrincipal").style.display = "block";
+                    document.getElementById("clientStatusText").textContent = `Olá, ${data.usuario.nome}`;
+                    sessionStorage.setItem("cliente_nome", data.usuario.nome);
+                    sessionStorage.setItem("cliente_cnpj", data.usuario.cnpj);
+                    carregarProdutos();
+                } else {
+                    alert(data.error || "Erro ao autenticar.");
+                }
+            } catch (err) {
+                alert("Erro de conexão.");
+                console.error(err);
+            }
+        });
+
+        function voltarParaVerificacao() {
+            senhaBox.style.display = "none";
+            boxVerificacao.style.display = "block";
+        }
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof inicializarFiltroLateral === 'function') {
                 inicializarFiltroLateral(filtros => {
                     console.log("Filtros aplicados:", filtros);
-                    // aqui você pode recarregar os produtos com os filtros, por ex:
                     carregarProdutos(filtros);
                 });
             }
-        });
 
-        // Adicionar ao botão de busca
-        document.getElementById('btnBuscar').addEventListener('click', () => {
+            document.getElementById('btnBuscar').addEventListener('click', () => {
                 const termo = document.getElementById('searchInput').value.trim();
-                if (termo) {
-                    buscarProdutosPorTexto(termo);
-                }
+                if (termo) buscarProdutosPorTexto(termo);
             });
 
-        // disparar a busca ao pressionar
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     const termo = e.target.value.trim();
                     if (termo) buscarProdutosPorTexto(termo);
                 }
             });
-
+        });
     </script>
 
 </body>

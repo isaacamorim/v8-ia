@@ -21,7 +21,7 @@ def create_app():
         allow_headers=["Content-Type", "Authorization"],
     )
 
-    from .routes import auth_bp, produtos_bp, carrinho_bp, whatsapp_bp, cnpj_verification
+    from .routes import auth_bp, produtos_bp, carrinho_bp, whatsapp_bp
     from .routes.cnpj_verification import cnpj_bp  # Importação direta
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")

@@ -12,3 +12,4 @@ class CarrinhoTemp(db.Model):
     JCT_QUANTIDADE = db.Column(db.Integer, nullable=False)
     JCT_DATA_ADICAO = db.Column(db.DateTime, server_default=db.func.now())
     JCT_CNPJ_TEMP = db.Column(db.String(20))
+    JCT_STATUS = db.Column(db.String(20))
