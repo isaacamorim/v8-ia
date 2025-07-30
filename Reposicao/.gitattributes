@@ -1,0 +1,2 @@
+maq/3d/modelos-stl/*.stl filter=lfs diff=lfs merge=lfs -text
+maq/3d/modelos-stl/*.STL filter=lfs diff=lfs merge=lfs -text

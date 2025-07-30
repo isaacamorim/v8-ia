@@ -33,11 +33,20 @@ function fazerLogin() {
 function definirSenha() {
     const cnpj = document.getElementById('cnpj_definir').value;
     const nova = document.getElementById('nova_senha').value;
-    fetch('/api/auth/definir-senha', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cnpj, senha: nova })
-    }).then(r => {
-        if (r.ok) alert('Senha definida');
-    });
-  }
+    fetch("/api/cnpj/definir-senha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ documento, senha }),
+    })
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error("Erro ao definir senha");
+            }
+            return res.json();
+        })
+        .then((data) => {
+            console.log("Senha definida com sucesso", data);
+        })
+        .catch((err) => {
+            console.error("Erro:", err.message);
+        });

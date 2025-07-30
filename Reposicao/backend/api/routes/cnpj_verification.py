@@ -45,7 +45,7 @@ def verificar_cnpj():
             """
             SELECT 
                 JND_ENDID, 
-                JND_DESCRI, 
+                JMP_NFANTA, 
                 JND_NUMCGC,  
                 NUMDOC,      
                 JMP_ERAZAO
@@ -64,7 +64,7 @@ def verificar_cnpj():
                         "status": "existente",
                         "documento_formatado": res["numdoc"], 
                         "nome": res["jmp_erazao"],  # minúscula
-                        "fantasia": res["jnd_descri"],  # minúscula
+                        "fantasia": res["jmp_nfanta"],  # minúscula
                         "mensagem": "CNPJ/CPF encontrado.",
                     }
                 ),
@@ -106,8 +106,8 @@ def fazer_login():
             SELECT JND_ENDID, JND_DESCRI, NUMDOC
             FROM J_V_ENDERECO_COMPLEMENTO
             WHERE JND_NUMCGC = :cnpj
-              AND JMP_TIPEMP = 'B'
-              AND JNC_SENHA_HASH = J_CRIPT(P_PASSWORD => :senha)
+                AND JMP_TIPEMP = 'B'
+                AND JNC_SENHA_HASH = J_CRIPT(P_PASSWORD => :senha)
         """
         )
         res = (

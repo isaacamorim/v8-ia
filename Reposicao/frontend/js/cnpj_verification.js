@@ -17,7 +17,7 @@ formVerificacao.addEventListener("submit", async (e) => {
     if (!documento) return alert("Informe seu CNPJ ou CPF");
 
     try {
-        const res = await fetch(`/api/cnpj/verificar?documento=${encodeURIComponent(documento)}`);
+        const res = await fetch(`http://127.0.0.1:5000/api/cnpj/verificar?documento=${encodeURIComponent(documento)}`);
         const data = await res.json();
 
         if (data.status === "existente") {
@@ -53,7 +53,7 @@ formSenha.addEventListener("submit", async (e) => {
     try {
         const rota = senhaTitle.textContent === "Login" ? "login" : "definir-senha";
 
-        const res = await fetch(`/api/cnpj/${rota}`, {
+        const res = await fetch(`http://127.0.0.1:5000/api/cnpj/${rota}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ documento: cnpjGlobal, senha }),
