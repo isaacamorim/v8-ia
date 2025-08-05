@@ -505,8 +505,9 @@ a:hover {
 
 /* General Section Spacing - Increase top/bottom margin for sections */
 .card-section {
-    margin-top: -0px; /* Increased top margin */
+    margin-top: -01px; /* Increased top margin */
     margin-bottom: 40px; /* Increased bottom margin */
+    margin-right: -1px;
 }
 
 
@@ -1305,6 +1306,11 @@ hr {
     .sobre-nos-coluna-direita .paragrafo-item {
         flex-direction: column;
         text-align: center;
+        padding-top: 10px;
+    }
+
+    .sobre-nos-coluna-direita .paragrafo-item {
+        align-items: center !important;
     }
 
     .sobre-nos-coluna-direita .paragrafo-icon {

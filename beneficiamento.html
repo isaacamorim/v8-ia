@@ -72,11 +72,11 @@
         .hero-banner {
             background: 
                 linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('/Imgs/graos.jpg');
+                url('/Imgs/graos_nh.png');
             background-size: cover; /* Faz a imagem cobrir toda a área */
             background-position: center; /* Centraliza a imagem */
             background-repeat: no-repeat; /* Evite repetição */
-            background-attachment: fixed; /* Efeito parallax (opcional) */
+            /*background-attachment: fixed; /* Efeito parallax (opcional) */
             
             color: var(--text-light);
             padding: 100px 0;
@@ -319,6 +319,10 @@
             object-fit: contain;
             margin: 0;
             padding: 0;
+        }
+
+        .product-image img {
+            position: relative;
         }
 
         .product-image {
