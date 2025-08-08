@@ -33,31 +33,37 @@ def get_carrinho(session_id):
 
 # === Rota para adicionar item ao carrinho ===
 @carrinho_bp.route("/adicionar", methods=["POST"])
-def adicionar():
-    data = request.json
-    print("Recebido do frontend:", data)
+def adicionar_item():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"erro": "JSON ausente"}), 400
 
-    cnpj = session.get("cliente")
-    if not cnpj:
-        return jsonify({"error": "CNPJ da sessão não encontrado."}), 400
+        session_id = data.get("session_id")
+        produto_id = data.get("produto_id")
+        quantidade = data.get("quantidade")
+        cnpj = data.get("cnpj_temp", "")  # se estiver enviando o CNPJ opcionalmente
 
-    session_id = data.get("session_id")
-    produto_id = int(data.get("produto_id"))
-    quantidade = int(data.get("quantidade"))
+        if not all([session_id, produto_id, quantidade]):
+            return jsonify({"erro": "Campos obrigatórios ausentes"}), 400
 
-    item = CarrinhoTemp(
-        JCT_SESSION_ID=session_id,
-        JCT_PROID=produto_id,
-        JCT_QUANTIDADE=quantidade,
-        JCT_STATUS="ATIVO",
-        JCT_CNPJ_TEMP=cnpj,
-    )
+        produto_id = int(produto_id)
+        quantidade = int(quantidade)
 
-    # <-- aqui estava o erro: estava com indentação errada
-    db.session.add(item)
-    db.session.commit()
-    return jsonify({"message": "Adicionado ao carrinho."}), 201
+        item = CarrinhoTemp(
+            JCT_SESSION_ID=session_id,
+            JCT_PROID=produto_id,
+            JCT_QUANTIDADE=quantidade,
+            JCT_STATUS="ATIVO",
+            JCT_CNPJ_TEMP=cnpj,
+        )
 
+        db.session.add(item)
+        db.session.commit()
+        return jsonify({"message": "Adicionado ao carrinho."}), 201
+
+    except Exception as e:
+        return jsonify({"erro": f"Erro ao adicionar item: {str(e)}"}), 500
 
 # === Rota para atualizar o status de um item do carrinho ===
 @carrinho_bp.route("/status", methods=["PUT"])

@@ -182,14 +182,18 @@ function carregarCarrinho() {
 }
 
 function salvarNoServidor(item) {
+    const payload = {
+        session_id: obterSessionId(),
+        produto_id: item.id,
+        quantidade: item.qtd
+    };
+
+    console.log("Enviando para API:", payload);  // <--- Adicione isto
+
     fetch("http://127.0.0.1:5000/api/carrinho/adicionar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            session_id: obterSessionId(), // você deve implementar isso
-            produto_id: item.id,
-            quantidade: item.qtd
-        })
+        body: JSON.stringify(payload)
     }).then(res => {
         if (!res.ok) console.warn("Erro ao salvar item no servidor.");
     });

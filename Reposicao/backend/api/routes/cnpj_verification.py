@@ -22,7 +22,7 @@ cnpj_bp = Blueprint("cnpj", __name__)
 @cnpj_bp.route("/verificar", methods=["POST", "GET"])
 def verificar_cnpj():
     try:
-        # Obtenção do documento (mantido igual)
+        # Coleta do documento
         if request.method == "POST":
             data = request.get_json()
             documento = data.get("documento", "").strip() if data else ""
@@ -40,51 +40,70 @@ def verificar_cnpj():
 
         cnpj_limpo = limpar_documento(documento)
 
-        # CONSULTA CORRIGIDA (sem alias conflitante)
         sql = text(
             """
             SELECT 
                 JND_ENDID, 
                 JMP_NFANTA, 
+                JND_DESCRI, 
                 JND_NUMCGC,  
-                NUMDOC,      
-                JMP_ERAZAO
+                JMP_ERAZAO,
+                JNC_SENHA_HASH
             FROM J_V_ENDERECO_COMPLEMENTO
             WHERE JND_NUMCGC = :cnpj
                 AND JMP_TIPEMP = 'B'
-            """
+        """
         )
         res = db.session.execute(sql, {"cnpj": cnpj_limpo}).mappings().fetchone()
 
         if res:
-            # Acesse as colunas EM MINÚSCULAS conforme mostrado no log
-            return (
-                jsonify(
-                    {
-                        "status": "existente",
-                        "documento_formatado": res["numdoc"], 
-                        "nome": res["jmp_erazao"],  # minúscula
-                        "fantasia": res["jmp_nfanta"],  # minúscula
-                        "mensagem": "CNPJ/CPF encontrado.",
-                    }
-                ),
-                200,
-            )
-        else:
-            return (
-                jsonify(
-                    {
-                        "status": "nao_encontrado",
-                        "documento_formatado": formatar_documento(documento),
-                        "mensagem": "CNPJ/CPF não cadastrado.",
-                    }
-                ),
-                200,
-            )
+            senha_hash = res["jnc_senha_hash"]
+
+            if senha_hash and senha_hash.strip():
+                # Caso 1: tem senha
+                return (
+                    jsonify(
+                        {
+                            "status": "existente_com_senha",
+                            "requires_password": True,
+                            "documento_formatado": formatar_documento(documento),
+                            "nome": res["jmp_erazao"],
+                            "social": res["jmp_nfanta"],
+                            "mensagem": "CNPJ/CPF encontrado. Digite sua senha para continuar.",
+                        }
+                    ),
+                    200,
+                )
+            else:
+                # Caso 2: não tem senha definida
+                return (
+                    jsonify(
+                        {
+                            "status": "existente_sem_senha",
+                            "requires_password": False,
+                            "documento_formatado": formatar_documento(documento),
+                            "nome": res["jmp_erazao"],
+                            "social": res["jmp_nfanta"],
+                            "mensagem": "CNPJ/CPF encontrado. Defina uma senha para continuar.",
+                        }
+                    ),
+                    200,
+                )
+
+        # Caso 3: não encontrado
+        return (
+            jsonify(
+                {
+                    "status": "nao_encontrado",
+                    "documento_formatado": formatar_documento(documento),
+                    "mensagem": "CNPJ/CPF não cadastrado.",
+                }
+            ),
+            200,
+        )
 
     except Exception as e:
         return jsonify({"status": "erro", "mensagem": f"Erro interno: {str(e)}"}), 500
-
 
 @cnpj_bp.route("/login", methods=["POST"])
 def fazer_login():
@@ -145,31 +164,38 @@ def fazer_login():
 
 @cnpj_bp.route("/definir-senha", methods=["POST"])
 def definir_senha():
+    """
+    Define a senha para quem ainda não tem.
+    Recebe JSON: { documento: string, senha: string }
+    """
     try:
-        data = request.get_json()
+        data = request.get_json() or {}
         documento = data.get("documento", "").strip()
         senha = data.get("senha", "").strip()
 
+        # validações básicas
         if not documento or not senha:
             return jsonify({"error": "Documento e senha são obrigatórios"}), 400
-
         if not validar_documento(documento):
             return jsonify({"error": "Documento inválido"}), 400
-
         if len(senha) < 4:
-            return jsonify({"error": "A senha deve ter pelo menos 4 caracteres"}), 400
+            return jsonify({"error": "Senha deve ter pelo menos 4 caracteres"}), 400
 
-        cnpj_limpo = limpar_documento(documento)
+        cnpj_limpo = limpar_cnpj(documento)
 
-        # Buscar cliente
+        # buscar cliente na view
         cliente = (
             db.session.execute(
                 text(
                     """
-                SELECT jnd_endid, jnd_descri, numdoc, jnc_senha_hash
-                FROM j_v_endereco_complemento
-                WHERE jnd_numcgc = :cnpj AND jmp_tipemp = 'B'
-            """
+                    SELECT 
+                        JND_ENDID, 
+                        JND_NUMCGC, 
+                        JNC_SENHA_HASH
+                    FROM J_V_ENDERECO_COMPLEMENTO
+                    WHERE JND_NUMCGC = :cnpj
+                        AND JMP_TIPEMP = 'B'
+                """
                 ),
                 {"cnpj": cnpj_limpo},
             )
@@ -180,34 +206,35 @@ def definir_senha():
         if not cliente:
             return jsonify({"error": "Cliente não encontrado"}), 404
 
+        # se já tiver senha
         if cliente["jnc_senha_hash"]:
-            return jsonify({"error": "Senha já cadastrada"}), 400
+            return jsonify({"error": "Senha já definida"}), 400
 
-        # Atualizar senha
+        # grava nova senha criptografada no *tabela base* J_ENDERE
         db.session.execute(
             text(
                 """
-                UPDATE j_endere
-                SET jnc_senha_hash = J_CRIPT(P_PASSWORD => :senha)
-                WHERE jnd_endid = :endid
+                UPDATE J_ENDERECO_COMPLEMENTO
+                SET JNC_SENHA_HASH = J_CRIPT(P_PASSWORD => :senha)
+                WHERE JNC_ENDID = :endid
             """
             ),
             {"senha": senha, "endid": cliente["jnd_endid"]},
         )
         db.session.commit()
 
-        # Criar sessão (se desejar)
+        # criar sessão e retornar sucesso
         criar_sessao_usuario(
-            cliente["jnd_endid"], formatar_documento(documento), cliente["jnd_descri"]
+            cliente["jnd_endid"], formatar_documento(documento), "Cliente"
         )
 
         return (
             jsonify(
                 {
                     "success": True,
-                    "mensagem": "Senha definida com sucesso",
+                    "mensagem": "Senha definida e login realizado com sucesso",
                     "usuario": {
-                        "nome": cliente["numdoc"],
+                        "nome": formatar_documento(documento),
                         "cnpj": formatar_documento(documento),
                     },
                 }

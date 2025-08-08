@@ -13,15 +13,16 @@ const palavrasChaveDisponiveis = [
 function inicializarFiltroLateral(callback) {
     if (!btnFiltrar || !filtroSidebar) return;
 
-    btnFiltrar.addEventListener('click', () => {
-        filtroSidebar.classList.add('active');
+    document.getElementById("btnFiltrar").addEventListener("click", () => {
+        document.getElementById("filterSidebar").style.display = "block";
     });
 
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('.filter-sidebar') === null && e.target !== btnFiltrar) {
-            filtroSidebar.classList.remove('active');
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("apply-filter")) {
+            document.getElementById("filterSidebar").style.display = "none";
         }
     });
+
 
     renderizarFiltros();
 
