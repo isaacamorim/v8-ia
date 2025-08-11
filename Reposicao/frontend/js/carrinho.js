@@ -1,10 +1,7 @@
 /* js/carrinho.js */
-// carrinho.js
 let carrinho = [];
 
-carregarCarrinho(); // recupera do localStorage
-
-
+/* ---------------- Notificação ---------------- */
 function mostrarNotificacao(mensagem, cor = "green") {
     const antiga = document.querySelector('.notification');
     if (antiga) antiga.remove();
@@ -14,17 +11,15 @@ function mostrarNotificacao(mensagem, cor = "green") {
     box.textContent = mensagem;
     document.body.appendChild(box);
 
-    setTimeout(() => {
-        box.remove();
-    }, 2500);
+    setTimeout(() => box.remove(), 2500);
 }
 
-
+/* ---------------- Adicionar / Alterar / Remover ---------------- */
 function adicionarAoCarrinho(id, descricao, qtd, cod, imagem) {
     const existente = carrinho.find(item => item.id === id);
 
     if (existente) {
-        existente.qtd = qtd;  // atualiza quantidade
+        existente.qtd = qtd;
         mostrarNotificacao(`Quantidade atualizada de ${descricao}`, "yellow");
     } else {
         carrinho.push({ id, descricao, qtd, cod, imagem });
@@ -33,23 +28,8 @@ function adicionarAoCarrinho(id, descricao, qtd, cod, imagem) {
 
     atualizarBadgeCarrinho();
     atualizarCarrinhoSidebar();
-    salvarCarrinho(); // já está sendo feito
     salvarNoServidor({ id, qtd });
-
 }
-
-function removerDoCarrinho(id) {
-    const index = carrinho.findIndex(p => p.id === id);
-    if (index !== -1) {
-        const produto = carrinho[index];
-        carrinho.splice(index, 1);
-        mostrarNotificacao(`Removido: ${produto.descricao}`, "red");
-        salvarCarrinho();
-        atualizarCarrinhoVisual();
-        salvarNoServidor({ id, qtd });
-    }
-}
-
 
 function alterarQuantidade(id, novaQtd) {
     novaQtd = parseInt(novaQtd);
@@ -58,53 +38,46 @@ function alterarQuantidade(id, novaQtd) {
     const produto = carrinho.find(p => p.id === id);
     if (produto) {
         produto.qtd = novaQtd;
-        salvarCarrinho();
         atualizarCarrinhoSidebar();
         atualizarBadgeCarrinho();
         mostrarNotificacao(`Quantidade alterada`, "yellow");
+        salvarNoServidor({ id, qtd: novaQtd });
     }
 }
 
-
-function atualizarBadgeCarrinho() {
-    const total = Object.values(carrinho).reduce((acc, p) => acc + p.qtd, 0);
-    document.getElementById('cartCount').textContent = total;
+function removerDoCarrinho(id) {
+    const index = carrinho.findIndex(p => p.id === id);
+    if (index !== -1) {
+        const produto = carrinho[index];
+        carrinho.splice(index, 1);
+        mostrarNotificacao(`Removido: ${produto.descricao}`, "red");
+        atualizarCarrinhoSidebar();
+        atualizarBadgeCarrinho();
+        marcarComoExcluidoNoServidor(id);
+    }
 }
 
-function exibirNotificacao(msg) {
-    const notif = document.querySelector('.notification');
-    notif.textContent = msg;
-    notif.style.display = 'block';
-    notif.style.opacity = '0';
-    notif.style.transform = 'translateY(20px)';
-
-    setTimeout(() => {
-        notif.style.transition = 'all 0.3s ease';
-        notif.style.opacity = '1';
-        notif.style.transform = 'translateY(0)';
-    }, 10);
-
-    setTimeout(() => {
-        notif.style.opacity = '0';
-        notif.style.transform = 'translateY(20px)';
-    }, 2000);
-
-    setTimeout(() => {
-        notif.style.display = 'none';
-    }, 2500);
+/* ---------------- Atualizações de UI ---------------- */
+function atualizarBadgeCarrinho() {
+    const total = carrinho.reduce((acc, p) => acc + p.qtd, 0);
+    document.getElementById('cartCount').textContent = total;
 }
 
 function atualizarCarrinhoSidebar() {
     const container = document.querySelector('.cart-items');
     container.innerHTML = '';
 
-    Object.values(carrinho).forEach(p => {
+    carrinho.forEach(p => {
+        // Se a imagem vier como Base64, monta o src
+        const imgSrc = p.imagem
+            ? `data:image/jpeg;base64,${p.imagem}`
+            : 'img/sem-imagem.jpg';
+
         const el = document.createElement('div');
         el.classList.add('cart-item');
-
         el.innerHTML = `
             <div style="display:flex; align-items:center; gap:0.5rem;">
-                <img src="${p.imagem || 'img/sem-imagem.jpg'}" style="width:40px; height:40px; object-fit:cover; border-radius:6px;">
+                <img src="${imgSrc}" style="width:40px; height:40px; object-fit:cover; border-radius:6px;">
                 <div>
                     <strong>${p.descricao}</strong><br>
                     <small>${p.cod}</small>
@@ -115,15 +88,12 @@ function atualizarCarrinhoSidebar() {
                 <button data-id="${p.id}" class="remove-btn">🗑</button>
             </div>
         `;
-
         container.appendChild(el);
     });
 
-    // Eventos dinâmicos
     container.querySelectorAll('.qty-input').forEach(input => {
         input.addEventListener('change', e => {
-            const id = input.dataset.id;
-            alterarQuantidade(id, parseInt(input.value));
+            alterarQuantidade(input.dataset.id, parseInt(input.value));
         });
     });
 
@@ -134,120 +104,18 @@ function atualizarCarrinhoSidebar() {
     });
 }
 
-// Evento: abrir o carrinho lateral
-document.querySelector('.cart-icon').addEventListener('click', () => {
-    document.querySelector('.cart-sidebar').classList.add('active');
-});
-
-// Fechar clicando fora
-document.addEventListener('click', (e) => {
-    const sidebar = document.querySelector('.cart-sidebar');
-    if (!sidebar.contains(e.target) && !e.target.closest('.cart-icon')) {
-        sidebar.classList.remove('active');
-    }
-});
-
-// Expor globalmente para uso externo
-window.adicionarAoCarrinho = adicionarAoCarrinho;
-
-function mostrarNotificacao(mensagem, cor = "green") {
-    const box = document.createElement("div");
-    box.className = `notification ${cor}`;
-    box.textContent = mensagem;
-    document.body.appendChild(box);
-
-    box.style.display = "block";
-
-    setTimeout(() => {
-        box.remove();
-    }, 2500);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    atualizarBadgeCarrinho();
-    atualizarCarrinhoSidebar(); // Garante que os itens já salvos apareçam
-});
-
-function salvarCarrinho() {
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-}
-
-function carregarCarrinho() {
-    const salvo = localStorage.getItem('carrinho');
-    if (salvo) {
-        carrinho = JSON.parse(salvo);
-    } else {
-        carrinho = [];
-    }
-}
-
+/* ---------------- API ---------------- */
 function salvarNoServidor(item) {
-    const payload = {
-        session_id: obterSessionId(),
-        produto_id: item.id,
-        quantidade: item.qtd
-    };
-
-    console.log("Enviando para API:", payload);  // <--- Adicione isto
-
     fetch("http://127.0.0.1:5000/api/carrinho/adicionar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    }).then(res => {
-        if (!res.ok) console.warn("Erro ao salvar item no servidor.");
-    });
-}
-
-// salvar um session_id simples no localStorage
-function obterSessionId() {
-    let sessionId = localStorage.getItem("session_id");
-    if (!sessionId) {
-        sessionId = `sess_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
-        localStorage.setItem("session_id", sessionId);
-    }
-    return sessionId;
-}
-
-async function carregarCarrinhoDoServidor() {
-    const sessionId = obterSessionId();
-    try {
-        const res = await fetch(`http://127.0.0.1:5000/api/carrinho/${sessionId}`);
-        const dados = await res.json();
-
-        carrinho = dados
-            .filter(item => item.status === 'ATIVO') // só carrega os ativos
-            .map(item => ({
-                id: item.produto_id,
-                descricao: item.descricao,
-                qtd: item.quantidade,
-                cod: item.codigo,
-                imagem: item.imagem
-            }));
-
-        salvarCarrinho(); // salva no localStorage
-        atualizarBadgeCarrinho();
-        atualizarCarrinhoSidebar();
-    } catch (err) {
-        console.warn("Erro ao carregar carrinho do servidor:", err);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    carregarCarrinhoDoServidor(); // carrega do banco
-});
-
-function removerDoCarrinho(id) {
-    const index = carrinho.findIndex(p => p.id === id);
-    if (index !== -1) {
-        const produto = carrinho[index];
-        carrinho.splice(index, 1);
-        mostrarNotificacao(`Removido: ${produto.descricao}`, "red");
-        salvarCarrinho();
-        atualizarCarrinhoSidebar();
-        atualizarBadgeCarrinho();
-        marcarComoExcluidoNoServidor(id);
-    }
+        body: JSON.stringify({
+            session_id: obterSessionId(),
+            produto_id: item.id,
+            quantidade: item.qtd,
+            cnpj_temp: obterCNPJLogado()
+        })
+    }).catch(() => console.warn("Erro ao salvar item no servidor."));
 }
 
 function marcarComoExcluidoNoServidor(id) {
@@ -257,9 +125,86 @@ function marcarComoExcluidoNoServidor(id) {
         body: JSON.stringify({
             session_id: obterSessionId(),
             produto_id: id,
+            cnpj_temp: obterCNPJLogado(),
             status: "EXCLUIDO"
         })
-    }).then(res => {
-        if (!res.ok) console.warn("Erro ao marcar como excluído.");
-    });
+    }).catch(() => console.warn("Erro ao marcar como excluído."));
+}
+
+async function carregarCarrinhoDoServidor() {
+    const cnpj = obterCNPJLogado(); // vem do localStorage
+    if (!cnpj) {
+        console.warn("Nenhum CNPJ logado encontrado.");
+        return;
+    }
+
+    try {
+        const res = await fetch(`http://127.0.0.1:5000/api/carrinho/${cnpj}`);
+        if (!res.ok) {
+            console.warn(`Erro ao buscar carrinho: ${res.status} ${res.statusText}`);
+            return;
+        }
+
+        const dados = await res.json();
+        if (!Array.isArray(dados)) {
+            console.warn("Resposta inesperada do servidor:", dados);
+            return;
+        }
+
+        carrinho = dados
+            .filter(item => item.status === 'ATIVO')
+            .map(item => ({
+                id: item.produto_id,
+                descricao: item.descricao,
+                qtd: item.quantidade,
+                cod: item.codigo,
+                imagem: item.imagem, // já vem em Base64 ou null
+                cnpj_temp: cnpj
+            }));
+
+        atualizarBadgeCarrinho();
+        atualizarCarrinhoSidebar();
+    } catch (err) {
+        console.warn("Erro ao carregar carrinho do servidor:", err);
+    }
+}
+
+/* ---------------- Utilidades ---------------- */
+function obterSessionId() {
+    let sessionId = localStorage.getItem("session_id");
+    if (!sessionId) {
+        sessionId = `sess_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+        localStorage.setItem("session_id", sessionId);
+    }
+    return sessionId;
+}
+
+function obterCNPJLogado() {
+    return localStorage.getItem("cnpj_logado") || "";
+}
+
+/* ---------------- Eventos ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+    carregarCarrinhoDoServidor();
+});
+
+document.querySelector('.cart-icon').addEventListener('click', () => {
+    document.querySelector('.cart-sidebar').classList.add('active');
+});
+
+document.addEventListener('click', (e) => {
+    const sidebar = document.querySelector('.cart-sidebar');
+    if (!sidebar.contains(e.target) && !e.target.closest('.cart-icon')) {
+        sidebar.classList.remove('active');
+    }
+});
+
+window.adicionarAoCarrinho = adicionarAoCarrinho;
+
+function trocarCliente(cnpj) {
+    localStorage.setItem("cnpj_logado", cnpj);
+    carrinho = [];
+    atualizarBadgeCarrinho();
+    atualizarCarrinhoSidebar();
+    carregarCarrinhoDoServidor(); // busca do banco
 }

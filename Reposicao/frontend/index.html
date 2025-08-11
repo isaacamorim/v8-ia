@@ -195,11 +195,16 @@
                 alert("Acesso liberado!");
                 carregarProdutos();
 
+                localStorage.setItem("cnpj_logado", cnpjGlobal.replace(/\D/g, ""));
+
                 document.getElementById("verifyOverlay").style.display = "none";
                 document.getElementById("appHeader").style.display = "flex";
                 document.getElementById("conteudoPrincipal").style.display = "block";
 
                 document.getElementById("clientStatusText").textContent = `${data.usuario.nome} (${data.usuario.cnpj})`;
+
+                carregarCarrinhoDoServidor();
+            
             } else {
                 alert(data.error || "Erro ao autenticar.");
             }

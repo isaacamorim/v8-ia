@@ -1,5 +1,5 @@
 # routes/carrinho.py
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from ..extensions import db
 from ..models.carrinho import CarrinhoTemp
 from ..models.produto import Produto
@@ -7,31 +7,50 @@ from ..models.produto import Produto
 carrinho_bp = Blueprint("carrinho", __name__)
 
 
-# === Rota para buscar itens do carrinho com base no session_id ===
-@carrinho_bp.route("/<session_id>", methods=["GET"])
-def get_carrinho(session_id):
-    itens = (
-        db.session.query(CarrinhoTemp, Produto)
-        .join(Produto, CarrinhoTemp.JCT_PROID == Produto.JRO_PROID)
-        .filter(CarrinhoTemp.JCT_SESSION_ID == session_id)
-        .all()
-    )
-    return jsonify(
-        [
-            {
-                "produto_id": item.JCT_PROID,
-                "quantidade": item.JCT_QUANTIDADE,
-                "status": item.JCT_STATUS,
-                "descricao": produto.JRO_DESCRI,
-                "codigo": produto.JRO_PROERP,
-                "imagem": produto.JRO_IMAGEM,
-            }
-            for item, produto in itens
-        ]
-    )
+# === GET: Buscar carrinho só pelo CNPJ, filtrando apenas itens ativos ===
+import base64
 
 
-# === Rota para adicionar item ao carrinho ===
+@carrinho_bp.route("/<cnpj_temp>", methods=["GET"])
+def get_carrinho_por_cnpj(cnpj_temp):
+    try:
+        itens = (
+            db.session.query(CarrinhoTemp, Produto)
+            .join(Produto, CarrinhoTemp.JCT_PROID == Produto.JRO_PROID)
+            .filter(CarrinhoTemp.JCT_CNPJ_TEMP == cnpj_temp)
+            .all()
+        )
+
+        resultado = []
+        for item, produto in itens:
+            # Se o campo for bytes, converte para base64 string
+            imagem_str = None
+            if hasattr(produto, "IMG_IMAGEM") and produto.IMG_IMAGEM:
+                try:
+                    imagem_str = base64.b64encode(produto.IMG_IMAGEM).decode("utf-8")
+                except Exception:
+                    imagem_str = None
+
+            resultado.append(
+                {
+                    "produto_id": item.JCT_PROID,
+                    "quantidade": item.JCT_QUANTIDADE,
+                    "status": item.JCT_STATUS,
+                    "descricao": produto.JRO_DESCRI,
+                    "codigo": produto.JRO_PROERP,
+                    "imagem": imagem_str,  # já convertido
+                }
+            )
+
+        return jsonify(resultado)
+
+    except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+        return jsonify({"erro": f"Erro ao buscar carrinho: {str(e)}"}), 500
+
+# === POST: Adicionar item ao carrinho pelo CNPJ ===
 @carrinho_bp.route("/adicionar", methods=["POST"])
 def adicionar_item():
     try:
@@ -42,20 +61,23 @@ def adicionar_item():
         session_id = data.get("session_id")
         produto_id = data.get("produto_id")
         quantidade = data.get("quantidade")
-        cnpj = data.get("cnpj_temp", "")  # se estiver enviando o CNPJ opcionalmente
+        cnpj_temp = data.get("cnpj_temp")
 
-        if not all([session_id, produto_id, quantidade]):
+        if not all([session_id, produto_id, quantidade, cnpj_temp]):
             return jsonify({"erro": "Campos obrigatórios ausentes"}), 400
 
-        produto_id = int(produto_id)
-        quantidade = int(quantidade)
+        try:
+            produto_id = int(produto_id)
+            quantidade = int(quantidade)
+        except ValueError:
+            return jsonify({"erro": "IDs e quantidades precisam ser inteiros"}), 400
 
         item = CarrinhoTemp(
             JCT_SESSION_ID=session_id,
             JCT_PROID=produto_id,
             JCT_QUANTIDADE=quantidade,
             JCT_STATUS="ATIVO",
-            JCT_CNPJ_TEMP=cnpj,
+            JCT_CNPJ_TEMP=cnpj_temp,
         )
 
         db.session.add(item)
@@ -63,19 +85,35 @@ def adicionar_item():
         return jsonify({"message": "Adicionado ao carrinho."}), 201
 
     except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+        db.session.rollback()
         return jsonify({"erro": f"Erro ao adicionar item: {str(e)}"}), 500
 
-# === Rota para atualizar o status de um item do carrinho ===
+# === PUT: Atualizar status do item pelo CNPJ ===
 @carrinho_bp.route("/status", methods=["PUT"])
 def atualizar_status():
-    data = request.json
-    item = CarrinhoTemp.query.filter_by(
-        JCT_SESSION_ID=data["session_id"], JCT_PROID=data["produto_id"]
-    ).first()
+    try:
+        data = request.json
+        produto_id = data.get("produto_id")
+        cnpj_temp = data.get("cnpj_temp")
+        status = data.get("status")
 
-    if item:
-        item.JCT_STATUS = data["status"]
-        db.session.commit()
-        return jsonify({"message": "Status atualizado"}), 200
+        if not all([produto_id, cnpj_temp, status]):
+            return jsonify({"erro": "Campos obrigatórios ausentes"}), 400
 
-    return jsonify({"error": "Item não encontrado"}), 404
+        item = CarrinhoTemp.query.filter_by(
+            JCT_PROID=produto_id, JCT_CNPJ_TEMP=cnpj_temp
+        ).first()
+
+        if item:
+            item.JCT_STATUS = status
+            db.session.commit()
+            return jsonify({"message": "Status atualizado"}), 200
+
+        return jsonify({"error": "Item não encontrado"}), 404
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"erro": f"Erro ao atualizar status: {str(e)}"}), 500
