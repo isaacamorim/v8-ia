@@ -23,7 +23,6 @@ def get_carrinho_por_cnpj(cnpj_temp):
 
         resultado = []
         for item, produto in itens:
-            # Se o campo for bytes, converte para base64 string
             imagem_str = None
             if hasattr(produto, "IMG_IMAGEM") and produto.IMG_IMAGEM:
                 try:
@@ -38,7 +37,9 @@ def get_carrinho_por_cnpj(cnpj_temp):
                     "status": item.JCT_STATUS,
                     "descricao": produto.JRO_DESCRI,
                     "codigo": produto.JRO_PROERP,
-                    "imagem": imagem_str,  # já convertido
+                    "imagem": imagem_str,
+                    "qtd_minima": getattr(produto, "JRO_QTD_MINIMA", 1),
+                    "passo_qtd": getattr(produto, "JRO_PASSO_QTD", 1),
                 }
             )
 
@@ -117,3 +118,23 @@ def atualizar_status():
     except Exception as e:
         db.session.rollback()
         return jsonify({"erro": f"Erro ao atualizar status: {str(e)}"}), 500
+
+# PUT - Atualizar quantidade de um item
+@carrinho_bp.route("/quantidade", methods=["PUT"])
+def atualizar_quantidade():
+    try:
+        data = request.get_json()
+        item = CarrinhoTemp.query.filter_by(
+            JCT_SESSION_ID=data["session_id"],
+            JCT_PROID=data["produto_id"],
+            JCT_CNPJ_TEMP=data["cnpj_temp"],
+        ).first()
+
+        if item:
+            item.JCT_QUANTIDADE = data["quantidade"]
+            db.session.commit()
+            return jsonify({"message": "Quantidade atualizada"}), 200
+        return jsonify({"error": "Item não encontrado"}), 404
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500

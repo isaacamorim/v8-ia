@@ -1,4 +1,4 @@
-<!--frontend/index.html-->
+<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -14,7 +14,6 @@
 
     <!-- Overlay de verificação/login -->
     <section class="verify-overlay" id="verifyOverlay">
-        <!-- dentro da <section id="verifyOverlay"> -->
         <div class="verify-box" id="boxVerificacao">
             <h2>Verificação de Acesso</h2>
             <form id="verificacaoRapida">
@@ -22,22 +21,17 @@
                 <button type="submit">Verificar</button>
             </form>
         </div>
-        
+
         <div class="verify-box" id="boxSenha" style="display:none;">
             <h2 id="senhaTitle">Criar Senha</h2>
             <p id="senhaDescricao">Defina sua senha para continuar</p>
             <form id="formSenha">
-                <!-- Campo único: login ou criação -->
                 <input type="password" id="novaSenha" placeholder="Digite sua senha">
-            
-                <!-- Só aparece se for criação de senha -->
                 <div id="grupoConfirmar" style="display: none;">
                     <input type="password" id="confirmarSenha" placeholder="Confirme sua senha">
                 </div>
-            
                 <button type="submit">Continuar</button>
             </form>
-
             <button type="button" onclick="voltarParaVerificacao()">Voltar</button>
         </div>
     </section>
@@ -45,7 +39,8 @@
     <!-- Cabeçalho -->
     <header id="appHeader" style="display:none;">
         <div class="client-status" id="clientStatus">
-            <span id="clientStatusText"></span>
+            <span class="client-name" id="clientName"></span>
+            <span class="client-doc" id="clientDoc"></span>
         </div>
         <div class="cart-icon" id="cartIcon">
             <i class="fas fa-shopping-cart"></i>
@@ -60,8 +55,21 @@
                 <button id="btnBuscar"><i class="fas fa-search"></i> Buscar</button>
             </div>
             <button id="btnFiltrar"><i class="fas fa-sliders-h"></i> Filtros</button>
+            <!-- <button id="btnSair"><i class="fas fa-sign-out-alt"></i > Sair</button> -->
         </section>
 
+        <!-- ✅ Sidebar de Filtros -->
+        <aside id="filterSidebar" class="filter-sidebar">
+            <div class="filter-header">
+                <h3>Filtros</h3>
+                <button class="apply-filter">Aplicar</button>
+            </div>
+            <div class="filter-options">
+                <!-- preenchido dinamicamente -->
+            </div>
+        </aside>
+
+        <!-- ✅ Apenas UMA barra de busca -->
         <div id="searchBarContainer" style="display: none; width: 100%;">
             <div class="search-bar">
                 <input type="text" id="searchInput" class="search-input"
@@ -71,22 +79,19 @@
         </div>
     </main>
 
+    <!-- Produtos -->
     <section class="products-section" id="productsGrid">
         <div class="loading"><i class="fas fa-spinner fa-pulse"></i> Carregando produtos...</div>
     </section>
 
+    <!-- Carrinho -->
     <aside class="cart-sidebar">
         <h3>Carrinho</h3>
         <div class="cart-items" id="cartItems"></div>
         <button class="finalize-order">Enviar Pedido</button>
     </aside>
 
-    <aside class="filter-sidebar" id="filterSidebar">
-        <h3>Filtrar por Palavras-chave</h3>
-        <div class="filter-options" id="filterOptions"></div>
-        <button class="apply-filter" id="applyFilterBtn">Aplicar Filtros</button>
-    </aside>
-
+    <!-- Notificação -->
     <div class="notification" id="notification"></div>
 
     <!-- Scripts -->
@@ -95,133 +100,152 @@
     <script src="js/filtros.js"></script>
     <script src="js/carrinho.js"></script>
 
-<!-- ... HTML anterior mantido ... -->
+    <!-- Scripts internos -->
+    <script>
+        const formVerificacao = document.getElementById("verificacaoRapida");
+        const docQuick = document.getElementById("docQuick");
 
-<script>
-    const formVerificacao = document.getElementById("verificacaoRapida");
-    const docQuick = document.getElementById("docQuick");
+        const senhaBox = document.getElementById("boxSenha");
+        const formSenha = document.getElementById("formSenha");
+        const senhaTitle = document.getElementById("senhaTitle");
+        const senhaDescricao = document.getElementById("senhaDescricao");
+        const boxVerificacao = document.getElementById("boxVerificacao");
 
-    const senhaBox = document.getElementById("boxSenha");
-    const formSenha = document.getElementById("formSenha");
-    const senhaTitle = document.getElementById("senhaTitle");
-    const senhaDescricao = document.getElementById("senhaDescricao");
-    const boxVerificacao = document.getElementById("boxVerificacao");
+        const novaSenhaInput = document.getElementById("novaSenha");
+        const confirmarSenhaInput = document.getElementById("confirmarSenha");
+        const grupoConfirmar = document.getElementById("grupoConfirmar");
 
-    const novaSenhaInput = document.getElementById("novaSenha");
-    const confirmarSenhaInput = document.getElementById("confirmarSenha");
-    const grupoConfirmar = document.getElementById("grupoConfirmar");
+        let cnpjGlobal = "";
+        let modo = ""; // "login" ou "criar_senha"
 
-    let cnpjGlobal = "";
-    let modo = ""; // "login" ou "criar_senha"
+        formVerificacao.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const documento = docQuick.value.trim();
 
-    formVerificacao.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const documento = docQuick.value.trim();
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/cnpj/verificar?documento=${encodeURIComponent(documento)}`);
+                const data = await res.json();
 
-        try {
-            const res = await fetch(`http://127.0.0.1:5000/api/cnpj/verificar?documento=${encodeURIComponent(documento)}`);
-            const data = await res.json();
+                if (data.status === "existente_com_senha") {
+                    cnpjGlobal = documento;
+                    modo = "login";
 
-            if (data.status === "existente_com_senha") {
-                // Login
-                cnpjGlobal = documento;
-                modo = "login";
+                    senhaBox.style.display = "block";
+                    boxVerificacao.style.display = "none";
 
-                senhaBox.style.display = "block";
-                boxVerificacao.style.display = "none";
+                    senhaTitle.textContent = "Login";
+                    senhaDescricao.textContent = `Olá ${data.nome || "cliente"}, digite sua senha para continuar.`;
+                    grupoConfirmar.style.display = "none";
 
-                senhaTitle.textContent = "Login";
-                senhaDescricao.textContent = `Olá ${data.nome || "cliente"}, digite sua senha para continuar.`;
-                grupoConfirmar.style.display = "none";
+                } else if (data.status === "existente_sem_senha") {
+                    cnpjGlobal = documento;
+                    modo = "criar_senha";
 
-            } else if (data.status === "existente_sem_senha") {
-                // Criar senha
-                cnpjGlobal = documento;
-                modo = "criar_senha";
+                    senhaBox.style.display = "block";
+                    boxVerificacao.style.display = "none";
 
-                senhaBox.style.display = "block";
-                boxVerificacao.style.display = "none";
+                    senhaTitle.textContent = "Criar Senha";
+                    senhaDescricao.textContent = `Olá ${data.nome || "cliente"}, defina uma senha para continuar.`;
+                    grupoConfirmar.style.display = "block";
 
-                senhaTitle.textContent = "Criar Senha";
-                senhaDescricao.textContent = `Olá ${data.nome || "cliente"}, defina uma senha para continuar.`;
-                grupoConfirmar.style.display = "block";
-
-            } else if (data.status === "nao_encontrado") {
-                // Não encontrado → WhatsApp
-                const confirmZap = confirm("CNPJ não cadastrado. Deseja solicitar cadastro via WhatsApp?");
-                if (confirmZap) {
-                    const mensagem = `Olá! Gostaria de solicitar meu cadastro para o sistema de peças. Meu CNPJ é ${documento}.`;
-                    const link = `https://wa.me/551934512822?text=${encodeURIComponent(mensagem)}`;
-                    window.open(link, "_blank");
+                } else if (data.status === "nao_encontrado") {
+                    const confirmZap = confirm("CNPJ não cadastrado. Deseja solicitar cadastro via WhatsApp?");
+                    if (confirmZap) {
+                        const mensagem = `Olá! Gostaria de solicitar meu cadastro para o sistema de peças. Meu CNPJ é ${documento}.`;
+                        const link = `https://wa.me/551934512822?text=${encodeURIComponent(mensagem)}`;
+                        window.open(link, "_blank");
+                    }
+                } else {
+                    alert(data.mensagem || "Erro ao verificar.");
                 }
-            } else {
-                alert(data.mensagem || "Erro ao verificar.");
+
+            } catch (err) {
+                console.error(err);
+                alert("Erro ao conectar com o servidor.");
+            }
+        });
+
+        formSenha.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const novaSenha = novaSenhaInput.value.trim();
+            const confirmarSenha = confirmarSenhaInput.value.trim();
+
+            if (!novaSenha) {
+                alert("Informe sua senha.");
+                return;
             }
 
-        } catch (err) {
-            console.error(err);
-            alert("Erro ao conectar com o servidor.");
+            if (modo === "criar_senha" && novaSenha !== confirmarSenha) {
+                alert("As senhas não coincidem.");
+                return;
+            }
+
+            const rota = (modo === "login") ? "login" : "definir-senha";
+
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/cnpj/${rota}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ documento: cnpjGlobal, senha: novaSenha }),
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    alert("Acesso liberado!");
+                    carregarProdutos();
+
+                    localStorage.setItem("cnpj_logado", cnpjGlobal.replace(/\D/g, ""));
+
+                    document.getElementById("verifyOverlay").style.display = "none";
+                    document.getElementById("appHeader").style.display = "flex";
+                    document.getElementById("conteudoPrincipal").style.display = "block";
+
+                    // salva em localStorage para persistir durante a sessão
+                    localStorage.setItem("clienteNome", data.usuario.nome);
+                    localStorage.setItem("clienteCNPJ", data.usuario.cnpj);
+
+                    // preenche os spans separados
+                    document.getElementById("clientName").textContent = data.usuario.nome;
+                    document.getElementById("clientDoc").textContent = data.usuario.cnpj;
+
+                    carregarCarrinhoDoServidor();
+
+                } else {
+                    alert(data.error || "Erro ao autenticar.");
+                }
+
+            } catch (err) {
+                alert("Erro de conexão.");
+                console.error(err);
+            }
+        });
+
+        function voltarParaVerificacao() {
+            senhaBox.style.display = "none";
+            boxVerificacao.style.display = "block";
+            novaSenhaInput.value = "";
+            confirmarSenhaInput.value = "";
         }
-    });
+        document.addEventListener("DOMContentLoaded", () => {
+                inicializarFiltroLateral((filtros) => {
+                    carregarProdutos(filtros); // 👉 recebe os filtros corretamente
+                });
 
-    formSenha.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const novaSenha = novaSenhaInput.value.trim();
-        const confirmarSenha = confirmarSenhaInput.value.trim();
-
-        if (!novaSenha) {
-            alert("Informe sua senha.");
-            return;
-        }
-
-        if (modo === "criar_senha" && novaSenha !== confirmarSenha) {
-            alert("As senhas não coincidem.");
-            return;
-        }
-
-        const rota = (modo === "login") ? "login" : "definir-senha";
-
-        try {
-            const res = await fetch(`http://127.0.0.1:5000/api/cnpj/${rota}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ documento: cnpjGlobal, senha: novaSenha }),
             });
+            document.addEventListener("DOMContentLoaded", () => {
+                    const nome = localStorage.getItem("clienteNome");
+                    const cnpj = localStorage.getItem("clienteCNPJ");
 
-            const data = await res.json();
+                    if (nome && cnpj) {
+                        document.getElementById("clientName").textContent = nome;
+                        document.getElementById("clientDoc").textContent = cnpj;
+                    }
+                });
 
-            if (res.ok && data.success) {
-                alert("Acesso liberado!");
-                carregarProdutos();
-
-                localStorage.setItem("cnpj_logado", cnpjGlobal.replace(/\D/g, ""));
-
-                document.getElementById("verifyOverlay").style.display = "none";
-                document.getElementById("appHeader").style.display = "flex";
-                document.getElementById("conteudoPrincipal").style.display = "block";
-
-                document.getElementById("clientStatusText").textContent = `${data.usuario.nome} (${data.usuario.cnpj})`;
-
-                carregarCarrinhoDoServidor();
-            
-            } else {
-                alert(data.error || "Erro ao autenticar.");
-            }
-
-        } catch (err) {
-            alert("Erro de conexão.");
-            console.error(err);
-        }
-    });
-
-    function voltarParaVerificacao() {
-        senhaBox.style.display = "none";
-        boxVerificacao.style.display = "block";
-        novaSenhaInput.value = "";
-        confirmarSenhaInput.value = "";
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
