@@ -201,7 +201,7 @@ async function confirmBatch() {
 }
 
 
-const API_BASE = 'http://10.42.92.84:5000/api';
+const API_BASE = 'http://10.42.92.86:5000/api';
 
 // Carrega sequenciamento para o operador
 async function loadSequencing() {
@@ -339,6 +339,65 @@ async function completeJob() {
     };
 
     input.click();
+}
+
+// --- Funções para Carregar Apontamentos Existentes ---
+async function loadExistingApontamentos(ofId) {
+    console.log("Carregando apontamentos para OF:", ofId);
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/laser/apontamento/list/${encodeURIComponent(ofId)}`);
+        console.log("Resposta da API:", response);
+        const data = await response.json();
+        console.log("Dados recebidos:", data);
+
+        if (data.success) {
+            renderExistingApontamentos(data.apontamentos);
+        } else {
+            console.error("Erro ao carregar apontamentos:", data.error);
+            showToast("error", "Erro ao carregar apontamentos existentes");
+        }
+    } catch (error) {
+        console.error("Erro na requisição de apontamentos:", error);
+        showToast("error", "Erro ao carregar apontamentos existentes");
+    }
+}
+
+function renderExistingApontamentos(apontamentos) {
+    const tbody = document.getElementById("existingApontamentosBody");
+    const table = document.getElementById("existingApontamentosTable");
+    const noData = document.getElementById("noExistingApontamentos");
+
+    tbody.innerHTML = "";
+
+    if (!apontamentos || apontamentos.length === 0) {
+        table.style.display = "none";
+        noData.style.display = "block";
+        return;
+    }
+
+    table.style.display = "table";
+    noData.style.display = "none";
+
+    apontamentos.forEach(apontamento => {
+        const row = tbody.insertRow();
+
+        // Determinar status com base nas datas
+        let status = "Finalizado";
+        let statusColor = "#28a745";
+
+        if (apontamento.SOF_DTAFIM === null || apontamento.SOF_DTAFIM === "") {
+            status = "Em Andamento";
+            statusColor = "#007bff";
+        }
+
+        row.innerHTML = `
+            <td style="padding: 8px; border: 1px solid #ddd;">${apontamento.SOF_OPERAD || "-"}</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${apontamento.SOF_DTINIC || "-"}</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${apontamento.SOF_DTAFIM || "-"}</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${apontamento.SOF_QNTBOA || "0"}</td>
+            <td style="padding: 8px; border: 1px solid #ddd; color: ${statusColor}; font-weight: bold;">${status}</td>
+        `;
+    });
 }
 
 // Notificações do navegador

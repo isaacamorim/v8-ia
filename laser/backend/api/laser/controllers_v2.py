@@ -357,6 +357,49 @@ def finish_apontamento():
         conn.close()
 
 
+# --- LISTAR APONTAMENTOS DA OF ---
+@laser_v2_bp.route("/apontamento/list/<string:of_id>", methods=["GET"])
+def list_apontamentos(of_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        sql = """
+            SELECT 
+                SOF_CODIOF,
+                SOF_OPERAD,
+                TO_CHAR(SOF_DTINIC, 'DD/MM/YYYY HH24:MI:SS') AS SOF_DTINIC,
+                TO_CHAR(SOF_DTAFIM, 'DD/MM/YYYY HH24:MI:SS') AS SOF_DTAFIM,
+                SOF_QNTBOA
+            FROM S_APONTAMENTO_OF 
+            WHERE SOF_CODIOF = :of_id
+            ORDER BY SOF_DTINIC DESC
+        """
+        cursor.execute(sql, {"of_id": of_id})
+        results = cursor.fetchall()
+
+        apontamentos = []
+        for row in results:
+            apontamentos.append(
+                {
+                    "SOF_CODIOF": row[0],
+                    "SOF_OPERAD": row[1],
+                    "SOF_DTINIC": row[2],
+                    "SOF_DTAFIM": row[3],
+                    "SOF_QNTBOA": row[4],
+                }
+            )
+
+        return jsonify(
+            {"success": True, "apontamentos": apontamentos, "total": len(apontamentos)}
+        )
+
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
 # --- CONFIRMAR EM LOTE OS PDFs PENDENTES ---
 @laser_v2_bp.route("/apontamento/confirm_batch", methods=["POST"])
 def confirm_batch():

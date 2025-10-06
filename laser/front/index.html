@@ -19,6 +19,8 @@
     <!-- Carregar script do menu CORRETAMENTE -->
     <script src="/../menu/sidebar.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         /* sidebar.css */
 
@@ -1038,6 +1040,22 @@ body {
         .shake {
             animation: shake 0.3s ease-in-out;
         }
+        
+    .btn {
+        padding: 10px 15px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+    }
+
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
     </style>
 </head>
 
@@ -1162,7 +1180,7 @@ body {
 
         <!-- Apontamento -->
         <div class="container" id="apontamentoSection">
-            <div id="apontamentoOfInfo" class="apontamento-title"></div>
+            <div id="apontamentoOfInfo" class="apontamento-title"></div>           
             <div class="form-group">
                 <label for="pdfFile">1. Selecionar Relatório de Produção (PDF)</label>
                 <input type="file" id="pdfFile" accept=".pdf" />
@@ -1171,14 +1189,89 @@ body {
 
             <!-- === Botões de Controle de Apontamento === -->
             <div id="apontamentoControlBtns" style="margin-top: 15px; margin-bottom: 15px;">
-                <button class="btn" id="startApontamentoBtn" style="background-color: #28a745;">Iniciar
-                    Apontamento</button>
-                <button class="btn" id="pauseApontamentoBtn" style="background-color: #ffc107; color: #333;"
-                    disabled>Pausar Apontamento</button>
-                <button class="btn" id="manualFinishApontamentoBtn" style="background-color: #dc3545;"
-                    disabled>Finalizar Apontamento (Manual)</button>
+                <button class="btn" id="startApontamentoBtn" style="background-color: #28a745;">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M8 5v14l11-7z" />
+                    </svg>
+                    Iniciar Apontamento
+                </button>
+                
+                <button class="btn" id="pauseApontamentoBtn" style="background-color: #ffc107; color: #333;" disabled>
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                    </svg>
+                    Pausar Apontamento
+                </button>
+                
+                <button class="btn" id="manualFinishApontamentoBtn" style="background-color: #dc3545;" disabled>
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M6 6h12v12H6z" />
+                    </svg>
+                    Finalizar Apontamento
+                </button>
             </div>
             <!-- ========================================== -->
+            <!-- === Tabela de Apontamentos Existentes - VERSÃO MELHORADA === -->
+            <div id="existingApontamentosSection" style="margin-top: 30px;">
+                <h3
+                    style="color: #333; margin-bottom: 20px; font-size: 1.4rem; font-weight: 600; border-bottom: 2px solid #D52029; padding-bottom: 8px;">
+                    📊 Apontamentos Realizados para esta OF
+                </h3>
+
+                <div style="background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); overflow: hidden;">
+                    <table id="existingApontamentosTable" style="width: 100%; border-collapse: collapse; display: none;">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #D52029 0%, #B4252C 100%); color: white;">
+                                <th
+                                    style="padding: 16px 12px; text-align: left; font-weight: 600; font-size: 0.9rem; border-bottom: 2px solid #a00000;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-user"></i>
+                                        Operador
+                                    </div>
+                                </th>
+                                <th
+                                    style="padding: 16px 12px; text-align: left; font-weight: 600; font-size: 0.9rem; border-bottom: 2px solid #a00000;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-play-circle"></i>
+                                        Início
+                                    </div>
+                                </th>
+                                <th
+                                    style="padding: 16px 12px; text-align: left; font-weight: 600; font-size: 0.9rem; border-bottom: 2px solid #a00000;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-stop-circle"></i>
+                                        Fim
+                                    </div>
+                                </th>
+                                <th
+                                    style="padding: 16px 12px; text-align: center; font-weight: 600; font-size: 0.9rem; border-bottom: 2px solid #a00000;">
+                                    <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                        <i class="fas fa-boxes"></i>
+                                        Qtd. Boa
+                                    </div>
+                                </th>
+                                <th
+                                    style="padding: 16px 12px; text-align: center; font-weight: 600; font-size: 0.9rem; border-bottom: 2px solid #a00000;">
+                                    <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                        <i class="fas fa-tasks"></i>
+                                        Status
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="existingApontamentosBody" style="font-size: 0.9rem;"></tbody>
+                    </table>
+                </div>
+
+                <div id="noExistingApontamentos"
+                    style="display: none; text-align: center; padding: 40px 20px; color: #666; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                    <div style="font-size: 4rem; color: #e0e0e0; margin-bottom: 16px;">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h4 style="color: #999; margin-bottom: 8px; font-weight: 500;">Nenhum apontamento realizado</h4>
+                    <p style="color: #aaa; font-size: 0.9rem;">Os apontamentos realizados para esta OF aparecerão aqui</p>
+                </div>
+            </div>
 
             <div id="pdfExtractResults" style="display:none;">
                 <h4>Dados Extraídos do Último PDF:</h4>
@@ -1295,23 +1388,36 @@ body {
             let pendingApontamentos = [];
             let currentApontamentoState = "idle"; // idle, started, paused
             let currentApontamentoId = null; // Store the ID (e.g., SOF_APONTAOFID) of the active record
-            const API_BASE_URL = "http://10.42.92.84:5000"; // Configure se necessário, ex: http://localhost:5000
+            const API_BASE = 'http://10.42.92.86:5000/api';
+            const API_BASE_URL = "http://10.42.92.86:5000"; // Configure se necessário, ex: http://localhost:5000
 
             // --- Funções de Controle de Estado dos Botões ---
             function updateApontamentoControlButtons() {
                 const isStarted = currentApontamentoState === "started";
-                const apontamentoControlsActive = apontamentoSection && apontamentoSection.style.display === "block";
+                const isApontamentoActive = apontamentoSection && apontamentoSection.style.display === "block";
 
-                if (startApontamentoBtn) startApontamentoBtn.disabled = isStarted || !apontamentoControlsActive;
-                if (pauseApontamentoBtn) pauseApontamentoBtn.disabled = !isStarted || !apontamentoControlsActive;
-                if (manualFinishApontamentoBtn) manualFinishApontamentoBtn.disabled = !isStarted || !apontamentoControlsActive;
+                console.log("Atualizando botões:", { isStarted, isApontamentoActive }); // Debug
 
-                if (processPdfBtn) processPdfBtn.disabled = !(currentApontamentoState === 'idle' || currentApontamentoState === 'started') || !apontamentoControlsActive;
+                if (startApontamentoBtn) {
+                    startApontamentoBtn.disabled = isStarted || !isApontamentoActive;
+                }
+
+                if (pauseApontamentoBtn) {
+                    pauseApontamentoBtn.disabled = !isStarted || !isApontamentoActive;
+                }
+
+                if (manualFinishApontamentoBtn) {
+                    manualFinishApontamentoBtn.disabled = !isStarted || !isApontamentoActive;
+                }
+
+                if (processPdfBtn) {
+                    processPdfBtn.disabled = !(currentApontamentoState === 'idle' || currentApontamentoState === 'started') || !isApontamentoActive;
+                }
+
                 if (confirmAllPendingBtn) {
-                    confirmAllPendingBtn.disabled = !(currentApontamentoState === "started" && pendingApontamentos.length > 0 && apontamentoControlsActive);
+                    confirmAllPendingBtn.disabled = !(currentApontamentoState === "started" && pendingApontamentos.length > 0 && isApontamentoActive);
                 }
             }
-
             // --- Funções de Toast e Confirmação ---
             function showToast(type, message, duration = 5000) { // Aumentado duration padrão
                 const container = document.getElementById("toast-container");
@@ -1499,6 +1605,8 @@ body {
 
             // --- Função de Início de Apontamento (CORRIGIDA) ---
             function handleStartApontamento(e) {
+                console.log("Botão Iniciar clicado"); // Debug
+
                 const ofIdFromDataset = e.target.dataset.ofId;
                 const empresaIdFromDataset = e.target.dataset.empresaId;
 
@@ -1525,15 +1633,176 @@ body {
                     return;
                 }
 
+                console.log("OF encontrada:", currentSelectedOfData); // Debug
+
                 // Atualiza a interface com as informações da OF selecionada
                 updateOfDisplay();
+
+                // Adicione esta linha ANTES de chamar loadExistingApontamentos no handleStartApontamento:
+                console.log("Carregando apontamentos existentes para OF:", ofIdFromDataset);
+
+                // E depois chame a função:
+                loadExistingApontamentos(ofIdFromDataset);
 
                 // Reseta o estado do apontamento
                 resetApontamentoState();
 
+                // Carrega apontamentos existentes para esta OF
+                loadExistingApontamentos(ofIdFromDataset);
+
                 // Alterna para a tela de apontamento
                 switchToApontamentoView();
             }
+
+    // --- FUNÇÃO CORRIGIDA loadExistingApontamentos ---
+    async function loadExistingApontamentos(ofId) {
+        console.log("🔄 Carregando apontamentos existentes para OF:", ofId);
+
+        try {
+            // Use o endpoint que funciona: /api/laser/apontamento/list/{of_id}
+            const response = await fetch(`${API_BASE_URL}/api/laser/apontamento/list/${encodeURIComponent(ofId)}`);
+
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("📊 Dados recebidos da API:", data);
+
+            // A resposta deve ter a estrutura: { success: true, apontamentos: [...] }
+            if (data.success && data.apontamentos) {
+                renderExistingApontamentos(data.apontamentos);
+            } else {
+                console.error("❌ API não retornou apontamentos:", data);
+                renderExistingApontamentos([]);
+            }
+        } catch (error) {
+            console.error("❌ Erro ao carregar apontamentos existentes:", error);
+            renderExistingApontamentos([]);
+        }
+    }
+    // --- FUNÇÃO ATUALIZADA renderExistingApontamentos ---
+    function renderExistingApontamentos(apontamentos) {
+        const tbody = document.getElementById("existingApontamentosBody");
+        const table = document.getElementById("existingApontamentosTable");
+        const noData = document.getElementById("noExistingApontamentos");
+
+        if (!tbody || !table || !noData) {
+            console.error("Elementos HTML não encontrados");
+            return;
+        }
+
+        tbody.innerHTML = "";
+
+        if (!apontamentos || apontamentos.length === 0) {
+            table.style.display = "none";
+            noData.style.display = "block";
+            return;
+        }
+
+        table.style.display = "table";
+        noData.style.display = "none";
+
+        console.log("Renderizando apontamentos:", apontamentos);
+
+        apontamentos.forEach((apont, index) => {
+            const row = tbody.insertRow();
+            row.style.transition = "background-color 0.2s ease";
+            row.style.borderBottom = "1px solid #f0f0f0";
+
+            // Efeito hover nas linhas
+            row.onmouseenter = () => {
+                row.style.backgroundColor = "#f8f9fa";
+            };
+            row.onmouseleave = () => {
+                row.style.backgroundColor = index % 2 === 0 ? "#ffffff" : "#fafafa";
+            };
+
+            // Cor de fundo alternada para as linhas
+            row.style.backgroundColor = index % 2 === 0 ? "#ffffff" : "#fafafa";
+
+            // Célula do Operador
+            const operadorCell = row.insertCell();
+            operadorCell.style.padding = "14px 12px";
+            operadorCell.style.borderBottom = "1px solid #f0f0f0";
+            operadorCell.textContent = apont.SOF_OPERAD || "-";
+
+            // Célula do Início
+            const inicioCell = row.insertCell();
+            inicioCell.style.padding = "14px 12px";
+            inicioCell.style.borderBottom = "1px solid #f0f0f0";
+            inicioCell.textContent = apont.SOF_DTINIC || "-";
+
+            // Célula do Fim
+            const fimCell = row.insertCell();
+            fimCell.style.padding = "14px 12px";
+            fimCell.style.borderBottom = "1px solid #f0f0f0";
+            fimCell.textContent = apont.SOF_DTAFIM || "-";
+
+            // Célula da Quantidade Boa
+            const qtdCell = row.insertCell();
+            qtdCell.style.padding = "14px 12px";
+            qtdCell.style.borderBottom = "1px solid #f0f0f0";
+            qtdCell.style.textAlign = "center";
+            qtdCell.style.fontWeight = "600";
+            qtdCell.style.color = "#2e7d32";
+            qtdCell.textContent = apont.SOF_QNTBOA || "0";
+
+            // Célula do Status
+            const statusCell = row.insertCell();
+            statusCell.style.padding = "14px 12px";
+            statusCell.style.borderBottom = "1px solid #f0f0f0";
+            statusCell.style.textAlign = "center";
+            statusCell.style.fontWeight = "600";
+
+            // Status baseado na data de fim
+            const status = apont.SOF_DTAFIM ? "Finalizado" : "Em andamento";
+            const statusColor = apont.SOF_DTAFIM ? "#28a745" : "#ffc107";
+            const statusBg = apont.SOF_DTAFIM ? "#e8f5e8" : "#fff8e1";
+
+            statusCell.innerHTML = `
+            <span style="
+                background: ${statusBg};
+                color: ${statusColor};
+                padding: 6px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                border: 1px solid ${statusColor}20;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            ">
+                <i class="fas ${apont.SOF_DTAFIM ? 'fa-check-circle' : 'fa-clock'}"></i>
+                ${status}
+            </span>
+        `;
+        });
+    }
+    // --- FUNÇÃO AUXILIAR PARA FORMATAR DATA/HORA ---
+    function formatDateTime(dateTimeString) {
+        if (!dateTimeString) return "-";
+
+        try {
+            // Converte do formato "DD/MM/YYYY HH:MM:SS" para objeto Date
+            const [datePart, timePart] = dateTimeString.split(' ');
+            const [day, month, year] = datePart.split('/');
+
+            const date = new Date(`${year}-${month}-${day}T${timePart}`);
+
+            // Formata para o padrão brasileiro
+            return date.toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        } catch (error) {
+            console.error("Erro ao formatar data:", error);
+            return dateTimeString; // Retorna o original se houver erro
+        }
+    }
 
             function updateOfDisplay() {
                 const prod = currentSelectedOfData.JRO_PROERP || "";
@@ -1557,27 +1826,36 @@ body {
 
                 // Esconde resultados de extração anteriores
                 clearPdfResults();
+
+                // Limpa tabela de apontamentos existentes
+                const tbody = document.getElementById("existingApontamentosBody");
+                const table = document.getElementById("existingApontamentosTable");
+                const noData = document.getElementById("noExistingApontamentos");
+
+                if (tbody) tbody.innerHTML = "";
+                if (table) table.style.display = "none";
+                if (noData) noData.style.display = "none";
             }
 
             function switchToApontamentoView() {
-                // Esconde dashboard
-                if (typeof dashboard !== 'undefined') {
-                    dashboard.style.display = "none";
-                }
+                    console.log("Alternando para tela de apontamento"); // Debug
 
-                // Mostra seção de apontamento
-                if (typeof apontamentoSection !== 'undefined') {
-                    apontamentoSection.style.display = "block";
-                }
+                    // Esconde dashboard
+                    if (dashboard) {
+                        dashboard.style.display = "none";
+                    }
 
-                // Renderiza tabela (inicialmente vazia)
-                renderPendingApontamentosTable();
+                    // Mostra seção de apontamento
+                    if (apontamentoSection) {
+                        apontamentoSection.style.display = "block";
+                    }
 
-                // Atualiza estado dos botões
-                if (typeof updateApontamentoControlButtons === 'function') {
+                    // Renderiza tabela (inicialmente vazia)
+                    renderPendingApontamentosTable();
+
+                    // Atualiza estado dos botões
                     updateApontamentoControlButtons();
                 }
-            }
 
             // --- Funções Auxiliares ---
             function clearPdfResults() {
@@ -2009,6 +2287,11 @@ body {
                         updateApontamentoControlButtons();
                         pendingApontamentos = [];
                         renderPendingApontamentosTable();
+
+                        // Recarregar apontamentos existentes
+                        if (currentSelectedOfData) {
+                            loadExistingApontamentos(currentSelectedOfData.SOC_CODIOF);
+                        }
                     } else {
                         throw new Error(result.error || "Falha ao finalizar apontamento no backend.");
                     }
@@ -2017,93 +2300,96 @@ body {
                     if (currentApontamentoState === 'started') manualFinishApontamentoBtn.disabled = false;
                 }
             });
-
             // --- Confirma Todos os Apontamentos Pendentes ---
             confirmAllPendingBtn.addEventListener("click", async () => {
-                    console.log("[1] Botão clicado - Início da função");
+                console.log("[1] Botão clicado - Início da função");
 
-                    try {
-                        console.log("[2] Verificando pendentes:", pendingApontamentos.length);
+                try {
+                    console.log("[2] Verificando pendentes:", pendingApontamentos.length);
 
-                        if (pendingApontamentos.length === 0) {
-                            console.log("[3] Nenhum apontamento pendente");
-                            showToast("info", "Nenhum apontamento pendente para confirmar.");
-                            return;
-                        }
-
-                        console.log("[4] Verificando estado do apontamento:", currentApontamentoState);
-
-                        if (currentApontamentoState !== "started" || !currentApontamentoId) {
-                            console.log("[5] Apontamento não está ativo");
-                            showToast("error", "Nenhum apontamento ativo para associar estas confirmações.");
-                            return;
-                        }
-
-                        console.log("[6] Preparando payload");
-
-                        // Mostrar estado de carregamento
-                        const originalText = confirmAllPendingBtn.innerHTML;
-                        confirmAllPendingBtn.disabled = true;
-                        confirmAllPendingBtn.innerHTML = "Confirmando... <span class=\"loading\"></span>";
-
-                        // Preparar os dados
-                        const payload = {
-                            apontamento_id: currentApontamentoId,
-                            operator_code: currentOperatorCode,
-                            soc_empresa: currentSelectedOfData.SOC_EMPRESA,
-                            soc_codseq: currentSelectedOfData.SOC_CODSEQ,
-                            items: pendingApontamentos.map(item => ({
-                                start_time: item.startTime,
-                                total_time: item.totalTime,
-                                qtd_apontar: item.qtdApontar
-                            }))
-                        };
-
-                        console.log("[7] Payload preparado:", JSON.stringify(payload, null, 2));
-
-                        console.log("[8] Enviando para API");
-                        const res = await fetch(`${API_BASE_URL}/api/laser/apontamento/confirm_batch`, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(payload)
-                        });
-
-                        console.log("[9] Resposta recebida. Status:", res.status);
-
-                        const json = await res.json();
-                        console.log("[10] Resposta JSON:", json);
-
-                        if (!res.ok || !json.success) {
-                            throw new Error(json.error || "Erro ao confirmar os apontamentos");
-                        }
-
-                        console.log("[11] Sucesso! Atualizando estado");
-
-                        // Sucesso!
-                        showToast("success", "Todos os PDFs confirmados com sucesso!");
-
-                        // Limpar lista de pendentes
-                        pendingApontamentos = [];
-                        renderPendingApontamentosTable();
-
-                        // Finalizar o apontamento
-                        currentApontamentoState = "idle";
-                        currentApontamentoId = null;
-                        updateApontamentoControlButtons();
-
-                    } catch (error) {
-                        console.error("[ERROR] Erro ao confirmar lote:", error);
-                        showToast("error", `Erro: ${error.message}`);
-                    } finally {
-                        console.log("[12] Finalizando - Restaurando botão");
-                        // Restaurar estado do botão
-                        if (confirmAllPendingBtn) {
-                            confirmAllPendingBtn.disabled = false;
-                            confirmAllPendingBtn.innerHTML = "Confirmar Todos os Apontamentos Pendentes";
-                        }
+                    if (pendingApontamentos.length === 0) {
+                        console.log("[3] Nenhum apontamento pendente");
+                        showToast("info", "Nenhum apontamento pendente para confirmar.");
+                        return;
                     }
+
+                    console.log("[4] Verificando estado do apontamento:", currentApontamentoState);
+
+                    if (currentApontamentoState !== "started" || !currentApontamentoId) {
+                        console.log("[5] Apontamento não está ativo");
+                        showToast("error", "Nenhum apontamento ativo para associar estas confirmações.");
+                        return;
+                    }
+
+                    console.log("[6] Preparando payload");
+
+                    // Mostrar estado de carregamento
+                    const originalText = confirmAllPendingBtn.innerHTML;
+                    confirmAllPendingBtn.disabled = true;
+                    confirmAllPendingBtn.innerHTML = "Confirmando... <span class=\"loading\"></span>";
+
+                    // Preparar os dados
+                    const payload = {
+                        apontamento_id: currentApontamentoId,
+                        operator_code: currentOperatorCode,
+                        soc_empresa: currentSelectedOfData.SOC_EMPRESA,
+                        soc_codseq: currentSelectedOfData.SOC_CODSEQ,
+                        items: pendingApontamentos.map(item => ({
+                            start_time: item.startTime,
+                            total_time: item.totalTime,
+                            qtd_apontar: item.qtdApontar
+                        }))
+                    };
+
+                    console.log("[7] Payload preparado:", JSON.stringify(payload, null, 2));
+
+                    console.log("[8] Enviando para API");
+                    const res = await fetch(`${API_BASE_URL}/api/laser/apontamento/confirm_batch`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
                     });
 
+                    console.log("[9] Resposta recebida. Status:", res.status);
+
+                    const json = await res.json();
+                    console.log("[10] Resposta JSON:", json);
+
+                    if (!res.ok || !json.success) {
+                        throw new Error(json.error || "Erro ao confirmar os apontamentos");
+                    }
+
+                    console.log("[11] Sucesso! Atualizando estado");
+
+                    // Sucesso!
+                    showToast("success", "Todos os PDFs confirmados com sucesso!");
+
+                    // Limpar lista de pendentes
+                    pendingApontamentos = [];
+                    renderPendingApontamentosTable();
+
+                    // Recarregar apontamentos existentes para mostrar os novos
+                    if (currentSelectedOfData) {
+                        loadExistingApontamentos(currentSelectedOfData.SOC_CODIOF);
+                    }
+
+                    // Finalizar o apontamento
+                    currentApontamentoState = "idle";
+                    currentApontamentoId = null;
+                    updateApontamentoControlButtons();
+
+                } catch (error) {
+                    console.error("[ERROR] Erro ao confirmar lote:", error);
+                    showToast("error", `Erro: ${error.message}`);
+                } finally {
+                    console.log("[12] Finalizando - Restaurando botão");
+                    // Restaurar estado do botão
+                    if (confirmAllPendingBtn) {
+                        confirmAllPendingBtn.disabled = false;
+                        confirmAllPendingBtn.innerHTML = "Confirmar Todos os Apontamentos Pendentes";
+                    }
+                }
+            });
             // --- Voltar para Sequenciamento ---
             finishApontamentoBtn.addEventListener("click", async () => {
                 let proceed = true;
