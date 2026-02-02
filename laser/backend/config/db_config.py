@@ -3,10 +3,10 @@ import cx_Oracle
 import logging
 
 # Configurações do banco de dados (do settings.py fornecido pelo usuário)
-DB_USER = os.getenv("DB_USER", "HORIZONTE")
-DB_PASS = os.getenv("DB_PASS", "LARANJA")
-DB_HOST = os.getenv("DB_HOST", "10.42.92.200")
-DB_PORT = os.getenv("DB_PORT", "1521")
+DB_USER = os.getenv("DB_USER", "")
+DB_PASS = os.getenv("DB_PASS", "")
+DB_HOST = os.getenv("DB_HOST", "")
+DB_PORT = os.getenv("DB_PORT", "")
 DB_SERVICE = os.getenv("DB_SERVICE", "ORCL")
 
 # String de conexão DSN (Data Source Name)
